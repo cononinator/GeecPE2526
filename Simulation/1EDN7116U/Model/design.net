@@ -1,0 +1,19 @@
+* E:\Documents\Masters\Project\Simulation\1EDN7116U\Model\DEMO_TESTBENCH.sxsch
+*#SIMETRIX
+.GRAPH R1_P axisType="owngrid" persistence=-1 curveLabel="TAMB" analysis="tran|ac|dc" order="g" xLog="auto" yLog="auto"  nowarn=true GUID="5ab69f2a-5a3a-4c51-b107-31a569e2ac0e" disabled=false PROBEREF=Probe8  
+Vtamb R1_N 0 25
+Vinp Vinp_P 0  Pulse(0 5 10u 1n 1n 25u 50u)
+.GRAPH TJ axisType="owngrid" persistence=-1 curveLabel="TJ" analysis="tran|ac|dc" order="h" xLog="auto" yLog="auto"  nowarn=true GUID="748d196b-3e75-4e51-9410-36ffc2e1a6eb" disabled=false PROBEREF=Probe6  
+Vdd U1_VDD 0 PWL 0 0 100n 0 200n 5
+X$U1 Vinp_P 0 0 U1_VDD U1_BST U1_OUT_SRC U1_OUT_SRC R1_P TJ 1EDN7116U pinnames: IN+ IN- VSS VDD BST OUT_SNK OUT_SRC TAMB TJ
+R1 R1_P R1_N 10
+.GRAPH U1_OUT_SRC axisType="owngrid" persistence=-1 curveLabel="OUT" analysis="tran|ac|dc" order="f" xLog="auto" yLog="auto"  nowarn=true GUID="b612cfae-0594-4fb2-817e-ba229fecaa29" disabled=false PROBEREF=Probe9  
+.GRAPH U1_BST axisType="owngrid" persistence=-1 curveLabel="BST" analysis="tran|ac|dc" order="e" xLog="auto" yLog="auto"  nowarn=true GUID="298238d7-cc90-4f9c-8bf4-8cbde987a301" disabled=false PROBEREF=Probe5  
+.GRAPH Vinp_P axisType="owngrid" persistence=-1 curveLabel="INP" analysis="tran|ac|dc" order="c" xLog="auto" yLog="auto"  nowarn=true GUID="4663c1c7-c52c-42b8-b084-0deb368c4943" disabled=false PROBEREF=Probe3  
+.GRAPH U1_VDD axisType="owngrid" persistence=-1 curveLabel="VDD" analysis="tran|ac|dc" order="a" xLog="auto" yLog="auto"  nowarn=true GUID="f0f9dec5-837c-4ca5-b845-88c4a069cc3d" disabled=false PROBEREF=Probe1  
+Cout U1_OUT_SRC 0 1n   
+Cbst U1_BST 0 1n   
+C1 R1_P 0 100n   
+.TRAN 1m
+.lib "1EDN7116U.lib"
+

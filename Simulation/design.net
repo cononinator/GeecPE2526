@@ -1,0 +1,12 @@
+* E:\Documents\Masters\Project\Simulation\GaNTestBench.wxsch
+*#SIMETRIX
+Vinp Vinp_P U1_source  Pulse(0 5 10u 10n 10n 50m 100m)
+V1 U1_drain 0 24
+X$U1 U1_drain R2_P U1_source U1_Tj U1_Tcase IGC019S06S1_L3 pinnames: drain gate source Tj Tcase
+R2 R2_P Vinp_P 10
+R1 U1_source 0 10
+.GRAPH R2_P curveLabel= U1-gate nowarn=true ylog=auto xlog=auto analysis=tran|ac|dc GUID="d7308bcc-738e-4130-bbc0-ed16df88093d" disabled=false PROBEREF=Probe1  
+.GRAPH U1_source axisType="owngrid" persistence=-1 curveLabel="OUT" analysis="tran|ac|dc" order="f" xLog="auto" yLog="auto"  nowarn=true GUID="3c6a11f1-e06b-48e6-bc24-60de3ef2593c" disabled=false PROBEREF=Probe9  
+.GRAPH R2#P  GUID="1b301028-e69d-4422-9d77-bf294ad685f4" disabled=false 
+.tran 1m
+

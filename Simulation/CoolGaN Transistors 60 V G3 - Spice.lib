@@ -1,0 +1,179 @@
+*****************************************************************
+* INFINEON Power Transistors                                    *
+* Content:        SPICE Model Library                           *
+* Device:         CoolGaN                                       *
+* Model Types:    L1 L3                                         *
+* Technology:     CoolGaN G3 60V                            *
+* Date and time:  05.11.2024  10:42:04                          *
+* Version:        1184                                          *
+*****************************************************************
+*                                                               *
+* The models for Infineon Power MOSFET are evaluated with       *
+* SIMetrixTM-SPICE simulator. The Infineon Power MOSFET models  *
+* are tested, verified and provided in SPICE simulation code.   *
+*                                                               *
+* Infineon | Terminals | Usage suggestion                       *
+* Level    |           |                                        *
+* ------------------------------------------------------------- *
+* L0       | G, D, S   | General electrical simulations/ whole  *
+*          |           | application circuits.                  *
+* ------------------------------------------------------------- *
+* L1       | G, D, S   | Transient, switching losses and        *
+*          |           | efficiency analyses. Behavior of       *
+*          |           | device over full temperature range.    *
+* ------------------------------------------------------------- *
+* L2       | G, D, S,  | Same as L1 but with individual device  *
+*          | Tj, Tcase | temperature. This model is not         *
+*          |           | supported because it is covered by     *
+*          |           | L3-model.                              *
+* ------------------------------------------------------------- *
+* L3       | G, D, S,  | Self-heating effects, modeling of heat *
+*          | Tj, Tcase | flow including thermal models of       *
+*          |           | application.                           *
+*                                                               *
+*****************************************************************
+* Detailed Informations:                                        *
+*                                                               *
+* The model files are available on the Infineon web page:       *
+* http://www.infineon.com                                       *
+*                                                               *
+* This library contains models of the following INFINEON        *
+* CoolGaN transistors:                                          *
+*                                                               *
+*   CoolGaN G3 60V                                          *
+*      IGC019S06S1                                              *
+*                                                               *
+*****************************************************************
+**********************************************************************
+************************ L3 TECHNOLOGY MODEL *************************
+**********************************************************************
+
+.SUBCKT GaN_60_gan_var dd g s0 Tj PARAMS: a=1 dVth=0 dR=0 dgfs=0 Inn=1
++Unn=1 Rmax=1 gmin=1 Rs=1 Rp=1 dC=0 Rm=1u
+.PARAM b0=15.6         d0=200m        d1=1           p00=7.28         p01=12m       p02=0
+.PARAM mubet=1.7      fbet=200m      fpar53=2.687      fpar54=-1.98m      dvgs=-1        dk=50m
+.PARAM x0=3.6
+.PARAM Rdoff=0    Rd = 3.65e-3 aoff=0 fpar63=435m        fpar60=4.1        Rsg=5m
+.PARAM Rda={Rdoff+Rd/(a-aoff)}
+.PARAM gl1=0          gl2=20p        gl3=5          gl4=450m       glTC1=1.2      glTC2=280m
+.PARAM glTC3=0        Rgsd=16.7      Rgdd=16.7
+.PARAM fpar37=85.8u      fpar39=298       fpar38=273
+.PARAM f3=174.8p        f3c=-330p      f3d=100p       f3e=150p
+.PARAM ps1=39p        ps2=-146.4m      ps5=1.48p       ps6=0.4p       ps7=0          pc0=0
+.PARAM qs6=38.72p
+.PARAM q80=754.8p       q81=61p      q82=48.6p      qs1=7.02p      qs2=31p        qs3=-34.41m
+.PARAM qs4=51.42p      qs5=-28.94m    f2r=1.2
+.PARAM x1={(q80-q81)/q82}       x2={q80/q82}
+.PARAM z1={-f3c/f3e}            z2={(f3d-f3c)/f3e}
+.PARAM Vmin=2.02      Vmax=3.12      dCmax=330m
+.PARAM Vth={fpar53+(Vmax-fpar53)*limit(dVth,0,1)-(Vmin-fpar53)*limit(dVth,-1,0)}
+.PARAM dRs={Rsg/a}
+.PARAM q1={1/(a*b0*((Unn-Inn*(Rs+dRs))-fpar53)*(p00+(p01+p02*fpar39)*fpar39))}
+.PARAM dRd={Rda+if(dVth==0,limit(dR,0,1)*max(Rmax-q1/(1-x0*Inn*q1)-Rda-dRs-Rs-Rp,0),0)}
+.PARAM dC1={1+dCmax*limit(dC,0,1)}
+.PARAM dC2={1+dCmax*limit(dC,0,1)}
+.PARAM Cgs0={f3*a*dC1}
+.PARAM Cgs3={f3d*a*dC1}
+.PARAM Cds1={qs6*a*dC1}
+.PARAM Cds5={qs1*a*dC1}
+.PARAM Cds6={(a*qs2*(1+f2r/sqrt(a)))*dC1}
+.PARAM Cds7={qs4*a*dC1}
+.PARAM Cds8={q80*a*dC1}
+.PARAM Cdg1={(a*ps1*(1+pc0*sqrt(a)))*dC2}
+.PARAM Cdg3={(ps5*a+ps6)*dC2}
+.FUNC fpar85(T)      {a*b0*((1-fbet)*(fpar39/T)**mubet+fbet)}
+.FUNC st(T)       {1/(p00+(p01+p02*T)*T)}
+.FUNC Vt(T)       {Vth-fpar54*(T-fpar39)}
+.FUNC dvx(T)      {((Vt(T)-dvgs)*st(T)-Vt(T)*(st(T)+dk))/dk}
+.FUNC h0(z)       {1+limit(z,0,1)**2*(2*limit(z,0,1)-3)}
+.FUNC h1(g,d)     {if(d<0,(1-h0((-d)/d1))*d0+(g-d),g)}
+.FUNC h2(g,T)     {(g+h0(g+dvx(T))*dvgs-Vt(T))/(st(T)+h0(g+dvx(T))*dk)}
+.FUNC ich(d,g,T)  {fpar85(T)*if(h2(g,T)>30,h2(g,T),ln(1+exp(h2(g,T))))*d/(1+x0*d)}
+.FUNC gl1T(T)     {gl1*exp((T/fpar39-1)/(fpar37*T)*glTC1)}
+.FUNC gl2T(T)     {gl2*exp((T/fpar39-1)/(fpar37*T)*glTC2)}
+.FUNC Igl(x,T)    {a*(gl1T(T)*(exp(x/(gl3*(1+glTC3*(T-fpar39))))-1)+gl2T(T)*(exp(x/(gl4*(1+glTC3*(T-fpar39))))-1))}
+.FUNC Q01(Uds)    {a*(limit(Uds,x1,x2)*(q80-q82/2*limit(Uds,x1,x2))+min(Uds-x1,0)*q81-max(x1,0)*(q80-q81)/2)}
+.FUNC Q05(Ugs)    {a*(f3e/2*max(min(Ugs,z2)-z1,0)**2+f3d*max(Ugs-z2,0))/Cgs3}
+Vs     dd    d1   0
+G_RD   d1    d    VALUE {V(d1,d)/(fpar63*dRd+(1-fpar63)*dRd*((limit(V(Tj),-200,999)+fpar38)/fpar39)**fpar60)}
+Vd01   d     d0   0
+G_chan d0    s    VALUE {sgn(V(d0,s))*ich(abs(V(d0,s)),h1(V(g,s),V(d0,s)),fpar38+limit(V(Tj),-200,999))}
+Vs01   s     s1   0
+G_RS   s1    s0   VALUE {V(s1,s0)/(Rm+fpar63*dRs+(1-fpar63)*dRs*((limit(V(Tj),-200,999)+fpar38)/fpar39)**fpar60)}
+G_gsd  g     gs   VALUE {Igl(min(V(g,gs),10),fpar38+limit(V(Tj),-200,999))}
+Rgs    gs    s1   {Rgsd/a}
+G_gdd  g     gd   VALUE {Igl(min(V(g,gd),10),fpar38+limit(V(Tj),-200,999))}
+Rgd    gd    d    {Rgdd/a}
+C_Cgs  g     s    {Cgs0}
+E_Egs3 g     e2   VALUE {V(g,s)-Q05(V(g,s))}
+C_Cgs3 e2    s    {Cgs3}
+C_Cds1 d     s      {Cds1}
+C_Cds5 d     s      {Cds5}
+E_Eds6 d     edep6  VALUE {if(qs3==0,0,V(d,s)-(exp(qs3*max(V(d,s),0))-1)/min(qs3,-1u)-min(V(d,s),0))}
+C_Cds6 edep6 s      {Cds6}
+E_Eds7 d     edep7  VALUE {if(qs5==0,0,V(d,s)-(exp(qs5*max(V(d,s),0))-1)/min(qs5,-1u)-min(V(d,s),0))}
+C_Cds7 edep7 s      {Cds7}
+E_Eds8 d     edep8  VALUE {V(d,s)-Q01(V(d,s))/Cds8}
+C_Cds8 edep8 s      {Cds8}
+E_Edg1 d     ox1 VALUE {if(ps2==0,0,V(d,g)-(exp(ps2*max(V(d,g),0))-1)/min(ps2,-1u)-min(V(d,g),0))}
+C_Cdg1 ox1   g   {Cdg1}
+C_Cdg3 d     g   {Cdg3}
+Rpar1  d1    d   1k
+Rpar2  d0    s   100Meg
+Rpar3  s1    s0  1k
+Rpar4  g     gs  5G
+Rpar5  g     gd  5G
+G_TH   0     Tj   VALUE {I(Vs)*V(d1,d)+I(Vd01)*V(d0,s)+I(Vs01)*V(s1,s0)+V(gs,s1)/(Rgsd/a)*V(g,s1)+V(gd,d)/(Rgdd/a)*V(g,d)}
+.ENDS
+
+**********************************************************************
+**********************************************************************
+
+.SUBCKT IGC019S06S1_L1 drain gate source PARAMS: dVth=0 dRdson=0
+.PARAM Rs=2.83E-05    Rg=0.4    Rdp=2.62E-05          Ls=5.63E-12        Ld=5.89E-12
+.PARAM Lg=6.58E-11    fpar40=8.267        Inn={1.00E+00*8.267}  Unn=1.00E+01       Rmax=2.40E-03
+X1  dd g s Tj GaN_60_gan_var PARAMS: a={fpar40} dVth={dVth+0} dR={dRdson} Inn={Inn} Unn={Unn}
+                                      +Rmax={Rmax} Rs={Rs} Rdp={Rdp} heat=0
+L_Ld         drain  ldrd    {Ld}
+R_Ld         drain  ldrd    10
+R_Rd         dd     ldrd    {Rdp}
+L_Ls         source lsrs  {Ls}
+R_Ls         source lsrs  10
+R_Rs         s      lsrs  {Rs}
+L_Lg         gate   lgrg  {Lg}
+R_Lg         gate   lgrg  10
+R_Rg         lgrg   g     {Rg}
+E1    Tj     w      VALUE={TEMP}
+R1    w      0      1u
+.ENDS
+
+********************************************************************************
+
+.SUBCKT IGC019S06S1_L3 drain gate source Tj Tcase PARAMS: dVth=0 dRdson=0 Zthtype=0
+.PARAM Rs=2.83E-05    Rg=0.4    Rdp=2.62E-05          Ls=5.63E-12        Ld=5.89E-12
+.PARAM Lg=6.58E-11    fpar40=8.267        Inn={1.00E+00*8.267}  Unn=1.00E+01       Rmax=2.40E-03
+.PARAM lzth={limit(Zthtype,0,1)}
+X1  dd g s Tj GaN_60_gan_var PARAMS: a={fpar40} dVth={dVth+0} dR={dRdson} Inn={Inn} Unn={Unn}
+                                     +Rmax={Rmax} Rs={Rs} Rdp={Rdp} heat=1
+L_Ld         drain  ldrd    {Ld}
+R_Ld         drain  ldrd    10
+R_Rd         dd     ldrd    {Rdp}
+L_Ls         source lsrs  {Ls}
+R_Ls         source lsrs  10
+R_Rs         s      lsrs  {Rs}
+L_Lg         gate   lgrg  {Lg}
+R_Lg         gate   lgrg  10
+R_Rg         lgrg   g     {Rg}
+C_CZth1     Tj    0      {535.834u/(1+0.5*lzth)}
+C_CZth2     0     1      {1.51556m/(1+0.5*lzth)}
+C_CZth3     0     2      {4.02704m/(1+0.5*lzth)}
+C_CZth4     0     3      {10.3772m/(1+0.5*lzth)}
+C_CZth5     0     4      {19.7254m/(1+0.5*lzth)}
+R_Rth1      Tj    1      {29.9067m*(1+0.5*lzth)}
+R_Rth2      1     2      {86.8230m*(1+0.5*lzth)}
+R_Rth3      2     3      {121.267m*(1+0.5*lzth)}
+R_Rth4      3     4      {814.094m*(1+0.5*lzth)}
+R_Rth5      4     Tcase  {814.096m*(1+0.5*lzth)}
+.ENDS
+
+********************************************************************************

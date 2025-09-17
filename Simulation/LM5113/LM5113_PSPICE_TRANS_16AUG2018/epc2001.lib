@@ -1,0 +1,85 @@
+* PSpice Model Editor - Version 17.2.0
+
+*$
+* (C) Copyright Efficient Power Conversion Corporation. All rights reserved.
+* **************************************************************************
+* Version History:
+*        1.02: Added the copyright statement.
+*
+* source EPC2001DEV1
+.subckt EPC2001 gatein drainin sourcein
+.param aWg=1077 A1=41.7998 k2=2.259866e+000 k3=1.2e-001 rpara=4.463059e-003  
++	aITc=5.486028e-003 arTc=-4.699671e-003 ax0Tc=0.75E-4 x0_0=-0.75 x0_1=1.10
++	dgs1=4.3e-7 dgs2=2.6e-13 dgs3=.8 dgs4=.23	  
++	ags1=8.6952e-010 ags2=5.3168e-010 ags3=1.9975e+000 ags4=2.8377e-001
++	ags5=-1.4751e-010 ags6=-7.5163e+000 ags7=7.2121e+000
++	agd1=1.4182e-011 agd2=2.1475e-010 agd3=-3.8030e+000 agd4=5.9551e+000
++	asd1=3.3621e-010 asd2=6.3080e-010 asd3=-1.2803e+001 asd4=2.2690e+000
++	asd5=2.5818e-010 asd6=-4.0599e+001 asd7=2.0638e+001
+
+rd drainin drain {(0.75*rpara*(1-arTc*(Temp-25)))}
+rs sourcein source {(0.25*rpara*(1-arTc*(Temp-25)))}
+rg gatein gate {(.6)}
+
+*Large resistors to aid convergence
+Rcsdconv drain source {100000Meg/aWg}
+Rcgsconv gate source {100000Meg/aWg}
+Rcgdconv gate drain {100000Meg/aWg}
+
+
+gswitch drain source Value {if( v(drain,source)>0.0,
++	(A1*(1-aITc*(Temp-25))*log(1.0+exp((v(gate,source)-k2)/k3))* 
++	v(drain,source)/(1 + max((x0_0+x0_1*v(gate,source))/(1+ax0Tc*(Temp-25)*(Temp-25)),0.5)*v(drain,source)) ),
++	(-A1*(1-aITc*(Temp-25))*log(1.0+exp((v(gate,drain)-k2)/k3))* 
++	v(source,drain)/(1 + max((x0_0+x0_1*v(gate,drain))/(1+ax0Tc*(Temp-25)*(Temp-25)),0.5)*v(source,drain)) ) ) }
+
+
+ggsdiode gate source VALUE {if( v(gate,source) < 10,
++	0.5*aWg/1077*(dgs1*(exp((v(gate,source))/dgs3)-1)+dgs2*(exp((v(gate,source))/dgs4)-1)),
++	0.5*aWg/1077*(dgs1*(exp((10)/dgs3)-1)+dgs2*(exp((10)/dgs4)-1)) ) }
+
+
+ggddiode gate drain Value {if( v(gate,drain) < 10,
++	0.5*aWg/1077*(dgs1*(exp((v(gate,drain))/dgs3)-1)+dgs2*(exp((v(gate,drain))/dgs4)-1)),
++	0.5*aWg/1077*(dgs1*(exp((10)/dgs3)-1)+dgs2*(exp((10)/dgs4)-1)) ) }
+
+
+
+*Parasitic gate-source capacitance
+*C_GS         gate source  {ags1}
+*Model for voltage dependent gate-source capacitance
+E_IGS tl_gs bl_gs value = {0.5*ags2*ags4*log(1+exp((v(gate,source)-ags3)/ags4))+
++	ags5*ags7*log(1+exp((v(source,drain)-ags6)/ags7))+
++	ags1*v(gate,source) }
+V_INGS br_gs bl_gs 0.0
+C_IGS br_gs tr_gs {1.0e-6}
+R_IGS tr_gs tl_gs {1.0e-4}
+F_IGS gate source V_INGS 1e6
+R_IGS2 bl_gs source 100Meg
+
+*Parasitic gate-drain capacitance 
+*C_GD         gate drain  {agd1}
+*Model for voltage dependent gate-drain capacitance
+E_IGD tl_gd bl_gd value = {0.5*ags2*ags4*log(1+exp((v(gate,drain)-ags3)/ags4))+
++	agd2*agd4*log(1+exp((v(gate,drain)-agd3)/agd4))+
++	agd1*v(gate,drain) }
+V_INGD br_gd bl_gd 0.0
+C_IGD br_gd tr_gd {1.0e-6}
+R_IGD tr_gd tl_gd {1.0e-4}
+F_IGD gate drain V_INGD 1e6
+R_IGD2 bl_gd drain 100Meg
+
+*Parasitic source-drain capacitance 
+*C_SD         source drain  {asd1}
+*Model for voltage dependent source-drain capacitance
+E_ISD tl_sd bl_sd value = {asd2*asd4*log(1+exp((v(source,drain)-asd3)/asd4))+
++	asd5*asd7*log(1+exp((v(source,drain)-asd6)/asd7))+
++	asd1*v(source,drain) }
+V_INSD br_sd bl_sd 0.0
+C_ISD br_sd tr_sd {1.0E-6}
+R_ISD tr_sd tl_sd {1.0e-4}
+F_ISD source drain V_INSD 1e6
+R_ISD2 bl_sd drain 100Meg
+
+.ends
+*$
