@@ -1,0 +1,353 @@
+***********************************************************************************************
+***                                                                                         ***
+*** Elements Version 9.20f (x64) - 08/09/2025 20:04                                         ***
+*** Platform: Windows 10                                                                    ***
+*** Architecture: x64                                                                       ***
+*** Serial Number:                                                                          ***
+*** User:                                                                                   ***
+***                                                                                         ***
+*** TITLE:   * E:\Documents\Masters\Project\Simulation\1EDN7116U\Model\DEMO_TESTBENCH.sxsch***
+*** NETLIST: E:\Documents\Masters\Project\Simulation\1EDN7116U\Model\design.net             ***
+***                                                                                         ***
+***********************************************************************************************
+
+********************************************************************************
+***                                                                          ***
+***                                Input Deck                                ***
+***                                                                          ***
+********************************************************************************
+
+.options bjtPSpiceSubNode=1
+.options allowdivzero=1
+.options initCondMode=2
+.options icres=0.002
+.options inhibitAttoISource=1
+#SIMETRIX
+.GRAPH R1_P axisType="owngrid" persistence=-1 curveLabel="TAMB" analysis="tran|ac|dc" order="g" xLog="auto" yLog="auto"  nowarn=true GUID="5ab69f2a-5a3a-4c51-b107-31a569e2ac0e" disabled=false PROBEREF=Probe8  
+Vtamb R1_N 0 25
+Vinp Vinp_P 0  Pulse(0 5 10u 1n 1n 25u 50u)
+.GRAPH TJ axisType="owngrid" persistence=-1 curveLabel="TJ" analysis="tran|ac|dc" order="h" xLog="auto" yLog="auto"  nowarn=true GUID="748d196b-3e75-4e51-9410-36ffc2e1a6eb" disabled=false PROBEREF=Probe6  
+Vdd U1_VDD 0 PWL 0 0 100n 0 200n 5
+X$U1 Vinp_P 0 0 U1_VDD U1_BST U1_OUT_SRC U1_OUT_SRC R1_P TJ 1EDN7116U pinnames: IN+ IN- VSS VDD BST OUT_SNK OUT_SRC TAMB TJ
+R1 R1_P R1_N 10
+.GRAPH U1_OUT_SRC axisType="owngrid" persistence=-1 curveLabel="OUT" analysis="tran|ac|dc" order="f" xLog="auto" yLog="auto"  nowarn=true GUID="b612cfae-0594-4fb2-817e-ba229fecaa29" disabled=false PROBEREF=Probe9  
+.GRAPH U1_BST axisType="owngrid" persistence=-1 curveLabel="BST" analysis="tran|ac|dc" order="e" xLog="auto" yLog="auto"  nowarn=true GUID="298238d7-cc90-4f9c-8bf4-8cbde987a301" disabled=false PROBEREF=Probe5  
+.GRAPH Vinp_P axisType="owngrid" persistence=-1 curveLabel="INP" analysis="tran|ac|dc" order="c" xLog="auto" yLog="auto"  nowarn=true GUID="4663c1c7-c52c-42b8-b084-0deb368c4943" disabled=false PROBEREF=Probe3  
+.GRAPH U1_VDD axisType="owngrid" persistence=-1 curveLabel="VDD" analysis="tran|ac|dc" order="a" xLog="auto" yLog="auto"  nowarn=true GUID="f0f9dec5-837c-4ca5-b845-88c4a069cc3d" disabled=false PROBEREF=Probe1  
+Cout U1_OUT_SRC 0 1n   
+Cbst U1_BST 0 1n   
+C1 R1_P 0 100n   
+.TRAN 1m
+.lib "1EDN7116U.lib"
+.SUBCKT 1EDN7116U IN+ IN- VSS VDD BST OUT_SNK OUT_SRC TAMB TJ
+R_INP IN+ VSS 1E12
+C_INP IN+ VSS 1F
+R_IN- IN- VSS 1E12
+C_IN- IN- VSS 1F
+ROUT_SNK OUT_SNK VSS 1E12
+ROUT_SRC OUT_SRC VSS 1E12
+COUT_SNK OUT_SNK VSS 1E-12
+COUT_SRC OUT_SRC VSS 1E-12
+RBST BST VSS 1E12
+CBST BST VSS 1E-12
+RTAMB TAMB VSS 1E12
+RTJ TJ VSS 1E12
+RTC TC VSS 1E12
+RVDD VDD VSS 1E12
+X1 VDD VSS ONE_EDN7116U_CL_DIO PARAMS: P_V_BV=12 P_I_BV=100M
+X2 VSS VDD ONE_EDN7116U_ESD_DIO PARAMS: P_V_BV=0.3 P_I_BV=1M
+X12 IN+ IN- ONE_EDN7116U_CL_DIO PARAMS: P_V_BV=8.5 P_I_BV=10M
+X13 IN- IN+ ONE_EDN7116U_CL_DIO PARAMS: P_V_BV=8.5 P_I_BV=10M
+X_GD_TEMPLATE IN+ IN- VSS VDD BST OUT_SNK OUT_SRC TAMB TJ TC ONE_EDN7116U_GD_TEMPLATE
+.SUBCKT ONE_EDN7116U_GD_TEMPLATE IN+ IN- VSS VDD BST OUT_SNK OUT_SRC TAMB TJ TC
+V_H OUT_SRC1 OUT_SRC 0.0
+V_L OUT_SNK1 OUT_SNK 0.0
+V_B BST1 BST 0.0
+E_POW POW 0 VALUE={ABS(V(VDD,OUT_SRC)*I(V_H))+ABS(V(OUT_SNK,VSS)*I(V_L)) + ABS(V(VDD,BST)*I(V_B)) + ABS(V(BST,VSS)*I(V_B))}
+RTEMP TAMB 0 1K
+GTEMP 0 TAMB VALUE = {1M*TEMP}
+CTEMP TAMB 0 1N
+XTHERMAL_NETS TAMB TJ TC POW ONE_EDN7116U_THERMAL_NETS
+RX TJ VSS 1E12
+RY TC VSS 1E12
+XINPUT_STAGE IN+ IN- VSS IN_DD TJ ONE_EDN7116U_INPUT_STAGE
+XOUTPUT_STAGE VDD BST1 OUT_SRC1 OUT_SNK1 VSS IN_DD VDD_UV TJ ONE_EDN7116U_OUTPUT_STAGE
+XVDD_UV_DETECT VDD_UV VDD VSS TJ ONE_EDN7116U_VDD_UV_DETECT
+XCC_EMULATOR VDD VSS TJ ONE_EDN7116U_CC_EMULATOR
+.SUBCKT ONE_EDN7116U_CC_EMULATOR VDD VSS TEMP
+G_VDD VDD VSS VALUE={TABLE(V(TEMP),-40,1.4M,25,1.41M,125,1.4M) * TABLE(V(VDD,VSS),3.85,0,4.1,1,11,1.03571)}
+R_VDD VDD VSS 1E12
+.ENDS ONE_EDN7116U_CC_EMULATOR
+.SUBCKT ONE_EDN7116U_VDD_UV_DETECT VDD_UV VDD VSS TEMP
+E1 VDD_UVH 0 VALUE={TABLE(V(TEMP), -40, 3.81, 25, 3.85, 125,3.81)}
+E2 VDD_UVL 0 VALUE={TABLE(V(TEMP), -40, 3.71, 25,3.75, 125, 3.71)}
+X1 VDD VDD_UV_DIG VSS VDD_UVH VDD_UVL ONE_EDN7116U_STP_IDEAL_2
+X2 VDD_UV_DIG VDD_UV ONE_EDN7116U_ADV_FILTER_TIME_2 PARAMS: TIME_SET=1N
+.SUBCKT ONE_EDN7116U_ADV_FILTER_TIME_2 IN OUT PARAMS: TIME_SET=1N
+R1 IN 0 1E9
+R2 OUT 0 1E9
+G_RISE IN IN_DEL VALUE={V(IN,IN_DEL)/ MAX(({TIME_SET}/ABS(LOG(0.001))/1E-9),0.1)}
+C_RISE IN_DEL 0 1N
+R_3 IN_DEL 0 1E12
+X_CMP IN_DEL OUT 0 ONE_EDN7116U_STP_IDEAL PARAMS: P_TH_UP=0.999 P_TH_DW=0.001
+.SUBCKT ONE_EDN7116U_STP_IDEAL IN OUT GND PARAMS: P_TH_UP=0.9 P_TH_DW=0.1
+E_OUTP OUTP 0 VALUE={IF( V(IN,GND)>={P_TH_UP} | V(OUTN)<0.5 , 1,0 )}
+E_OUTN OUTN 0 VALUE={IF( V(IN,GND)<={P_TH_DW} | V(OUTP)<0.5 , 1,0 )}
+E_OUT OUT 0 VALUE={V(OUTP)}
+.ENDS ONE_EDN7116U_STP_IDEAL
+.ENDS ONE_EDN7116U_ADV_FILTER_TIME_2
+.SUBCKT ONE_EDN7116U_STP_IDEAL_2 IN OUT GND UP DW
+E_OUTP OUTP 0 VALUE={IF( V(IN,GND)>=V(UP) | V(OUTN)<0.5 , 1,0 )}
+E_OUTN OUTN 0 VALUE={IF( V(IN,GND)<=V(DW) | V(OUTP)<0.5 , 1,0 )}
+E_OUT OUT 0 VALUE={V(OUTP)}
+.ENDS ONE_EDN7116U_STP_IDEAL_2
+.ENDS ONE_EDN7116U_VDD_UV_DETECT
+.SUBCKT ONE_EDN7116U_OUTPUT_STAGE VDD BST OUT_SRC OUT_SNK VSS IN_DD VDD_UV TEMP
+X1BCDA VDD_UV VDD_UV_LPF ONE_EDN7116U_ADV_FILTER_TIME_2 PARAMS: TIME_SET=12U
+X2BNH VDD_UV_LPF 0 CP_Q CP_QN ONE_EDN7116U_RS_LATCH
+E1 OUT_GATE_DIG1 0 VALUE= {IF( V(IN_DD) > 0.5 & V(CP_Q) > 0.5,1,0)}
+RA OUT_GATE_DIG1 OUT_GATE_DIG 1
+CA OUT_GATE_DIG 0 1N
+E2 OUT_GATE_VGSP 0 VALUE={TABLE(V(TEMP),-40, 3.08, 25,3, 125, 2.52 )}
+E3 OUT_GATE_VGSN 0 VALUE={TABLE(V(TEMP),-40, 3.08, 25,3, 125, 2.52 ) }
+E3XX OUT_GATE_VGSN_MILLER 0 VALUE={TABLE(V(TEMP),-40, 2.38, 25,2.1, 125, 1.9 ) }
+E2A BST_VGSP 0 VALUE={TABLE(V(TEMP),-40, 3.08, 25,3, 125, 2.52 )}
+E3A BST_VGSN 0 VALUE={TABLE(V(TEMP),-40, 3.08, 25,3, 125, 2.52 ) }
+E_MILLER_H MILLER_H 0 VALUE={0.41}
+E_MILLER_L MILLER_L 0 VALUE={0.4}
+XCL OUT_SNK MILLER_DIG VSS MILLER_H MILLER_L ONE_EDN7116U_STP_IDEAL_2
+ECL CLAMP 0 VALUE={IF(V(IN_DD) < 0.5 & V(VDD_UV) > 0.5 & V(MILLER_DIG) < 0.5,1,0)}
+XCLLPF CLAMP CLAMP_LPF ONE_EDN7116U_ADV_FILTER_TIME_2 PARAMS: TIME_SET=3N
+ECLAMPRES CLAMP_RESET 0 VALUE={IF(V(IN_DD) > 0.5 | V(VDD_UV) < 0.5,1,0) }
+XMILLERLATCH CLAMP_LPF CLAMP_RESET CLAMP_OUT CLAMP_NOUT ONE_EDN7116U_RS_LATCH
+G_UNPOWERED OUT_SNK VSS VALUE={TABLE(V(OUT_SNK,VSS),0,0,1,100U,1.2,3M)* IF(V(VDD_UV_100N) < 0.5,1,0)}
+X0NBF VDD_UV VDD_UV_100N ONE_EDN7116U_ADV_FILTER_TIME_2 PARAMS: TIME_SET=100N
+RVOFF OUT_SNK VSS 100E6
+RVOFF2 OUT_SRC VDD 100E6
+COUT OUT_SNK VSS 25P
+COUT2 OUT_SRC VDD 25P
+E4 VDD OUT_GATE_P VALUE {V(OUT_GATE_VGSP)* IF( V(OUT_GATE_DIG) > 0.5 & V(VDD_UV) > 0.5,1,0)}
+E5 OUT_GATE_N VSS VALUE {V(OUT_GATE_VGSN)* IF(V(OUT_GATE_DIG) < 0.5 & V(VDD_UV) > 0.5,1,0)}
+R5G OUT_GATE_N VSS 1E12
+E5X OUT_GATE_MILLER VSS VALUE {V(OUT_GATE_VGSN_MILLER)* IF(V(CLAMP_OUT) > 0.5 ,1,0)}
+E4A VDD BST_P VALUE {V(BST_VGSP)* IF( V(OUT_GATE_DIG) > 0.5 & V(VDD_UV) > 0.5,1,0)}
+E5A BST_N VSS VALUE {V(BST_VGSN)* IF(V(OUT_GATE_DIG) < 0.5 & V(VDD_UV) > 0.5,1,0)}
+M_OUT_PMOS OUT_SRC OUT_GATE_P VDD VDD ONE_EDN7116U_LO_PMOS
+M_OUT_NMOS OUT_SNK OUT_GATE_N VSS VSS ONE_EDN7116U_LO_NMOS
+M_OUT_NMOS_MILLER OUT_SNK OUT_GATE_MILLER VSS VSS ONE_EDN7116U_MILLER_NMOS
+M_BST_PMOS BST BST_P VDD VDD ONE_EDN7116U_BST_PMOS
+M_BST_NMOS BST BST_N VSS VSS ONE_EDN7116U_BST_NMOS
+RBST BST VSS 1E12
+CBST BST VSS 10P
+.MODEL ONE_EDN7116U_LO_PMOS PMOS (LEVEL=1 VTO=-1 CGSO=100P W=10M L=1U RB=1 RG=10 RS=1M RD=10M LAMBDA=0.111 KP=64U )
+.MODEL ONE_EDN7116U_LO_NMOS NMOS (LEVEL=1 VTO=1 CGSO=100P W=10M L=1U RB=1 RG=10 RS=1M RD=10M LAMBDA=0.111 KP=64U)
+.MODEL ONE_EDN7116U_MILLER_NMOS NMOS (LEVEL=1 VTO=1 CGSO=100P W=10M L=1U RB=1 RG=10 RS=1M RD=10M LAMBDA=0.011 KP=299U)
+.MODEL ONE_EDN7116U_BST_PMOS PMOS (LEVEL=1 VTO=-1 CGSO=100P W=10M L=1U RB=1 RG=10 RS=1M RD=10M LAMBDA=0.111 KP=64U )
+.MODEL ONE_EDN7116U_BST_NMOS NMOS (LEVEL=1 VTO=1 CGSO=100P W=10M L=1U RB=1 RG=10 RS=1M RD=10M LAMBDA=0.111 KP=64U )
+.SUBCKT ONE_EDN7116U_STP_IDEAL_2 IN OUT GND UP DW
+E_OUTP OUTP 0 VALUE={IF( V(IN,GND)>=V(UP) | V(OUTN)<0.5 , 1,0 )}
+E_OUTN OUTN 0 VALUE={IF( V(IN,GND)<=V(DW) | V(OUTP)<0.5 , 1,0 )}
+E_OUT OUT 0 VALUE={V(OUTP)}
+.ENDS ONE_EDN7116U_STP_IDEAL_2
+.SUBCKT ONE_EDN7116U_RS_LATCH S R Q QN
+R_Q Q 0 1E12
+R_QN QN 0 1E12
+E_Q Q 0 VALUE={ IF( V(S) > 0.5 & V(R) < 0.5,1, IF( (V(R) > 0.5 ) | TIME < 1NS, 0, IF(V(QN)>0.5,0,1)))}
+E_QN QN 0 VALUE={ IF( V(R) > 0.5 ,1, IF( (V(R) < 0.5 & V(S) > 0.5), 0, IF(V(Q)>0.5,0,1))) }
+.ENDS ONE_EDN7116U_RS_LATCH
+.SUBCKT ONE_EDN7116U_ADV_FILTER_TIME_2 IN OUT PARAMS: TIME_SET=1N
+R1 IN 0 1E9
+R2 OUT 0 1E9
+G_RISE IN IN_DEL VALUE={V(IN,IN_DEL)/ MAX(({TIME_SET}/ABS(LOG(0.001))/1E-9),0.1)}
+C_RISE IN_DEL 0 1N
+R_3 IN_DEL 0 1E12
+X_CMP IN_DEL OUT 0 ONE_EDN7116U_STP_IDEAL PARAMS: P_TH_UP=0.999 P_TH_DW=0.001
+.SUBCKT ONE_EDN7116U_STP_IDEAL IN OUT GND PARAMS: P_TH_UP=0.9 P_TH_DW=0.1
+E_OUTP OUTP 0 VALUE={IF( V(IN,GND)>={P_TH_UP} | V(OUTN)<0.5 , 1,0 )}
+E_OUTN OUTN 0 VALUE={IF( V(IN,GND)<={P_TH_DW} | V(OUTP)<0.5 , 1,0 )}
+E_OUT OUT 0 VALUE={V(OUTP)}
+.ENDS ONE_EDN7116U_STP_IDEAL
+.ENDS ONE_EDN7116U_ADV_FILTER_TIME_2
+.ENDS ONE_EDN7116U_OUTPUT_STAGE
+.SUBCKT ONE_EDN7116U_INPUT_STAGE IN+ IN- VSS IN_DD TEMP
+R1 IN+ INP 1.3K
+R2 INP VSS 0.65K
+R3 IN- INN 1.3K
+R4 INN VSS 0.65K
+E1 TH_UP 0 VALUE={TABLE(V(TEMP),-40,1.9,25,1.95,125,2)*TABLE( ((V(IN+) + V(IN-))/2) * (48.95/1.95) ,-150,0.923,0,1,150,1.128)}
+E2 TH_DW 0 VALUE={TABLE(V(TEMP),-40,1.3,25, 1.35,125,1.4)*TABLE( ((V(IN+) + V(IN-))/2)* (48.95/1.95),-150,0.888,0,1,150,1.111)}
+E3 TH_UP_2 0 VALUE={V(TH_UP)*0.65/(0.65+1.3+47)}
+E4 TH_DW_2 0 VALUE={V(TH_DW)*0.65/(0.65+1.3+47)}
+X_HIN_TH INP IN_DIG INN TH_UP_2 TH_DW_2 ONE_EDN7116U_STP_IDEAL_2
+X1 IN_DIG IN_DIG_LPF ONE_EDN7116U_ADV_FILTER_TIME_2 PARAMS: TIME_SET=20N
+X2 IN_DIG_LPF IN_DD TEMP ONE_EDN7116U_RC_DELAY_TEMP_10 PARAMS: TEMP1=-40 TEMP2=25 TEMP3=125 P_TH_TPD_TEMP1=0.5 P_TH_TPD_TEMP2=0.5 
++ P_TH_TPD_TEMP3=0.5 P_R_TPD_TEMP1=5.142857142857143 P_R_TPD_TEMP2=5.0 P_R_TPD_TEMP3=5.142857142857143
+.SUBCKT ONE_EDN7116U_RC_DELAY_TEMP_10 IN OUT TEMP PARAMS: TEMP1=-40 TEMP2=25 TEMP3=150 P_TH_TPD_TEMP1=0.5 P_TH_TPD_TEMP2=0.5 
++ P_TH_TPD_TEMP3=0.5 P_R_TPD_TEMP1=1 P_R_TPD_TEMP2=1 P_R_TPD_TEMP3=1
+X_D1 IN D1 TEMP ONE_EDN7116U_RC_DELAY_TEMP_5 PARAMS: TEMP1={TEMP1} TEMP2={TEMP2} TEMP3={TEMP3} P_TH_TPD_TEMP1={P_TH_TPD_TEMP1} 
++ P_TH_TPD_TEMP2={P_TH_TPD_TEMP2} P_TH_TPD_TEMP3={P_TH_TPD_TEMP3} P_R_TPD_TEMP1={P_R_TPD_TEMP1} P_R_TPD_TEMP2={P_R_TPD_TEMP2} 
++ P_R_TPD_TEMP3={P_R_TPD_TEMP3}
+X_D2 D1 OUT TEMP ONE_EDN7116U_RC_DELAY_TEMP_5 PARAMS: TEMP1={TEMP1} TEMP2={TEMP2} TEMP3={TEMP3} P_TH_TPD_TEMP1={P_TH_TPD_TEMP1} 
++ P_TH_TPD_TEMP2={P_TH_TPD_TEMP2} P_TH_TPD_TEMP3={P_TH_TPD_TEMP3} P_R_TPD_TEMP1={P_R_TPD_TEMP1} P_R_TPD_TEMP2={P_R_TPD_TEMP2} 
++ P_R_TPD_TEMP3={P_R_TPD_TEMP3}
+.SUBCKT ONE_EDN7116U_RC_DELAY_TEMP_5 IN OUT TEMP PARAMS: TEMP1=-40 TEMP2=25 TEMP3=150 P_TH_TPD_TEMP1=0.5 P_TH_TPD_TEMP2=0.5 
++ P_TH_TPD_TEMP3=0.5 P_R_TPD_TEMP1=1 P_R_TPD_TEMP2=1 P_R_TPD_TEMP3=1
+X_D1 IN D1 TEMP ONE_EDN7116U_RC_DELAY_BASE_TEMP PARAMS: TEMP1={TEMP1} TEMP2={TEMP2} TEMP3={TEMP3} P_TH_TPD_TEMP1={P_TH_TPD_TEMP1} 
++ P_TH_TPD_TEMP2={P_TH_TPD_TEMP2} P_TH_TPD_TEMP3={P_TH_TPD_TEMP3} P_R_TPD_TEMP1={P_R_TPD_TEMP1} P_R_TPD_TEMP2={P_R_TPD_TEMP2} 
++ P_R_TPD_TEMP3={P_R_TPD_TEMP3}
+X_D2 D1 D2 TEMP ONE_EDN7116U_RC_DELAY_BASE_TEMP PARAMS: TEMP1={TEMP1} TEMP2={TEMP2} TEMP3={TEMP3} P_TH_TPD_TEMP1={P_TH_TPD_TEMP1} 
++ P_TH_TPD_TEMP2={P_TH_TPD_TEMP2} P_TH_TPD_TEMP3={P_TH_TPD_TEMP3} P_R_TPD_TEMP1={P_R_TPD_TEMP1} P_R_TPD_TEMP2={P_R_TPD_TEMP2} 
++ P_R_TPD_TEMP3={P_R_TPD_TEMP3}
+X_D3 D2 D3 TEMP ONE_EDN7116U_RC_DELAY_BASE_TEMP PARAMS: TEMP1={TEMP1} TEMP2={TEMP2} TEMP3={TEMP3} P_TH_TPD_TEMP1={P_TH_TPD_TEMP1} 
++ P_TH_TPD_TEMP2={P_TH_TPD_TEMP2} P_TH_TPD_TEMP3={P_TH_TPD_TEMP3} P_R_TPD_TEMP1={P_R_TPD_TEMP1} P_R_TPD_TEMP2={P_R_TPD_TEMP2} 
++ P_R_TPD_TEMP3={P_R_TPD_TEMP3}
+X_D4 D3 D4 TEMP ONE_EDN7116U_RC_DELAY_BASE_TEMP PARAMS: TEMP1={TEMP1} TEMP2={TEMP2} TEMP3={TEMP3} P_TH_TPD_TEMP1={P_TH_TPD_TEMP1} 
++ P_TH_TPD_TEMP2={P_TH_TPD_TEMP2} P_TH_TPD_TEMP3={P_TH_TPD_TEMP3} P_R_TPD_TEMP1={P_R_TPD_TEMP1} P_R_TPD_TEMP2={P_R_TPD_TEMP2} 
++ P_R_TPD_TEMP3={P_R_TPD_TEMP3}
+X_D5 D4 OUT TEMP ONE_EDN7116U_RC_DELAY_BASE_TEMP PARAMS: TEMP1={TEMP1} TEMP2={TEMP2} TEMP3={TEMP3} P_TH_TPD_TEMP1={P_TH_TPD_TEMP1} 
++ P_TH_TPD_TEMP2={P_TH_TPD_TEMP2} P_TH_TPD_TEMP3={P_TH_TPD_TEMP3} P_R_TPD_TEMP1={P_R_TPD_TEMP1} P_R_TPD_TEMP2={P_R_TPD_TEMP2} 
++ P_R_TPD_TEMP3={P_R_TPD_TEMP3}
+.SUBCKT ONE_EDN7116U_RC_DELAY_BASE_TEMP IN OUT TEMP PARAMS: TEMP1=-40 TEMP2=25 TEMP3=150 P_TH_TPD_TEMP1=0.5 P_TH_TPD_TEMP2=0.5 
++ P_TH_TPD_TEMP3=0.5 P_R_TPD_TEMP1=1 P_R_TPD_TEMP2=1 P_R_TPD_TEMP3=1
+E_TH_TPD TH_TPD 0 VALUE={TABLE(V(TEMP),{TEMP1},{P_TH_TPD_TEMP1}, {TEMP2}, {P_TH_TPD_TEMP2}, {TEMP3}, {P_TH_TPD_TEMP3}) }
+E_R_TPD R_TPD 0 VALUE={TABLE(V(TEMP),{TEMP1},{P_R_TPD_TEMP1}, {TEMP2}, {P_R_TPD_TEMP2}, {TEMP3}, {P_R_TPD_TEMP3})}
+G_R_DELAY IN IN_DEL VALUE={V(IN,IN_DEL)/V(R_TPD)}
+R_X IN IN_DEL 1E12
+C_DELAY IN_DEL 0 1N
+E_DELAY OUT 0 VALUE={IF( V(IN_DEL) > V(TH_TPD) , 1.0,0.0 )}
+.ENDS ONE_EDN7116U_RC_DELAY_BASE_TEMP
+.ENDS ONE_EDN7116U_RC_DELAY_TEMP_5
+.ENDS ONE_EDN7116U_RC_DELAY_TEMP_10
+.SUBCKT ONE_EDN7116U_ADV_FILTER_TIME_2 IN OUT PARAMS: TIME_SET=1N
+R1 IN 0 1E9
+R2 OUT 0 1E9
+G_RISE IN IN_DEL VALUE={V(IN,IN_DEL)/ MAX(({TIME_SET}/ABS(LOG(0.001))/1E-9),0.1)}
+C_RISE IN_DEL 0 1N
+R_3 IN_DEL 0 1E12
+X_CMP IN_DEL OUT 0 ONE_EDN7116U_STP_IDEAL PARAMS: P_TH_UP=0.999 P_TH_DW=0.001
+.SUBCKT ONE_EDN7116U_STP_IDEAL IN OUT GND PARAMS: P_TH_UP=0.9 P_TH_DW=0.1
+E_OUTP OUTP 0 VALUE={IF( V(IN,GND)>={P_TH_UP} | V(OUTN)<0.5 , 1,0 )}
+E_OUTN OUTN 0 VALUE={IF( V(IN,GND)<={P_TH_DW} | V(OUTP)<0.5 , 1,0 )}
+E_OUT OUT 0 VALUE={V(OUTP)}
+.ENDS ONE_EDN7116U_STP_IDEAL
+.ENDS ONE_EDN7116U_ADV_FILTER_TIME_2
+.SUBCKT ONE_EDN7116U_STP_IDEAL_2 IN OUT GND UP DW
+E_OUTP OUTP 0 VALUE={IF( V(IN,GND)>=V(UP) | V(OUTN)<0.5 , 1,0 )}
+E_OUTN OUTN 0 VALUE={IF( V(IN,GND)<=V(DW) | V(OUTP)<0.5 , 1,0 )}
+E_OUT OUT 0 VALUE={V(OUTP)}
+.ENDS ONE_EDN7116U_STP_IDEAL_2
+.ENDS ONE_EDN7116U_INPUT_STAGE
+.SUBCKT ONE_EDN7116U_THERMAL_NETS TAMB TJ TC POW PARAMS: THERMAL_MODEL=0
+G_THERM_POW1 0 TJ VALUE={IF ( TIME>50NS ,V(POW),0.0)}
+R_TH1 TJ 0 1G
+X_TH_1 TJ TC TAMB ONE_EDN7116U_PG_DSO_8_60
+.SUBCKT ONE_EDN7116U_PG_DSO_8_60 J C A
+RJC J C 28
+RCA C A 52
+CJC J C 10P
+CCA C A 10P
+CTCTOP C A 377U
+CTJ J A 190.70U
+.ENDS ONE_EDN7116U_PG_DSO_8_60
+.ENDS ONE_EDN7116U_THERMAL_NETS
+.ENDS ONE_EDN7116U_GD_TEMPLATE
+.SUBCKT ONE_EDN7116U_ESD_DIO A C PARAMS: P_V_BV=5 P_I_BV=1
+G_ESD_DIO A C VALUE {TABLE(V(A,C) , 0,0 , {P_V_BV}*1.01,0 , {P_V_BV}*1.02,{P_I_BV} , 10*{P_V_BV}, 100*{P_I_BV} )}
+C_ESD_DIO A C 10F
+R_ESD_DIO A C 1E12
+.ENDS ONE_EDN7116U_ESD_DIO
+.SUBCKT ONE_EDN7116U_CL_DIO C A PARAMS: P_V_BV=5 P_I_BV=1
+G_CL_DIO C A VALUE {TABLE(V(C,A) , 0,0 , {P_V_BV}*1.01,0 , {P_V_BV}*1.02,{P_I_BV} , 10*{P_V_BV}, 100*{P_I_BV} )}
+C_CL_DIO C A 10F
+R_CL_DIO C A 1E12
+.ENDS ONE_EDN7116U_CL_DIO
+.ENDS 1EDN7116U
+
+********************************************************************************
+***                                                                          ***
+*** Starting Transient analysis at 20:04                                     ***
+***                                                                          ***
+*** Analysis card: .TRAN 1m                                                  ***
+***                                                                          ***
+********************************************************************************
+********************************************************************************
+***                                                                          ***
+***                            Simulation Options                            ***
+***                                                                          ***
+********************************************************************************
+RELTOL                    0.001
+ABSTOL                    1e-12
+VNTOL                     1e-06
+POINTTOL                  0.001
+TEMPERATURE               27C
+GMIN                      1e-12
+Matrix Solver             UF KLU Version 1.1
+
+
+
+********************************************************************************
+***                                                                          ***
+***                             Device parameters                            ***
+***                                                                          ***
+********************************************************************************
+Model parameters for devices of type MOS1
+=========================================
+Model:       U1.          U1.          U1.          U1.          U1.          
+             X_GD_TEMPLAT X_GD_TEMPLAT X_GD_TEMPLAT X_GD_TEMPLAT X_GD_TEMPLAT 
+             E.           E.           E.           E.           E.           
+             XOUTPUT_STAG XOUTPUT_STAG XOUTPUT_STAG XOUTPUT_STAG XOUTPUT_STAG 
+             E.           E.           E.           E.           E.           
+             ONE_EDN7116U ONE_EDN7116U ONE_EDN7116U ONE_EDN7116U ONE_EDN7116U 
+             _BST_NMOS    _BST_PMOS    _LO_NMOS     _LO_PMOS     _MILLER_NMOS 
+
+cgso         100p         100p         100p         100p         100p         
+kp           64u          64u          64u          64u          299u         
+lambda       111m         111m         111m         111m         11m          
+lmod         1u           1u           1u           1u           1u           
+rb           1            1            1            1            1            
+rd           10m          10m          10m          10m          10m          
+rg           10           10           10           10           10           
+rs           1m           1m           1m           1m           1m           
+vt0          1            -1           1            -1           1            
+wmod         10m          10m          10m          10m          10m          
+
+
+Analysis statistics
+===================
+
+Nominal temperature = 27
+Operating temperature = 27
+Total iterations = 10633
+Transient iterations = 10606
+Transient timepoints = 3806
+Accepted timepoints = 3472
+Total analysis time = 0.891
+Transient time = 0
+Matrix reordering time = 0
+L-U decomposition time = 0
+Matrix solve time = 0
+Load time = 0
+Transient L-U decomp time = 0
+Transient solve time = 0
+Circuit build time = 0.063
+Simulator initialise time = 0
+Data write time = 0
+Convergence test time = 0
+LTE time = 0
+JI2 Iterations = 27
+Diag. GMIN stepping iterations = 0
+Junc. GMIN stepping iterations = 0
+Source stepping iterations = 0
+PTA iterations = 0
+Number of matrix fill ins = 51
+Number of initial matrix elements = 546
+Circuit equations = 216
+State vector size = 820
+Number of write buffer faults = 0
+
+Run statistics
+==============
+
+Netlist read in time = 0.031
+Total run time = 1.062 seconds
+Analysis concluded 08/09/2025 20:04
