@@ -26,6 +26,7 @@ float Kp = 20.0f;                                  // Proportional gain for curr
 float Ki = 0.0f;                                  // Integral gain for current PID controller
 float Kd = 0.0f;                                  // Derivative gain for current PID controller
 float target_current = 0.0f;
+float pwm_accumulator = 0.0f;                      // Accumulator for PWM adjustments from PID controller
 
 // SETUP
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -46,15 +47,31 @@ void setup() {
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 void loop() {
   int acclSig = readAccl(); // Read and process the accelerator signal
-  if (acclSig > 25 ) {
-    float target_current = map(acclSig, 0, 255, 0, 15); // Map accelerator signal to target current (0-15A)
+
+  // // Practical Accelerator Code
+  // if (acclSig > 25 ) {
+  //   float target_current = map(acclSig, 0, 255, 0, 15); // Map accelerator signal to target current (0-15A)
+  //   int pid_pwm = current_PID_realize(target_current, Kp, Ki, Kd); // Get PWM from PID controller
+  //   motorCtrl(pid_pwm); // Control motor with PID output
+  //   Serial.print("Accl: ");
+  //   Serial.print(acclSig);
+  //   Serial.print(", Target Current: ");
+  //   Serial.print(target_current, 2);
+  //   Serial.print(" A, PID PWM: ");
+  //   Serial.println(pid_pwm);
+  // } else {
+  //   motorCtrl(0); // No accelerator input, stop the motor
+  //   Serial.printf("Accl: %d, Motor Stopped\n", acclSig);
+  // }
+
+  // Setpoint Accelerator Code
+  if (acclSig > 25 && acclSig < 225) {
+    // int setpoint_pwm = map(acclSig, 0, 255, 0, 255); // Map accelerator signal directly to PWM (0-255)
     int pid_pwm = current_PID_realize(target_current, Kp, Ki, Kd); // Get PWM from PID controller
     motorCtrl(pid_pwm); // Control motor with PID output
     Serial.print("Accl: ");
     Serial.print(acclSig);
-    Serial.print(", Target Current: ");
-    Serial.print(target_current, 2);
-    Serial.print(" A, PID PWM: ");
+    Serial.print(", Setpoint PWM: ");
     Serial.println(pid_pwm);
   } else {
     motorCtrl(0); // No accelerator input, stop the motor
@@ -83,17 +100,17 @@ void loop() {
           char cmd = serialBuffer.charAt(1);
           String valueStr = serialBuffer.substring(firstComma + 1, secondComma > 0 ? secondComma : serialBuffer.length() - 1);
           float value = valueStr.toFloat();
-          if (cmd == 'P') {
+          if (cmd == 'P') {  //*P,45.21,@
             Kp = value;
             Serial.print("Kp set to: ");
             Serial.println(Kp);
           }
-          if (cmd == 'I') {
+          if (cmd == 'I') { //*I,1.21,@
             Ki = value;
             Serial.print("Ki set to: ");
             Serial.println(Ki);
           }
-          if (cmd == 'D') {
+          if (cmd == 'D') { //*D,0.01,@ 
             Kd = value;
             Serial.print("Kd set to: ");
             Serial.println(Kd);
@@ -115,6 +132,16 @@ void loop() {
         Serial.print(Ki);
         Serial.print(", Kd: ");
         Serial.println(Kd);
+      }
+      // Print help if command is *H,@
+      if (serialBuffer == "*H,@") {
+        Serial.println("Available Commands:");
+        Serial.println("*P,<value>,@ - Set Proportional gain (Kp)");
+        Serial.println("*I,<value>,@ - Set Integral gain (Ki)");
+        Serial.println("*D,<value>,@ - Set Derivative gain (Kd)");
+        Serial.println("*C,<value>,@ - Set Target Current (Amperes)");
+        Serial.println("*S,@ - Show current PID parameters");
+        Serial.println("*H,@ - Show this help message");
       }
       serialBuffer = "";
     }
@@ -165,6 +192,7 @@ void motorCtrl(int motorPWM) {
 int current_PID_realize(float target_current, float Kp, float Ki, float Kd) {
   static float current_sum_error = 0;
   static float current_error_last = 0;
+
   float PID_out;
   float actual_current = 0;
   int SUM_ADC = 0;
@@ -174,7 +202,7 @@ int current_PID_realize(float target_current, float Kp, float Ki, float Kd) {
   }
   float PRE_ADC = SUM_ADC / 30.0f;
   // Convert ADC value to real current (adjust scaling as needed for your sensor)
-  actual_current = (PRE_ADC / 1023.0f) * 80 * 5.0f; // Assuming 0-5V range, adjust multiplier for sensor sensitivity
+  actual_current = (PRE_ADC / 1023.0f) * 0.080 * 5.0f; // Assuming 0-5V range, adjust multiplier for sensor sensitivity
   float current_error = target_current - actual_current;
   // Limiting closed-loop deadband
   if (abs(current_error / target_current) < 0.1f && abs(current_error) < 0.1f) {
@@ -186,11 +214,19 @@ int current_PID_realize(float target_current, float Kp, float Ki, float Kd) {
     current_sum_error = 10;
   else if (current_sum_error < -10)
     current_sum_error = -10;
-  // PID calculation
+  // PID calculation - outputs correction factor
   PID_out = Kp * current_error + Ki * current_sum_error + Kd * (current_error - current_error_last);
   current_error_last = current_error; // Error propagation
-  PID_out = static_cast<int>(constrain(PID_out, 0, 255)); // Ensure PID output is within PWM bounds
   
-  return PID_out;
+  // Normalize PID output to range -10 to +10 (adjust scaling as needed)
+  PID_out = constrain(PID_out, -255, 255) / 25.50f;
+  
+  // Add correction to PWM accumulator
+  pwm_accumulator += PID_out; // Scale factor for sensitivity adjustment
+  
+  // Constrain accumulator to valid PWM range
+  pwm_accumulator = constrain(pwm_accumulator, 0, 255);
+  
+  return static_cast<int>(pwm_accumulator);
 }
 
