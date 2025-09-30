@@ -17,7 +17,7 @@ const float rampDownStep = 255.0 / rampDownTime;   // How much to ramp down PWM 
 const float filterConst = 0.05;                    // Filter constant for input smoothing
 
 const int minMotorPWM = 0;                         // Minimum motor PWM output, for lowest power/speed
-const int maxMotorPWM = 255;                       // Maximum motor PWM output, for highest power/speed
+const int maxMotorPWM = 253;                       // Maximum motor PWM output, for highest power/speed
 
 const int SoftStartPin = 2;                        // SoftStartPin is a digital output on pin 2
 const int softStartDelay = 200;                    // Delay in milliseconds between Arduino startup and soft start disable
@@ -26,6 +26,7 @@ float Kp = 20.0f;                                  // Proportional gain for curr
 float Ki = 0.0f;                                  // Integral gain for current PID controller
 float Kd = 0.0f;                                  // Derivative gain for current PID controller
 float target_current = 0.0f;
+float max_current = 15.0f;                        // Maximum current limit (15A)
 float pwm_accumulator = 0.0f;                      // Accumulator for PWM adjustments from PID controller
 
 // SETUP
@@ -64,18 +65,27 @@ void loop() {
   //   Serial.printf("Accl: %d, Motor Stopped\n", acclSig);
   // }
 
-  // Setpoint Accelerator Code
-  if (acclSig > 25 && acclSig < 225) {
-    // int setpoint_pwm = map(acclSig, 0, 255, 0, 255); // Map accelerator signal directly to PWM (0-255)
-    int pid_pwm = current_PID_realize(target_current, Kp, Ki, Kd); // Get PWM from PID controller
-    motorCtrl(pid_pwm); // Control motor with PID output
-    Serial.print("Accl: ");
-    Serial.print(acclSig);
-    Serial.print(", Setpoint PWM: ");
-    Serial.println(pid_pwm);
-  } else {
-    motorCtrl(0); // No accelerator input, stop the motor
-    Serial.printf("Accl: %d, Motor Stopped\n", acclSig);
+  // Setpoint Accelerator Code (check every 30ms, print every 300ms)
+  static unsigned long lastCheckTime = 0;
+  static unsigned long lastPrintTime = 0;
+  unsigned long now = millis();
+  if (now - lastCheckTime >= 30) {
+    lastCheckTime = now;
+    int pid_pwm = 0;
+    if (acclSig > 25 && acclSig < 225) {
+      pid_pwm = current_PID_realize(target_current, Kp, Ki, Kd); // Get PWM from PID controller
+      motorCtrl(pid_pwm); // Control motor with PID output
+      if (now - lastPrintTime >= 300) {
+        lastPrintTime = now;
+        Serial.println("Accl: " + String(acclSig) + ", Target Current: " + String(target_current, 2) + " A, PID PWM: " + String(pid_pwm));
+      }
+    } else {
+      motorCtrl(0); // No accelerator input, stop the motor
+      if (now - lastPrintTime >= 300) {
+        lastPrintTime = now;
+        Serial.printf("Accl: %d, Motor Stopped\n", acclSig);
+      }
+    }
   }
   // boolean acclApplied = acclSig > 0; // Check if accelerator is applied
   // int motorPWM = rampMotorPWM(acclSig, acclApplied); // Smoothly ramp PWM based on accelerator signal
@@ -126,12 +136,7 @@ void loop() {
       }
       // Print Kp, Ki, Kd if command is *S,@
       if (serialBuffer == "*S,@") {
-        Serial.print("Kp: ");
-        Serial.print(Kp);
-        Serial.print(", Ki: ");
-        Serial.print(Ki);
-        Serial.print(", Kd: ");
-        Serial.println(Kd);
+        Serial.println("Kp: " + String(Kp) + ", Ki: " + String(Ki) + ", Kd: " + String(Kd) + ", Target Current: " + String(target_current) + " A");
       }
       // Print help if command is *H,@
       if (serialBuffer == "*H,@") {
@@ -147,7 +152,7 @@ void loop() {
     }
   }
 
-  delay(10); // Short delay for stability and serial output readability
+  delay(1); // Short delay for stability and serial output readability
 }
 
 // FUNCTIONS
@@ -158,6 +163,48 @@ int readAccl() {
   filterAcclSig += (rawAcclSig - filterAcclSig) * filterConst; // Apply simple low-pass filter for noise reduction
   int mappedAcclSig = map(filterAcclSig, minAcclSig, maxAcclSig, 0, 255); // Map signal from full range to PWM range
   return mappedAcclSig;
+}
+
+// Takes in the target current and PID coefficients, returns the PWM value to apply to the motor
+int current_PID_realize(float target_current, float Kp, float Ki, float Kd) {
+  static float current_sum_error = 0;
+  static float current_error_last = 0;
+
+  float PID_out;
+  float actual_current = 0;
+  int SUM_ADC = 0;
+  // Read current sensor from A0, average 30 samples for noise reduction
+  for (int i = 0; i < 30; i++) {
+    SUM_ADC += analogRead(A0);
+  }
+  float PRE_ADC = SUM_ADC / 30.0f;
+  // Convert ADC value to real current 
+  actual_current = (PRE_ADC / 1023.0f) * 0.080 * 5.0f; // 0-5V range, 0.080 V/A sensitivity for ACS770-50U, 2^10 - 1 
+  float current_error = target_current - actual_current;
+  // Limiting closed-loop deadband
+  if (abs(current_error / target_current) < 0.1f && abs(current_error) < 0.1f) {
+    current_error = 0;
+  }
+  current_sum_error += current_error;  // error integrate
+  // Preventing integral saturation
+  if (current_sum_error > 10)
+    current_sum_error = 10;
+  else if (current_sum_error < -10)
+    current_sum_error = -10;
+  // PID calculation - outputs correction factor
+  PID_out = Kp * current_error + Ki * current_sum_error + Kd * (current_error - current_error_last);
+  current_error_last = current_error; // Error propagation
+  
+  // Normalize PID output to range -10 to +10 (adjust scaling as needed)
+  PID_out = constrain(PID_out, -255, 255) / 25.50f;
+  
+  // Add correction to PWM accumulator
+  pwm_accumulator += PID_out; // Scale factor for sensitivity adjustment
+  
+  // Constrain accumulator to valid PWM range
+  pwm_accumulator = constrain(pwm_accumulator, minMotorPWM, maxMotorPWM);
+  
+  return static_cast<int>(pwm_accumulator);
 }
 
 int rampMotorPWM(int acclSig, boolean acclApplied) {
@@ -184,49 +231,5 @@ int rampMotorPWM(int acclSig, boolean acclApplied) {
 
 void motorCtrl(int motorPWM) {
   analogWrite(PWMPin, motorPWM); // Write the PWM signal to the motor control pin
-}
-
-
-
-// Takes in the target current and PID coefficients, returns the PWM value to apply to the motor
-int current_PID_realize(float target_current, float Kp, float Ki, float Kd) {
-  static float current_sum_error = 0;
-  static float current_error_last = 0;
-
-  float PID_out;
-  float actual_current = 0;
-  int SUM_ADC = 0;
-  // Read current sensor from A0, average 30 samples for noise reduction
-  for (int i = 0; i < 30; i++) {
-    SUM_ADC += analogRead(A0);
-  }
-  float PRE_ADC = SUM_ADC / 30.0f;
-  // Convert ADC value to real current (adjust scaling as needed for your sensor)
-  actual_current = (PRE_ADC / 1023.0f) * 0.080 * 5.0f; // Assuming 0-5V range, adjust multiplier for sensor sensitivity
-  float current_error = target_current - actual_current;
-  // Limiting closed-loop deadband
-  if (abs(current_error / target_current) < 0.1f && abs(current_error) < 0.1f) {
-    current_error = 0;
-  }
-  current_sum_error += current_error;  // error integrate
-  // Preventing integral saturation
-  if (current_sum_error > 10)
-    current_sum_error = 10;
-  else if (current_sum_error < -10)
-    current_sum_error = -10;
-  // PID calculation - outputs correction factor
-  PID_out = Kp * current_error + Ki * current_sum_error + Kd * (current_error - current_error_last);
-  current_error_last = current_error; // Error propagation
-  
-  // Normalize PID output to range -10 to +10 (adjust scaling as needed)
-  PID_out = constrain(PID_out, -255, 255) / 25.50f;
-  
-  // Add correction to PWM accumulator
-  pwm_accumulator += PID_out; // Scale factor for sensitivity adjustment
-  
-  // Constrain accumulator to valid PWM range
-  pwm_accumulator = constrain(pwm_accumulator, 0, 255);
-  
-  return static_cast<int>(pwm_accumulator);
 }
 
