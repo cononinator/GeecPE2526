@@ -1,0 +1,15 @@
+LTspice 24.1.8 for Windows
+Circuit: C:\Users\conor\Documents\College\Masters\Thesis\GeecPE2526\Simulation\EPC23102\EPC23102_Behavioral_Model_LTSPICE\EPC23102_sim.net
+Start Time: Thu Oct  2 17:04:05 2025
+solver = Normal
+Maximum thread count: 12
+tnom = 27
+temp = 25
+method = trap
+Direct Newton iteration for .op point succeeded.
+Total elapsed time: 28.824 seconds.
+
+Files loaded:
+C:\Users\conor\Documents\College\Masters\Thesis\GeecPE2526\Simulation\EPC23102\EPC23102_Behavioral_Model_LTSPICE\EPC23102_sim.net
+C:\Users\conor\Documents\College\Masters\Thesis\GeecPE2526\Simulation\EPC23102\EPC23102_Behavioral_Model_LTSPICE\EPC23102_model.net
+
