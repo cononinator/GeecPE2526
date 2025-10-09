@@ -1,0 +1,16 @@
+EPC23102 Behavioral Model Notes
+
+Instructions: include EPC23102_model.net and call subcircuit EPC23102.
+
+An example 48V-12V buck converter testbench is provided, see EPC23102_sim.asc.
+
+The LTSPICE model EPC23102_model.net is a simplified version of the IC that simulates the device's
+functionality and approximate electrical performance (e.g., rise/fall times, power dissipation).
+In the case of a discrepancy between this behavioral model and the product datasheet, refer to the
+datasheet. Please report any model issues or convergence errors to AskaGaNExpert@epc-co.com or your
+field application engineer.
+
+Efficient Power Conversion Corporation (EPC) reserves the right to make changes without further 
+notice to any products herein to improve reliability, function or design. EPC does not assume any 
+liability arising out of the application or use of any product or circuit described herein; neither
+does it convey any license under its patent rights, nor the rights of others.

@@ -1,0 +1,186 @@
+SIMetrixFile type=schematic format=1.0 revision=9
+.Component
+.Schematic
+.SymbolLibrary
+.Symbol
+Attributes format="1.0" revision=9 name="1EDN7116U_9_2055370782" description="1EDN7116U" catalog="Auto Created Symbols" track=1
+Segment x1=240 y1=-120 x2=240 y2=0
+Segment x1=0 y1=0 x2=600 y2=0
+Segment x1=0 y1=960 x2=0 y2=0
+Segment x1=600 y1=0 x2=600 y2=960
+Segment x1=720 y1=120 x2=600 y2=120
+Segment x1=-120 y1=240 x2=0 y2=240
+Segment x1=720 y1=240 x2=600 y2=240
+Segment x1=-120 y1=360 x2=0 y2=360
+Segment x1=-120 y1=600 x2=0 y2=600
+Segment x1=720 y1=600 x2=600 y2=600
+Segment x1=720 y1=840 x2=600 y2=840
+Segment x1=600 y1=960 x2=0 y2=960
+Segment x1=240 y1=1080 x2=240 y2=960
+Pin name="BST" order=5 x=720 y=840 visible=1 xlabel=-133 ylabel=-48 align="RightTop" rotated=0
+Pin name="IN+" order=1 x=-120 y=240 visible=1 xlabel=144 ylabel=24 align="LeftBase" rotated=0
+Pin name="IN-" order=2 x=-120 y=360 visible=1 xlabel=144 ylabel=24 align="LeftBase" rotated=0
+Pin name="SNK" order=6 x=720 y=240 visible=1 xlabel=-144 ylabel=-48 align="RightTop" rotated=0
+Pin name="SRC" order=7 x=720 y=120 visible=1 xlabel=-144 ylabel=-48 align="RightTop" rotated=0
+Pin name="TAMB" order=8 x=-120 y=600 visible=1 xlabel=144 ylabel=-48 align="LeftTop" rotated=0
+Pin name="TJ" order=9 x=720 y=600 visible=1 xlabel=-144 ylabel=24 align="RightBase" rotated=0
+Pin name="VDD" order=4 x=240 y=-120 visible=1 xlabel=0 ylabel=120 align="CentreTop" rotated=0
+Pin name="VSS" order=3 x=240 y=1080 visible=1 xlabel=0 ylabel=-144 align="CentreBase" rotated=0
+Property name="MODEL" value="X" autopos=1 normal="Left" rotated="Left" visible=0 font="Default"
+Property name="REF" value="U?" autopos=1 normal="Right" rotated="Top" font="Default"
+Property name="VALUE" value="1EDN7116U" autopos=1 normal="Right" rotated="Top" font="Default"
+.EndSymbol
+.Symbol
+Attributes format="1.0" revision=9 name="gnd" description="Ground" catalog="Connections;Terminals" track=1
+Segment x1=0 y1=0 x2=0 y2=120
+Segment x1=-120 y1=120 x2=120 y2=120
+Segment x1=-72 y1=156 x2=72 y2=156
+Segment x1=-24 y1=192 x2=24 y2=192
+Pin name="GND" order=1 x=0 y=0 visible=0
+Property name="netname" value="" autopos=1 normal="Left" rotated="Left" visible=0 font="Default"
+Property name="VALUE" value=0 autopos=1 normal="Left" rotated="Left" protected=1 visible=0 font="Default"
+.EndSymbol
+.Symbol
+Attributes format="1.0" revision=9 name="nmos_thermal_5" description="N-channel - thermal - 5 terminal" catalog="Semiconductors;MOSFETs (Discrete)" track=1
+Arc l=60 t=0 r=540 b=480 x1=300 y1=480 x2=300 y2=480
+Arc l=348 t=108 r=372 b=132 x1=360 y1=132 x2=360 y2=132
+Arc l=348 t=348 r=372 b=372 x1=360 y1=372 x2=360 y2=372
+FilledPoly x="228,239,239,228,228" y="155,155,84,84,155"
+FilledPoly x="360,361,363,364,366,367,368,369,370,371,371,371,371,371,370,369,368,367,366,364,363,361,360,358,356,355,353,352,351,350,349,348,348,348,348,348,349,350,351,352,353,355,356,358,360" y="131,131,131,130,129,128,127,126,124,123,121,120,118,116,115,113,112,111,110,109,108,108,108,108,108,109,110,111,112,113,115,116,118,120,121,123,124,126,127,128,129,130,131,131,131"
+FilledPoly x="179,179,168,168,179" y="359,120,120,359,359"
+FilledPoly x="239,239,239,239,228,228,239,239,239,239" y="239,239,239,204,204,275,275,240,240,239"
+FilledPoly x="420,420,455,455,456,456,456,491,491,420" y="204,215,215,215,215,215,215,215,204,204"
+FilledPoly x="299,241,299,299" y="210,240,269,210"
+FilledPoly x="455,491,456,421,455" y="263,263,216,263,263"
+FilledPoly x="239,239,228,228,239,239" y="360,324,324,395,395,360"
+FilledPoly x="360,361,363,364,366,367,368,369,370,371,371,371,371,371,370,369,368,367,366,364,363,361,360,358,356,355,353,352,351,350,349,348,348,348,348,348,349,350,351,352,353,355,356,358,360" y="371,371,371,370,369,368,367,366,364,363,361,360,358,356,355,353,352,351,350,349,348,348,348,348,348,349,350,351,352,353,355,356,358,360,361,363,364,366,367,368,369,370,371,371,371"
+Segment x1=360 y1=0 x2=360 y2=108
+Segment x1=720 y1=0 x2=600 y2=0
+Segment x1=240 y1=84 x2=228 y2=84
+Segment x1=228 y1=84 x2=228 y2=156
+Segment x1=240 y1=84 x2=240 y2=156
+Segment x1=180 y1=120 x2=168 y2=120
+Segment x1=168 y1=120 x2=168 y2=360
+Segment x1=180 y1=360 x2=180 y2=120
+Segment x1=240 y1=120 x2=348 y2=120
+Segment x1=372 y1=120 x2=456 y2=120
+Segment x1=456 y1=204 x2=456 y2=120
+Segment x1=228 y1=156 x2=240 y2=156
+Segment x1=240 y1=204 x2=228 y2=204
+Segment x1=228 y1=204 x2=228 y2=276
+Segment x1=240 y1=204 x2=240 y2=276
+Segment x1=420 y1=204 x2=492 y2=204
+Segment x1=420 y1=216 x2=420 y2=204
+Segment x1=492 y1=204 x2=492 y2=216
+Segment x1=240 y1=240 x2=300 y2=210
+Segment x1=300 y1=210 x2=300 y2=270
+Segment x1=492 y1=216 x2=420 y2=216
+Segment x1=420 y1=264 x2=456 y2=216
+Segment x1=456 y1=216 x2=492 y2=264
+Segment x1=0 y1=240 x2=168 y2=240
+Segment x1=300 y1=270 x2=240 y2=240
+Segment x1=360 y1=240 x2=300 y2=240
+Segment x1=360 y1=240 x2=360 y2=348
+Segment x1=720 y1=240 x2=600 y2=240
+Segment x1=492 y1=264 x2=420 y2=264
+Segment x1=456 y1=360 x2=456 y2=264
+Segment x1=228 y1=276 x2=240 y2=276
+Segment x1=240 y1=324 x2=228 y2=324
+Segment x1=228 y1=324 x2=228 y2=396
+Segment x1=240 y1=324 x2=240 y2=396
+Segment x1=168 y1=360 x2=180 y2=360
+Segment x1=240 y1=360 x2=348 y2=360
+Segment x1=372 y1=360 x2=456 y2=360
+Segment x1=360 y1=480 x2=360 y2=372
+Segment x1=228 y1=396 x2=240 y2=396
+Pin name="drain" order=1 x=360 y=0 visible=0
+Pin name="gate" order=2 x=0 y=240 visible=0
+Pin name="source" order=3 x=360 y=480 visible=0
+Pin name="Tcase" order=5 x=720 y=240 visible=1 xlabel=0 ylabel=-48 align="LeftBase" rotated=0
+Pin name="Tj" order=4 x=720 y=0 visible=1 xlabel=0 ylabel=-48 align="LeftBase" rotated=0
+Property name="MODEL" value="X" autopos=0 x=0 y=720 align="LeftTop" visible=0 font="Default"
+Property name="pinprop$4$discipline" value="thermal" autopos=1 normal="Left" rotated="Left" protected=1 visible=0 font="Default"
+Property name="pinprop$5$discipline" value="thermal" autopos=1 normal="Left" rotated="Left" protected=1 visible=0 font="Default"
+Property name="VALUE" value="BSO302SN" autopos=1 normal="Left" rotated="Left" font="Default" order=1
+Property name="REF" value="Q?" autopos=1 normal="Left" rotated="Left" font="Default" order=2
+.EndSymbol
+.EndSymbolLibrary
+.StyleLibrary
+.EndStyleLibrary
+.Instance
+Attributes name="gnd" type="symbol" selected=0 x=4200 y=6240 orient="N0"
+Property name="guid" value="{62106890-3c03-40fa-8727-1e3bd95bed1a}" autopos=1 normal="Left" rotated="Left" protected=1 visible=0 font="Default"
+Property name="netname" value="" autopos=1 normal="Left" rotated="Left" visible=0 font="Default"
+Property name="StyleNormal" value="DefaultInstance" autopos=1 normal="Left" rotated="Left" visible=0 font="Default"
+Property name="StyleSelected" value="DefaultSelected" autopos=1 normal="Left" rotated="Left" visible=0 font="Default"
+.EndInstance
+.Instance
+Attributes name="nmos_thermal_5" type="symbol" selected=0 x=3840 y=2640 orient="N0"
+Property name="guid" value="{7fed425f-68b5-4b7a-af32-1febbee012d7}" autopos=1 normal="Left" rotated="Left" protected=1 visible=0 font="Default"
+Property name="MODEL" value="X" autopos=0 x=0 y=720 align="LeftTop" visible=0 font="Default"
+Property name="StyleNormal" value="DefaultInstance" autopos=1 normal="Left" rotated="Left" visible=0 font="Default"
+Property name="StyleSelected" value="DefaultSelected" autopos=1 normal="Left" rotated="Left" visible=0 font="Default"
+Property name="value" value="IGC019S06S1_L3" autopos=1 normal="Left" rotated="Left" font="Default" order=1
+Property name="REF" value="Q1" autopos=1 normal="Left" rotated="Left" font="Default" order=2
+.EndInstance
+.Instance
+Attributes name="nmos_thermal_5" type="symbol" selected=0 x=3840 y=4080 orient="N0"
+Property name="guid" value="{387d9739-c618-4e41-9fdd-db72b485dc86}" autopos=1 normal="Left" rotated="Left" protected=1 visible=0 font="Default"
+Property name="MODEL" value="X" autopos=0 x=0 y=720 align="LeftTop" visible=0 font="Default"
+Property name="StyleNormal" value="DefaultInstance" autopos=1 normal="Left" rotated="Left" visible=0 font="Default"
+Property name="StyleSelected" value="DefaultSelected" autopos=1 normal="Left" rotated="Left" visible=0 font="Default"
+Property name="value" value="IGC019S06S1_L3" autopos=1 normal="Left" rotated="Left" font="Default" order=1
+Property name="ref" value="Q2" autopos=1 normal="Left" rotated="Left" font="Default" order=2
+.EndInstance
+.Instance
+Attributes name="1EDN7116U_9_2055370782" type="symbol" selected=0 x=1920 y=2400 orient="N0"
+Property name="guid" value="{d6e40a27-d166-43cc-ae36-fffe8e1e7627}" autopos=1 normal="Left" rotated="Left" protected=1 visible=0 font="Default"
+Property name="MODEL" value="X" autopos=1 normal="Left" rotated="Left" visible=0 font="Default"
+Property name="REF" value="U1" autopos=1 normal="Right" rotated="Top" font="Default"
+Property name="StyleNormal" value="DefaultInstance" autopos=1 normal="Left" rotated="Left" visible=0 font="Default"
+Property name="StyleSelected" value="DefaultSelected" autopos=1 normal="Left" rotated="Left" visible=0 font="Default"
+Property name="VALUE" value="1EDN7116U" autopos=1 normal="Right" rotated="Top" font="Default"
+.EndInstance
+.Instance
+Attributes name="1EDN7116U_9_2055370782" type="symbol" selected=0 x=1920 y=4560 orient="N0"
+Property name="guid" value="{b13239c1-a81d-4cdb-89fb-0f42ea8a1a1f}" autopos=1 normal="Left" rotated="Left" protected=1 visible=0 font="Default"
+Property name="MODEL" value="X" autopos=1 normal="Left" rotated="Left" visible=0 font="Default"
+Property name="ref" value="U2" autopos=1 normal="Right" rotated="Top" font="Default"
+Property name="StyleNormal" value="DefaultInstance" autopos=1 normal="Left" rotated="Left" visible=0 font="Default"
+Property name="StyleSelected" value="DefaultSelected" autopos=1 normal="Left" rotated="Left" visible=0 font="Default"
+Property name="VALUE" value="1EDN7116U" autopos=1 normal="Right" rotated="Top" font="Default"
+.EndInstance
+Wire x1=2160 y1=5640 x2=2160 y2=6120
+.Wire
+Attributes x1=2160 y1=5640 x2=2160 y2=6120
+Property name="StyleNormal" value="DefaultWire" visible=0
+Property name="StyleSelected" value="DefaultSelected" visible=0
+.EndWire
+Wire x1=2160 y1=6120 x2=4200 y2=6120
+.Wire
+Attributes x1=2160 y1=6120 x2=4200 y2=6120
+Property name="StyleNormal" value="DefaultWire" visible=0
+Property name="StyleSelected" value="DefaultSelected" visible=0
+.EndWire
+Wire x1=4200 y1=4560 x2=4200 y2=6120
+.Wire
+Attributes x1=4200 y1=4560 x2=4200 y2=6120
+Property name="StyleNormal" value="DefaultWire" visible=0
+Property name="StyleSelected" value="DefaultSelected" visible=0
+.EndWire
+Wire x1=4200 y1=6120 x2=4200 y2=6240
+.Wire
+Attributes x1=4200 y1=6120 x2=4200 y2=6240
+Property name="StyleNormal" value="DefaultWire" visible=0
+Property name="StyleSelected" value="DefaultSelected" visible=0
+.EndWire
+Text value=""
+LicenseInfo version="9.20f" feats="Basic|Advanced|SIMPLIS_IF|Demo|Schematic|Intro|Multistep|Monte|Sim" serial="unknown" user="unknown" code="unknown" binarch="x64" system="WINNT/10.0/x64/34308161536/6/1/12/1526380843" product="Elements"
+SimulatorMode value="simetrix"
+View x=695 y=1349 snapgrid=120 offsetx=-489 offsety=-289 zoomlevel=31 zoom=9
+Property name="CreateProduct" value="Elements" type="value"
+Property name="GUID" value="{f17d2864-de69-4f28-a53e-dd44c5b2ef85}" type="value"
+Property name="UserVersion" value=1 type="value"
+Property name="WriteLog" value="1/1/434490/434490" type="value"
+.EndSchematic
+.EndComponent

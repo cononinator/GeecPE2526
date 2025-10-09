@@ -1,0 +1,65 @@
+Circuit: * C:\Users\Andrea\Documents\Andrea Documents\Simulation\LTSpice\2024 02 16 General buck\Example EPC2619.asc
+
+WARNING: Node N007 is floating.
+WARNING: Node N015 is floating.
+
+Direct Newton iteration for .op point skipped.
+Starting Gmin stepping
+Gmin = 10
+Gmin = 1.07374
+Gmin = 0.115292
+Gmin = 0.0123794
+Gmin = 0.00132923
+Gmin = 0.000142725
+Gmin = 1.5325e-005
+Gmin = 1.6455e-006
+Gmin = 1.76685e-007
+Gmin = 1.89714e-008
+Gmin = 2.03704e-009
+Gmin = 2.18725e-010
+Gmin = 2.34854e-011
+Gmin = 2.52173e-012
+Gmin = 2.70769e-013
+Gmin = 0
+Gmin stepping succeeded in finding the operating point.
+
+
+phs: AVG(v(vg_hs,u1_s)*i(r1g)+v(vdc,u1_s)*i(r1d))=1.21324 FROM 0 TO 2e-005
+pls: AVG(v(vg_ls,u2_s)*i(r2g)+v(vsw,u2_s)*i(r2d))=0.924533 FROM 0 TO 2e-005
+pgd_hs: AVG(-v(vhs,vsw)*i(v15))=0.0211337 FROM 0 TO 2e-005
+pgd_ls: AVG(-v(vls)*i(v25))=0.0189478 FROM 0 TO 2e-005
+ptot: phs+pgd_hs+pls+pgd_ls=2.17785
+pin: AVG(-v(vdc)*i(v1))=193.353 FROM 0 TO 2e-005
+pout: AVG(v(vout)*i(rload))=190.795 FROM 0 TO 2e-005
+ploss: pin-pout=2.55736
+eff: pout/pin=0.986774
+tr1: v(vsw)=7.2 AT 1.60022e-005
+tr2: v(vsw)=40.8 AT 1.60032e-005
+trise_ns: (tr2-tr1)*1e9=0.937132
+tf1: v(vsw)=40.8 AT 1.65045e-005
+tf2: v(vsw)=7.2 AT 1.65063e-005
+tfall_ns: (tf2-tf1)*1e9=1.78801
+dvdton: vin*0.7/trise_ns=35.8541
+dvdtoff: vin*0.7/tfall_ns=18.7919
+eon: INTEG(v(vdc,u1_s)*i(r1d)*1e6)=1.24154 FROM 1.6002e-005 TO 1.60033e-005
+eoff: INTEG(v(vdc,u1_s)*i(r1d)*1e6)=0.507496 FROM 1.65041e-005 TO 1.65066e-005
+pldcr: AVG(v(vsw1,vsw)*i(r1))=0.182026 FROM 0 TO 2e-005
+
+
+Date: Fri Feb 16 15:18:01 2024
+Total elapsed time: 24.136 seconds.
+
+tnom = 27
+temp = 27
+method = Gear
+totiter = 1188502
+traniter = 1188195
+tranpoints = 380508
+accept = 271672
+rejected = 108836
+matrix size = 38
+fillins = 21
+solver = Alternate
+Matrix Compiler1: 3.35 KB object code size  2.0/1.6/[0.9]
+Matrix Compiler2: off  [1.2]/1.6/1.5
+
