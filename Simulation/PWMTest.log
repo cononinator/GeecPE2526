@@ -1,6 +1,6 @@
 LTspice 24.1.9 for Windows
 Circuit: E:\Documents\Masters\Project\Simulation\PWMTest.net
-Start Time: Wed Oct  8 11:16:59 2025
+Start Time: Wed Oct 15 23:07:40 2025
 solver = Normal
 Maximum thread count: 12
 tnom = 27
@@ -11,7 +11,7 @@ E:\Documents\Masters\Project\Simulation\PWMTest.net(14): Limiting fall time to 1
 V2 N003 0 PULSE(0 1 0 {1/FREQ} 0 0 {1/FREQ})
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Direct Newton iteration for .op point succeeded.
-Total elapsed time: 3.105 seconds.
+Total elapsed time: 3.239 seconds.
 
 Files loaded:
 E:\Documents\Masters\Project\Simulation\PWMTest.net
