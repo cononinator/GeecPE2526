@@ -1,12 +1,12 @@
 LTspice 24.1.9 for Windows
 Circuit: E:\Documents\Masters\Project\Simulation\GaN.net
-Start Time: Thu Oct 16 00:00:47 2025
+Start Time: Sat Oct 18 22:38:02 2025
 solver = Normal
 Maximum thread count: 12
 tnom = 27
 temp = 27
 method = trap
-E:\Documents\Masters\Project\Simulation\GaN.net(17): Limiting fall time to 1.01644e-20.
+E:\Documents\Masters\Project\Simulation\GaN.net(20): Limiting fall time to 2.03288e-20.
 
 V2 N003 0 PULSE(0 1 0 {1/FREQ} 0 0 {1/FREQ})
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -37,33 +37,18 @@ Starting source stepping with srcstepmethod=0
 Source Step = 3.0303%
 Source Step = 33.3333%
 Source Step = 63.6364%
-Source Step = 78.7997%
-vernier = 0.000976562
+Source Step = 69.7058%
 Starting source stepping with srcstepmethod=1
 Source Step = 3.0303%
-vernier = 0.25
+Source Step = 33.3333%
+Source Step = 63.6364%
+Source Step = 93.9394%
+Source Step = 100%
+Source Step = 99.0059%
 Source stepping failed
 
-Pseudo Transient succeeded in finding the operating point at 327.69 ms.
-Warning: Simulation tolerance relaxed to achieve convergence from 9.2125000000443241e-03 to 9.2125000000443345e-03 seconds.
-Warning: Simulation tolerance relaxed to achieve convergence from 9.2125000000443553e-03 to 9.2125000000443658e-03 seconds.
-Warning: Simulation tolerance relaxed to achieve convergence from 2.0962499999982304e-02 to 2.0962499999982405e-02 seconds.
-Warning: Simulation tolerance relaxed to achieve convergence from 3.4162500000009192e-02 to 3.4162500000009290e-02 seconds.
-Warning: Simulation tolerance relaxed to achieve convergence from 3.8762499999998194e-02 to 3.8762499999998291e-02 seconds.
-Warning: Simulation tolerance relaxed to achieve convergence from 3.8762500000010774e-02 to 3.8762500000010872e-02 seconds.
-Warning: Simulation tolerance relaxed to achieve convergence from 3.8762500000010872e-02 to 3.8762500000010969e-02 seconds.
-Warning: Simulation tolerance relaxed to achieve convergence from 3.8762500000011364e-02 to 3.8762500000011461e-02 seconds.
-Warning: Simulation tolerance relaxed to achieve convergence from 4.2212500000002269e-02 to 4.2212500000002366e-02 seconds.
-Warning: Simulation tolerance relaxed to achieve convergence from 4.2212500000002366e-02 to 4.2212500000002463e-02 seconds.
-Warning: Simulation tolerance relaxed to achieve convergence from 4.2212500000002463e-02 to 4.2212500000002560e-02 seconds.
-Warning: Simulation tolerance relaxed to achieve convergence from 4.2212500000002762e-02 to 4.2212500000002859e-02 seconds.
-Warning: Simulation tolerance relaxed to achieve convergence from 5.1512500000002161e-02 to 5.1512500000002258e-02 seconds.
-Warning: Simulation tolerance relaxed to achieve convergence from 6.0562499999997486e-02 to 6.0562499999997584e-02 seconds.
-Warning: Simulation tolerance relaxed to achieve convergence from 6.0562500000002371e-02 to 6.0562500000002469e-02 seconds.
-Warning: Simulation tolerance relaxed to achieve convergence from 6.6012500000000002e-02 to 6.6012500000000099e-02 seconds.
-Warning: Simulation tolerance relaxed to achieve convergence from 8.6012499999999700e-02 to 8.6012499999999797e-02 seconds.
-Warning: Simulation tolerance relaxed to achieve convergence from 8.6012499999999992e-02 to 8.6012500000000089e-02 seconds.
-Total elapsed time: 57.352 seconds.
+Pseudo Transient succeeded in finding the operating point at 333.618 ms.
+Total elapsed time: 8.405 seconds.
 
 Files loaded:
 E:\Documents\Masters\Project\Simulation\GaN.net
