@@ -12,6 +12,25 @@ It is broken down into the following sections:
 4. Modularity and common supply voltage
    - All additional devices and board are supplied directly from the battery along the main current path. This cause the major issue that the high current loop goes through each section individually
 
+## Summary of Issues and Proposed Fixes
+
+1. The Opto Isolators on the Power Electronics were designed with now obsolete ICs. The current fix is different opto isolators (not reccomended for new devices) that have been modified with two layers of DIP holders to change the pinout.
+   **Proposal: Investigate the need for fully isolated grounding vs single connection AGND and DGND**
+2. Closed Loop Control Capabilities. This requires at minimum, accurate current sensing for the motor. 
+   **Proposal: AD8411A or INA241 Current sense amplifiers capable of 1-2 MHz bandwidth, this could then be controlled in hardware or software depending on timing requirements (PID, Peak Current, Current Limiting). The Arduino Nano PI Connect includes a built in IMU which could be used for speed verification alongside GPS and or wheelspeed sensor.**
+3. Supply Voltages and Main Battery path. The battery is connected directly though most components in the system before reaching the motor, additionally it is directly connected to the steering wheel display. This means all boards need to deal directly with instability in the main battery. 
+   **Proposal: Create a primary transmission bus voltage on the power electronics board. 12V 1A which can be stably transmitted across the system without worrying about battery instability.**
+4. Modularity and simplification, the DAQ and the power electronics boards are large boards with many functions but are difficult to modify without respinning the device. There are a large number of connectors in series with the high current path.
+   **Proposal: Create dedicated boards with limited functionality, that can allow for more versatility overall. Removal of DAQ and repositioning of WAGOs/replacing to keep connections in the high current path minimal.**
+5. Power FETs, the original power FETs that Oisin Anderson designed the board around have decent specifications but high switching losses. David Kong replaced them with new FETs in 2023 that have very good specifications but are only rated for 30V. The use of TVS diodes can mitigate this and can clamp the voltage to the specification but the proximity to the rated voltage is cause for concern.
+   **Proposal: Investigate new generations of power FETs including GaN FETs to find similar efficiencies but with voltage ratings of at least 40V ideally 60V+.**
+6. Device Idle, Based on data from Poland the car was idling for 40% of the race, This works out at about 6000J (2.7%) over the course of the race
+   **Proposal: Integrate sleep mode to the electrical system which can sleep while the throttle isn't active or above a certain state. To reduce idle currents.**
+7. Power Monitoring, The DAQ currently monitors voltage and current independently and the trapezoidal rule is used to calculate power consumption, this provides results very close to the SEM result (1~2% accurate). This requires about 15 discrete components to make work.
+   **Propsal: INA780B is an integrated joulemeter with temperature sensing, it requires I2C communication and can monitor bus voltage, current, power etc. with automatic averaging to impreove accuracy of the built in 16-bit ADC.**
+
+Below is more detailed investigations into the critical sections, with further justifications.
+
 ## Closed Loop Control
 ![](Fixed.drawio.png)
 Above is a diagram showing the control methodolgy for the current power electronics, it is an open loop controller i.e. no feedback.
@@ -38,6 +57,7 @@ Here are some fixes which would improve the series resistance and the total retu
 1. Swap the horn and main electrical relays. This would mean only pair set of Wago's would need to be connected through lowering some contact resistance.
 2. Removal of the DAQ would not only remove 2 XT90's but also the series resistance from the DAQ.
 3. Removal of the XT90's from the circuit after the Joulemeter. 
+
 ![alt text](image-1.png)
 Above is a press fit M4 connector rated for up to 130A, this would be combined with a ring crimp connector to achieve very low resistances.
 
@@ -57,7 +77,9 @@ The supply wouldn't need to be massive either: 0.6-1A would be able to output 7-
 ![alt text](image-2.png)
 
 The modularity would be achieved with these connectors:
+
 ![alt text](image-3.png)
+
 Which have a pair as shown:
 ![alt text](image-4.png)
 
@@ -91,13 +113,17 @@ This allows for a number of options,
 ![alt text](Circuit_Design.drawio.png)
 | Device  | Purpose   |
 |---|---|
-|INA241   |   |
-|EPC23101   |   |
-|INA780   |   |
-|Arduino Nano ESP32   |   |
-|  TPS62933 |   |
-|  Adafruit Ultimate GPS |   |
-|  WR-TBL Series 322  |   |
-|  WR-TBL Series 3093 |   |
-|   Adafruit CAN Pal | |
+|AD8411A   |  2.7 MHz bandwidth current sensor |
+| WSLP3921L5000FEA | 500uOhm Shunt resistor  |
+|EPC23101   | High side FET and integrated gate driver  |
+| EPC2361 | Low side FET |
+|INA780   | 500uOhm I2C joulemeter with integrated temp sensor  |
+|Arduino Nano ESP32 (RP2040?)  | Microcontroller   |
+| TPSM33615| Vbat > 12V 1.5A Buck Module|
+|  TPS62933 | 12 > 3.3V Buck Module  |
+|  Adafruit Ultimate GPS | 10 Hz GPS Module  |
+|  WR-TBL Series 322  | Green Connectors above  |
+|  WR-TBL Series 3093 | Green Connectors above  |
+|   Adafruit CAN Pal | CAN module requires a uC with a CAN peripheral|
 | 7461096 | REDCUBE PRESS-FIT|
+
