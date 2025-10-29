@@ -1,0 +1,26 @@
+LTspice 24.1.9 for Windows
+Circuit: E:\Documents\Masters\Project\Simulation\Motor\gearbox.net
+Start Time: Sat Oct 18 13:48:25 2025
+solver = Normal
+Maximum thread count: 12
+tnom = 27
+temp = 27
+method = trap
+E:\Documents\Masters\Project\Simulation\Motor\gearbox.net(3): WARNING: Specified period is not longer than the sum of Trise, Tfall, and Ton. Increasing period to 8.
+
+V_drive N001 0 PULSE(0.0 3 50m 0 0m 8 0 1)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E:\Documents\Masters\Project\Simulation\Motor\gearbox.net(3): Limiting rise time to 1.59872e-15.
+
+V_drive N001 0 PULSE(0.0 3 50m 0 0m 8 0 1)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E:\Documents\Masters\Project\Simulation\Motor\gearbox.net(3): Limiting fall time to 1.59872e-15.
+
+V_drive N001 0 PULSE(0.0 3 50m 0 0m 8 0 1)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.OP point found by inspection.
+Total elapsed time: 5.988 seconds.
+
+Files loaded:
+E:\Documents\Masters\Project\Simulation\Motor\gearbox.net
+

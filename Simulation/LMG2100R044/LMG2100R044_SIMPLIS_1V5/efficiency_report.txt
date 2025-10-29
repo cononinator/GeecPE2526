@@ -1,0 +1,15 @@
+Efficiency and Power Loss Breakdown Report
+Efficiency	99.37%
+Input power	581.2
+Output power	577.5
+Dissipated power	3.638
+
+Probe Type	Probe Name	Power
+Input	Power(V1)	581.148
+Input	Power(V2)	0.0291561
+Output	Power(R1)	560.338
+Output	Power(C1)	13.7833
+Output	4.7u	3.02546
+Output	Power(R4)	0.390075
+Output	Power(C3)	0.002304
+Other	Power(U1)	3.66054

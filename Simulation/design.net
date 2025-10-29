@@ -1,12 +1,45 @@
-* E:\Documents\Masters\Project\Simulation\GaNTestBench.wxsch
+* E:\Documents\Masters\Project\Simulation\GeecTestBench.wxsch
 *#SIMETRIX
-Vinp Vinp_P U1_source  Pulse(0 5 10u 10n 10n 50m 100m)
-V1 U1_drain 0 24
-X$U1 U1_drain R2_P U1_source U1_Tj U1_Tcase IGC019S06S1_L3 pinnames: drain gate source Tj Tcase
-R2 R2_P Vinp_P 10
-R1 U1_source 0 10
-.GRAPH R2_P curveLabel= U1-gate nowarn=true ylog=auto xlog=auto analysis=tran|ac|dc GUID="d7308bcc-738e-4130-bbc0-ed16df88093d" disabled=false PROBEREF=Probe1  
-.GRAPH U1_source axisType="owngrid" persistence=-1 curveLabel="OUT" analysis="tran|ac|dc" order="f" xLog="auto" yLog="auto"  nowarn=true GUID="3c6a11f1-e06b-48e6-bc24-60de3ef2593c" disabled=false PROBEREF=Probe9  
-.GRAPH R2#P  GUID="1b301028-e69d-4422-9d77-bf294ad685f4" disabled=false 
-.tran 1m
+.PARAM DT=150n
+.PARAM CDT={DT/(0.691*1k)}
+.PARAM FREQ=30k
+
+.GRAPH HS curveLabel= HS nowarn=true ylog=auto xlog=auto analysis=tran|ac|dc GUID="9b3ea495-9af8-4cae-8023-e776c7d69dab" disabled=false PROBEREF=Probe1  
+X$Q2 HS OUTL 0 Q2_Tj HEAT IGC019S06S1_L3 pinnames: drain gate source Tj Tcase
+R3 HEAT R3_N 4
+X$V7 V7_P 0 SAW_SOURCE pinnames: P N params: _V1=0 _V2=3.3 _FREQ=FREQ _DELAY=0 _DRATIOx100=99.9 _T_RISE=99.9u _T_FALL=100n _DAMP_COEF=0 _PWIDTH=0 _OFF_UNTIL_DELAY=0 _IDLE_IN_POP=0 _USEPHASE=0 _PHASE=0 _SHOWPARAMS=0
+X$C4 VBat 0 WE_ATG8_860010783029_2R7mF params: USEIC=1 USEIC_OP=0 USEIC_TRAN=1 USEIC_ACNOISETF=0 USEIC_DC=0 IC=24 M=4 pinnames: P N
+X$Q1 VBat OUTH HS Q1_Tj HEAT IGC019S06S1_L3 pinnames: drain gate source Tj Tcase
+R2 OUTL U1_LOH 10
+V6 V6_P 0 12.5m
+X$U5 U3_IN1 0 V7_P V6_P SX_COMP params: RIN=10Meg ROUT=10 HYSTWD=1m VOL=0 VOH=5 DELAY=1n risefall=10n pinnames: OUT RTN INP INN
+R1 OUTH U1_HOL 10
+V5 R3_N 0 25
+X$U4 U3_OUT R5_P PWML HC08 pinnames: IN1 IN2 OUT
+X$U1 OUTH U1_HOL C3_N PWMH HS PWML U1_LOH OUTL VCC 0 LM5113_TRANS pinnames: HOH HOL HB HI HS LI LOH LOL VDD VSS
+V2 VCC 0 5
+V1 VBat 0 24
+A$U3 U3_IN1 U3_OUT HC04D
+X$U2 U3_IN1 R4_P PWMH HC08 pinnames: IN1 IN2 OUT
+.GRAPH "V(OUTL)-V(0)" axisType="auto" persistence=-1 curveLabel="L_Out" analysis="tran|ac|dc" xLog="auto" yLog="auto"  nowarn=true GUID="17af023a-de4c-45ab-b397-f69ca8c414f5" disabled=false 
+R5 R5_P U3_OUT 1K
+.GRAPH "V(OUTH)-V(HS)" axisType="auto" persistence=-1 curveLabel="H_Out" analysis="tran|ac|dc" xLog="auto" yLog="auto"  nowarn=true GUID="2b8043cc-2bed-4265-89cc-313463ef7b5f" disabled=false 
+R4 R4_P U3_IN1 1K
+.GRAPH U3_IN1 axisType="auto" persistence=-1 curveLabel="PWM" analysis="tran|ac|dc" xLog="auto" yLog="auto"  nowarn=true GUID="5644110a-ecc4-4669-b054-2a48de16ec92" disabled=false PROBEREF=Probe8  
+.GRAPH PWMH axisType="auto" persistence=-1 curveLabel="PWMH" analysis="tran|ac|dc" xLog="auto" yLog="auto"  nowarn=true GUID="863acbc0-50aa-45b0-9f42-0f123f49b487" disabled=false PROBEREF=Probe7  
+.GRAPH PWML axisType="auto" persistence=-1 curveLabel="PWML" analysis="tran|ac|dc" xLog="auto" yLog="auto"  nowarn=true GUID="a1827ccf-3faa-4022-8db0-2b1f5a71f252" disabled=false PROBEREF=Probe5  
+.GRAPH # axisType="auto" persistence=-1 curveLabel="IBat" analysis="tran|ac|dc" xLog="auto" yLog="lin"  nowarn=true GUID="574915d7-a83f-4f4c-b036-5c9307a11fd9" disabled=false 
+C2 0 VCC 470n   
+D3 R4_P U3_IN1 D1N4148
+C1 HEAT 0 1n   
+D2 R5_P U3_OUT D1N4148
+X$C6 R4_P 0 C6$TP_NLCAP pinnames: P N 
+.subckt C6$TP_NLCAP P N 
+B1 P N i=-i(E1)*1E6*(CDT) 
+C1 N1 0 1u 
+E1 N1 0 P N 1 
+.ends
+C5 R5_P 0 145p   
+C3 HS C3_N 470n   
+.tran 1m Sweep device=V6 lin 20 5m 100m plot_grouping=multigroup
 

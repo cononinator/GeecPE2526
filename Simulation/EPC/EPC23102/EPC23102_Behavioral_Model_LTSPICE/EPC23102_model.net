@@ -1,0 +1,285 @@
+*****************************************************************************
+* EPC23102: 100V, 35A ePower Stage IC Simulation Model File 
+* (C) Copyright Efficient Power Conversion Corporation. All rights reserved.
+*****************************************************************************
+* Version History:
+*   1.0:    8/12/2022   First release
+
+.subckt epc23102 ENb HSIN LSIN VDRV AGND PGND RBOOT RDRV SW VBOOT VDD VIN
+XX1 N009 N011 N013 N014 AGND N007 N008 atlock
+XX2 HSIN N011 N009 VDD AGND logictrans
+XX3 LSIN N014 N013 VDD AGND logictrans
+XX4 VDD AGND N017 por
+XX5 N008 AGND N015 inv5
+XX6 N015 N017 N016 AGND nor2
+XU1 VIN HSG SW pwr_fet
+XX9 LSG VDD AGND ls_scur
+XX10 N008 N010 VDD AGND VBOOT cboot
+E1 N002 SW N007 AGND 1
+XX11 VBOOT SW N006 por
+XX12 N002 SW N003 inv5
+XX13 N003 N006 N004 SW nor2
+XX16 HSG SW VBOOT hs_scur
+XX18 Enb VDRV AGND VDD enb_logic
+XX8 N010 N012 VDD AGND LSG ls_rf_ctrl
+XX17 Enb SW VIN PGND vin_scur
+XX19 N016 N010 AGND delay_ls
+XX7 N004 N005 SW delay_hs
+XX14 N005 N001 SW VBOOT HSG hs_rf_ctrl
+XU2 SW LSG PGND pwr_fet
+R1 PGND AGND 1e-6
+D1 PGND SW well_diode
+XX20 Enb RBOOT AGND N001 enb_logic_drivers
+XX21 Enb RDRV AGND N012 enb_logic_drivers
+.model well_diode D(RS=3.23 IS=4.15E-09 N=2.435 CJ0=3.43E-10 M=0.5 VJ=1.57 FC=0.5)
+.ends epc23102
+
+.subckt atlock HSi HSib LSi LSib Vss HSo LSo
+XX1 HSi N001 Vss delay_5n
+XX2 LSi N002 Vss delay_5n
+XX3 N002 HSib HSo Vss nor2
+XX4 N001 LSib LSo Vss nor2
+.ends atlock
+
+.subckt logictrans In OutN OutP Vdd Vss
+C1 In Vss 6p
+R1 N001 N002 30.4k
+R2 N002 Vss 6.5k
+R3 N002 In 70
+V1 N005 Vss 5
+S1 Vss N003 N004 Vss S1_Model
+R4 N004 N005 10k
+R5 N003 N005 10k
+E1 N001 Vss Vdd Vss 1
+S2 Vss N004 N002 Vss S2_Model
+E2 OutP Vss N003 Vss 1
+E3 OutN Vss N004 Vss 1
+.MODEL S1_Model sw Ron=10 Roff=10MEG Vt=2.5 Vh=0
+.MODEL S2_Model sw Ron=10 Roff=10MEG Vt=1.6 Vh=500m
+.ends logictrans
+
+.subckt por Vdd Vss POR
+E1 POR Vss N002 Vss 1
+S1 Vss N002 Vdd Vss S2_Model
+V1 N001 Vss 5
+R1 N001 N002 10k
+.MODEL S2_Model sw  Vt=3.75 Vh=0.25 Ron=1 Roff=1e6
+.ends por
+
+.subckt inv5 A Vss Q
+V1 N001 Vss 5
+S1 Vss N002 A Vss S2_Model
+R1 N001 N002 10k
+E1 Q Vss N002 Vss 1
+.MODEL S2_Model sw  Vt=2.5 Vh=0
+.ends inv5
+
+.subckt nor2 A B Q Vss
+S1 Vss N001 B Vss S1_Model
+S2 Vss N001 A Vss S2_Model
+V1 P001 Vss 5
+R1 N001 P001 10k
+E1 Q Vss N001 Vss 1
+.MODEL S1_Model sw Ron=10 Roff=10MEG Vt=2.5 Vh=0
+.MODEL S2_Model sw Ron=10 Roff=10MEG Vt=2.5 Vh=0
+.ends nor2
+
+.subckt ls_scur LSG Vdd Vss
+S2 N1 Vss N001 LSG S2_Model
+S1 N001 N1 LSG N001 S1_Model
+V1 N001 Vss 5
+R1 Vdd Vss 500
+R2 N1 Vss 424
+F1 Vdd Vss V1 -1
+C1 N1 Vss 3.8n
+.MODEL S1_Model sw Ron=1 Roff=10MEG Vt=-2.5 Vh=0
+.MODEL S2_Model sw Ron=1 Roff=10MEG Vt=2.5 Vh=0
+.ends ls_scur
+
+.subckt cboot A B Vdd Vss Vboot
+S1 Vss N004 B Vss S1_Model
+S2 N004 N003 A Vss S2_Model
+S3 Vss N002 N003 Vss S3_Model
+V1 N001 Vss 5
+R4 N001 N003 10k
+R5 N001 N002 10k
+S4 Vboot Vdd N002 Vss S4_Model
+.MODEL S1_Model sw Ron=5 Roff=10MEG Vt=2.5 Vh=0
+.MODEL S2_Model sw Ron=5 Roff=10MEG Vt=2.5 Vh=0
+.MODEL S3_Model sw Ron=5 Roff=10MEG Vt=2.5 Vh=0
+.MODEL S4_Model sw Ron=12.5 Roff=10MEG Vt=2.5 Vh=0
+.ends cboot
+
+.subckt hs_scur HSG SW Vboot
+F1 Vboot SW V1 -1
+S2 SW N1 HSG SW S2_Model
+S1 N1 N001 N001 HSG S1_Model
+V1 N001 SW 5
+R1 Vboot SW 833
+C1 N1 SW 2.8n
+.MODEL S1_Model sw Ron=2 Roff=10MEG Vt=2.5 Vh=0
+.MODEL S2_Model sw Ron=2 Roff=10MEG Vt=2.5 Vh=0
+.ends hs_scur
+
+.subckt enb_logic ENb VDRV VSS VDD
+R1 ENb VSS 150k
+S2 VSS VDD ENb VSS Enbsw
+S1 VDRV VDD VSS ENb Enbsw_nc
+S3 N001 VDRV ENb VSS Enbsw
+R2 N001 VSS 125k
+.MODEL Enbsw_nc sw Vt=-3.3 Ron=1e-3 Roff=1e6
+.MODEL Enbsw sw Vt=3.3 Ron=1e-3 Roff=1e6
+.ends enb_logic
+
+.subckt ls_rf_ctrl A RDRV Vdd Vss Q
+C1 Vctrl Vss 4p
+R2 Vctrl N002 1k
+E1 RDRV Q Vdd Vctrl 1
+E2 N001 Vss Vdd Vss 1
+XX2 A N001 Vss N002 buffer
+.ends ls_rf_ctrl
+
+.subckt vin_scur ENb SW Vin Vss
+R1 Vin SW 1Meg
+S1 P001 Vin ENb Vss Enbsw
+R3 P001 Vss 88k
+.MODEL Enbsw sw Vt=3.3 Ron=1e-3 Roff=1e9
+.ends vin_scur
+
+.subckt delay_ls A Q Vss
+S2 Vss N003 N002 Vss S2_Model
+S1 Vss N002 A Vss S1_Model
+S3 Vss N004 N003 Vss S3_Model
+S4 Vss N005 N004 Vss S4_Model
+E1 Q Vss N005 Vss 1
+C1 N002 Vss 1.3p
+R2 N003 N001 10k
+R1 N002 N001 10k
+C2 N003 Vss 1.9p
+V1 N001 Vss 5
+R3 N001 N004 10k
+R4 N001 N005 10k
+.MODEL S2_Model sw Ron=10 Roff=10MEG Vt=3.16 Vh=0
+.MODEL S1_Model sw Ron=10 Roff=10MEG Vt=2.5 Vh=0
+.MODEL S3_Model sw Ron=10 Roff=10MEG Vt=3.16 Vh=0
+.MODEL S4_Model sw Ron=10 Roff=10MEG Vt=2.5 Vh=0
+.ends delay_ls
+
+.subckt delay_hs A Q Vss
+S2 Vss N003 N002 Vss S2_Model
+S1 Vss N002 A Vss S1_Model
+S3 Vss N004 N003 Vss S3_Model
+S4 Vss N005 N004 Vss S4_Model
+E1 Q Vss N005 Vss 1
+C1 N002 Vss 1.3p
+R2 N003 N001 10k
+R1 N002 N001 10k
+C2 N003 Vss 1.4p
+V1 N001 Vss 5
+R3 N001 N004 10k
+R4 N001 N005 10k
+.MODEL S2_Model sw Ron=10 Roff=10MEG Vt=3.16 Vh=0
+.MODEL S1_Model sw Ron=10 Roff=10MEG Vt=2.5 Vh=0
+.MODEL S3_Model sw Ron=10 Roff=10MEG Vt=3.16 Vh=0
+.MODEL S4_Model sw Ron=10 Roff=10MEG Vt=2.5 Vh=0
+.ends delay_hs
+
+.subckt hs_rf_ctrl A RBOOT SW VBOOT Q
+C1 Vctrl SW 10p
+R1 Vctrl N002 1k
+E1 RBOOT Q VBOOT Vctrl 1
+E2 N001 SW VBOOT SW 1
+XX1 A N001 SW N002 buffer
+.ends hs_rf_ctrl
+
+.subckt enb_logic_drivers ENb RDRV VSS RDRV_int
+S2 VSS RDRV_int ENb VSS Enbsw
+S1 RDRV RDRV_int VSS ENb Enbsw_nc
+.MODEL Enbsw_nc sw Vt=-3.3 Ron=1e-3 Roff=1e6
+.MODEL Enbsw sw Vt=3.3 Ron=1e-3 Roff=1e6
+.ends enb_logic_drivers
+
+.subckt delay_5n A Q Vss
+S1 Vss N003 N002 Vss S1_Model
+S2 Vss N002 A Vss S2_Model
+S3 Vss N004 N003 Vss S3_Model
+S4 Vss N005 N004 Vss S4_Model
+E1 Q Vss N005 Vss 1
+C1 N002 Vss 500f
+R1 N003 N001 10k
+R2 N002 N001 10k
+C2 N003 Vss 500f
+V1 N001 Vss 5
+R3 N001 N004 10k
+R4 N001 N005 10k
+.MODEL S1_Model sw Ron=10 Roff=10MEG Vt=3.16 Vh=0
+.MODEL S2_Model sw Ron=10 Roff=10MEG Vt=2.5 Vh=0
+.MODEL S3_Model sw Ron=10 Roff=10MEG Vt=3.16 Vh=0
+.MODEL S4_Model sw Ron=10 Roff=10MEG Vt=2.5 Vh=0
+.ends delay_5n
+
+.subckt buffer A Vdd Vss Q
+S1 Vss N001 A Vss S2_Model
+S2 Vss Q N001 Vss S2_Model
+S3 N001 Vdd Vdd A S2_Model
+S4 Q Vdd Vdd N001 S2_Model
+.MODEL S2_Model sw  Vt=2.5 Vh=0
+.ends buffer
+
+.subckt pwr_fet drainin gate sourcein
+.param W=0.932 Wg={W*1000000}
+.param  si={aWg} so={aWg} sr={aWg}
+.param  aWg={Wg*1E-3} A1={1.698e-02*aWg} k2=2.138e+00 k3=9.000e-02 rpara={1.74e-3/W}
++	rpara_s_factor=2.759e-01 aITc=3.6390e-03 arTc=-9.1547e-03 k2Tc=3.7300e-4
++	x0_0=2.269e+00 x0_0_TC=-1.6300e-03 x0_1=-2.000e-12 x0_1_TC=-8.5200e-7
++	dgs1=4.3e-07 dgs2=2.6e-13 dgs3=0.8 dgs4=0.23
++	ags1={1.188e-12*si}
++   ags2={4.370e-13*si} ags3=1.899e+00  ags4=2.039e-01
++	ags5={0.000e-00*si} ags6=7.480e+01  ags7=1.055e+01
++	agd1={1.940e-15*sr}
++   agd2={8.0e-14*sr}   agd3=-7.500e+00 agd4=2.157e+00
++	agd5={7.790e-15*sr} agd6=-1.726e+01 agd7=1.529e+01
++   agd8={0.000e-00*sr} agd9=-3.326e+01 agd10=8.900e-01
++	asd1={3.599e-13*so}
++   asd2={6.070e-13*so} asd3=-1.035e+01 asd4=1.086e+00
++	asd5={2.540e-13*so} asd6=-2.500e+01 asd7=5.616e+00
++   asd8={0.000e-00*so} asd9=-8.125e+01 asd10=5.665e+00
+
+rd drainin drain {(1-rpara_s_factor)*rpara*(1-arTc*(Temp-25))}
+rs sourcein source {rpara_s_factor*rpara*(1-arTc*(Temp-25))}
+
+*Large resistors to aid convergence
+rcsdconv drain source {100000Meg/aWg}
+rcgsconv gate source {100000Meg/aWg}
+rcgdconv gate drain {100000Meg/aWg}
+
+bswitch drain source I=(if(v(drain,source)>0,
++	(A1*(1-aITc*(Temp-25))*log(1.0+exp((v(gate,source)-(k2*(1-k2Tc*(Temp-25))))/k3))*
++	v(drain,source)/(1 + (x0_0*(1-x0_0_TC*(Temp-25))+x0_1*(1-x0_1_TC*(Temp-25))*v(gate,source))*v(drain,source)) ),
++	(-A1*(1-aITc*(Temp-25))*log(1.0+exp((v(gate,drain)-(k2*(1-k2Tc*(Temp-25))))/k3))*
++	v(source,drain)/(1 + (x0_0*(1-x0_0_TC*(Temp-25))+x0_1*(1-x0_1_TC*(Temp-25))*v(gate,drain))*v(source,drain)) ) ))
+
+bgsdiode gate source I=(if( v(gate,source) < 10,
++	0.125*aWg/1077*(dgs1*(exp((v(gate,source))/dgs3)-1)+dgs2*(exp((v(gate,source))/dgs4)-1)),
++	0.125*aWg/1077*(dgs1*(exp((10)/dgs3)-1)+dgs2*(exp((10)/dgs4)-1)) ))
+
+bgddiode gate drain I=(if( v(gate,drain) < 10,
++	0.125*aWg/1077*(dgs1*(exp((v(gate,drain))/dgs3)-1)+dgs2*(exp((v(gate,drain))/dgs4)-1)),
++	0.125*aWg/1077*(dgs1*(exp((10)/dgs3)-1)+dgs2*(exp((10)/dgs4)-1)) ))
+
+cgs gate source {ags1}
+cgsv gate source Q=(0.5*ags2*ags4*log(1+exp((v(gate,source)-ags3)/ags4))+
++	ags5*ags7*log(1+exp((v(source,drain)-ags6)/ags7)))
+
+cgd gate drain {agd1}
+cgdv gate drain Q=(0.5*ags2*ags4*log(1+exp((v(gate,drain)-ags3)/ags4))+
++	agd2*agd4*log(1+exp((v(gate,drain)-agd3)/agd4))+
++	agd5*agd7*log(1+exp((v(gate,drain)-agd6)/agd7))+
++	agd8*agd10*log(1+exp((v(gate,drain)-agd9)/agd10)))
+
+csd source drain {asd1}
+csdv source drain Q=(asd2*asd4*log(1+exp((v(source,drain)-asd3)/asd4))+
++	asd5*asd7*log(1+exp((v(source,drain)-asd6)/asd7))+
++	asd8*asd10*log(1+exp((v(source,drain)-asd9)/asd10)))
+
+.ends

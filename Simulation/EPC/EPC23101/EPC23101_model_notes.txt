@@ -1,0 +1,21 @@
+EPC23101 Behavioral Model Notes
+
+Instructions: include EPC23101_model.net and call subcircuit EPC23101.
+
+If you wish to use EPC2302 or another EPC power FET in a simulation alongside EPC23101, then 
+its model must also be included. These models are provided in EPCGaNLibrary.lib. The desired FET 
+must be linked to a symbol in the schematic.
+
+An example 48V-12V buck converter testbench is provided, which uses both EPC23101 and EPC2302, see
+EPC23101_sim.asc.
+
+The LTSPICE model EPC23101_model.net is a simplified version of the IC that simulates the device's
+functionality and approximate electrical performance (e.g., rise/fall times, power dissipation).
+In the case of a discrepancy between this behavioral model and the product datasheet, refer to the
+datasheet. Please report any model issues or convergence errors to AskaGaNExpert@epc-co.com or your
+field application engineer.
+
+Efficient Power Conversion Corporation (EPC) reserves the right to make changes without further 
+notice to any products herein to improve reliability, function or design. EPC does not assume any 
+liability arising out of the application or use of any product or circuit described herein; neither
+does it convey any license under its patent rights, nor the rights of others.
