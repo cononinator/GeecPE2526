@@ -1,0 +1,92 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" version="28.2.7">
+  <diagram name="Page-1" id="Pe3egoV1W_to12B9Ck2a">
+    <mxGraphModel dx="1188" dy="626" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="1Ilio97GYEyvz8-Gsxtv-10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="1Ilio97GYEyvz8-Gsxtv-1" target="1Ilio97GYEyvz8-Gsxtv-11">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="750.1428571428573" y="360" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="750" y="380" />
+              <mxPoint x="175" y="380" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="1Ilio97GYEyvz8-Gsxtv-12" value="Motor Speed" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="1Ilio97GYEyvz8-Gsxtv-10">
+          <mxGeometry x="-0.1267" y="3" relative="1" as="geometry">
+            <mxPoint x="-17" y="-3" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="1Ilio97GYEyvz8-Gsxtv-1" value="M" style="dashed=0;outlineConnect=0;align=center;html=1;shape=mxgraph.pid.engines.electric_motor;fontSize=45;" vertex="1" parent="1">
+          <mxGeometry x="700" y="430" width="100" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="1Ilio97GYEyvz8-Gsxtv-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1" source="1Ilio97GYEyvz8-Gsxtv-2" target="1Ilio97GYEyvz8-Gsxtv-1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="1Ilio97GYEyvz8-Gsxtv-5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="1Ilio97GYEyvz8-Gsxtv-2" target="1Ilio97GYEyvz8-Gsxtv-7">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="660" y="580" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="660" y="480" />
+              <mxPoint x="660" y="555" />
+              <mxPoint x="355" y="555" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="1Ilio97GYEyvz8-Gsxtv-6" value="Iout" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="1Ilio97GYEyvz8-Gsxtv-5">
+          <mxGeometry x="0.1568" y="1" relative="1" as="geometry">
+            <mxPoint x="-1" y="-9" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="1Ilio97GYEyvz8-Gsxtv-2" value="Power Electronics" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="508" y="430" width="110" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="1Ilio97GYEyvz8-Gsxtv-8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="1Ilio97GYEyvz8-Gsxtv-7" target="1Ilio97GYEyvz8-Gsxtv-2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="1Ilio97GYEyvz8-Gsxtv-9" value="Duty Cycle" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="1Ilio97GYEyvz8-Gsxtv-8">
+          <mxGeometry x="0.2069" y="2" relative="1" as="geometry">
+            <mxPoint x="-19" y="-8" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="1Ilio97GYEyvz8-Gsxtv-7" value="Current Control&lt;br&gt;&amp;nbsp;PID" style="rhombus;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="300" y="425" width="110" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="1Ilio97GYEyvz8-Gsxtv-13" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="1Ilio97GYEyvz8-Gsxtv-11" target="1Ilio97GYEyvz8-Gsxtv-7">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="1Ilio97GYEyvz8-Gsxtv-20" value="Set Current" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="1Ilio97GYEyvz8-Gsxtv-13">
+          <mxGeometry x="-0.3476" y="-3" relative="1" as="geometry">
+            <mxPoint x="8" y="-13" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="1Ilio97GYEyvz8-Gsxtv-14" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;startArrow=classic;startFill=1;endArrow=none;endFill=0;" edge="1" parent="1" source="1Ilio97GYEyvz8-Gsxtv-11">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="40" y="480" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="1Ilio97GYEyvz8-Gsxtv-15" value="Set Speed" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="1Ilio97GYEyvz8-Gsxtv-14">
+          <mxGeometry x="0.6583" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="1Ilio97GYEyvz8-Gsxtv-11" value="Speed Control&lt;br&gt;&amp;nbsp;PID" style="rhombus;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="120" y="425" width="110" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="1Ilio97GYEyvz8-Gsxtv-16" value="" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.annotation_1;align=left;pointerEvents=1;rotation=-90;" vertex="1" parent="1">
+          <mxGeometry x="458" y="375" width="50" height="420" as="geometry" />
+        </mxCell>
+        <mxCell id="1Ilio97GYEyvz8-Gsxtv-17" value="Fast Loop" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="440" y="570" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="1Ilio97GYEyvz8-Gsxtv-18" value="" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.annotation_1;align=left;pointerEvents=1;rotation=90;" vertex="1" parent="1">
+          <mxGeometry x="400" width="50" height="715" as="geometry" />
+        </mxCell>
+        <mxCell id="1Ilio97GYEyvz8-Gsxtv-19" value="Slow Loop" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="380" y="342.5" width="60" height="30" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

@@ -1,0 +1,57 @@
+LTspice 24.1.9 for Windows
+Circuit: E:\Documents\Masters\Project\Simulation\LM5104.net
+Start Time: Sat Oct 18 15:10:36 2025
+solver = Normal
+Maximum thread count: 12
+tnom = 27
+temp = 27
+method = trap
+E:\Documents\Masters\Project\Simulation\LM5104.net(21): Limiting fall time to 2.03288e-20.
+
+V2 N003 0 PULSE(0 1 0 {1/FREQ} 0 0 {1/FREQ})
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Instance "u1:xhsd:m1": Length shorter than recommended for a level 1 MOSFET.
+Instance "u1:xhsd:m2": Length shorter than recommended for a level 1 MOSFET.
+Instance "u1:xlsd:m1": Length shorter than recommended for a level 1 MOSFET.
+Instance "u1:xlsd:m2": Length shorter than recommended for a level 1 MOSFET.
+E:\Documents\Masters\Project\Simulation\LM5104_PSPICE_TRANS\LM5104_TRANS.lib(106): Missing value, assuming 0V @ DC.
+
+vdummy 101 rt 
+^^^^^^^^^^^^^^
+Direct Newton iteration for .op point succeeded.
+Warning: Simulation tolerance relaxed to achieve convergence from 9.2611898374008134e-04 to 9.2611898374008231e-04 seconds.
+Warning: Simulation tolerance relaxed to achieve convergence from 1.5261232611916472e-03 to 1.5261232611916572e-03 seconds.
+Warning: Simulation tolerance relaxed to achieve convergence from 1.6261185214701700e-03 to 1.6261185214701799e-03 seconds.
+Warning: Simulation tolerance relaxed to achieve convergence from 1.8261234542542957e-03 to 1.8261234542543056e-03 seconds.
+Warning: Simulation tolerance relaxed to achieve convergence from 1.9261163876850879e-03 to 1.9261163876850979e-03 seconds.
+Warning: Simulation tolerance relaxed to achieve convergence from 2.0261256225211359e-03 to 2.0261256225211459e-03 seconds.
+Warning: Simulation tolerance relaxed to achieve convergence from 2.3261242798487862e-03 to 2.3261242798487962e-03 seconds.
+Warning: Simulation tolerance relaxed to achieve convergence from 2.5261246543050774e-03 to 2.5261246543050874e-03 seconds.
+Warning: Simulation tolerance relaxed to achieve convergence from 2.8261249811700152e-03 to 2.8261249811700252e-03 seconds.
+Warning: Simulation tolerance relaxed to achieve convergence from 3.0261242502730729e-03 to 3.0261242502730829e-03 seconds.
+Warning: Simulation tolerance relaxed to achieve convergence from 3.1261248102958010e-03 to 3.1261248102958110e-03 seconds.
+Warning: Simulation tolerance relaxed to achieve convergence from 3.6261188742195572e-03 to 3.6261188742195672e-03 seconds.
+Warning: Simulation tolerance relaxed to achieve convergence from 3.7261189696639685e-03 to 3.7261189696639785e-03 seconds.
+Warning: Simulation tolerance relaxed to achieve convergence from 4.2261241972304173e-03 to 4.2261241972304277e-03 seconds.
+Warning: Simulation tolerance relaxed to achieve convergence from 5.2261199310026998e-03 to 5.2261199310027102e-03 seconds.
+Warning: Simulation tolerance relaxed to achieve convergence from 5.4261192241826838e-03 to 5.4261192241826942e-03 seconds.
+Warning: Simulation tolerance relaxed to achieve convergence from 5.6261194131721733e-03 to 5.6261194131721837e-03 seconds.
+Warning: Simulation tolerance relaxed to achieve convergence from 5.8261186167666073e-03 to 5.8261186167666177e-03 seconds.
+Warning: Simulation tolerance relaxed to achieve convergence from 5.9261199459098050e-03 to 5.9261199459098154e-03 seconds.
+Warning: Simulation tolerance relaxed to achieve convergence from 6.0261203017947518e-03 to 6.0261203017947622e-03 seconds.
+Warning: Simulation tolerance relaxed to achieve convergence from 6.1261191683104283e-03 to 6.1261191683104387e-03 seconds.
+Warning: Simulation tolerance relaxed to achieve convergence from 6.2261192819912181e-03 to 6.2261192819912286e-03 seconds.
+Warning: Simulation tolerance relaxed to achieve convergence from 7.3261187221257624e-03 to 7.3261187221257728e-03 seconds.
+Warning: Simulation tolerance relaxed to achieve convergence from 9.2261188423420314e-03 to 9.2261188423420418e-03 seconds.
+Warning: Simulation tolerance relaxed to achieve convergence from 9.4261200490547911e-03 to 9.4261200490548015e-03 seconds.
+Warning: Simulation tolerance relaxed to achieve convergence from 9.5261197391018609e-03 to 9.5261197391018713e-03 seconds.
+Warning: Simulation tolerance relaxed to achieve convergence from 9.7261195495387063e-03 to 9.7261195495387167e-03 seconds.
+Warning: Simulation tolerance relaxed to achieve convergence from 9.8261196527143109e-03 to 9.8261196527143213e-03 seconds.
+Total elapsed time: 34.192 seconds.
+
+Files loaded:
+E:\Documents\Masters\Project\Simulation\LM5104.net
+C:\Users\conor\AppData\Local\LTspice\lib\cmp\standard.dio
+C:\Users\conor\AppData\Local\LTspice\lib\sub\Contrib\Nexperia\nmos\PSMN1R2-30YLD.lib
+E:\Documents\Masters\Project\Simulation\LM5104_PSPICE_TRANS\LM5104_TRANS.lib
+

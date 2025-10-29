@@ -1,0 +1,32 @@
+Version 4
+SymbolType BLOCK
+RECTANGLE Normal -64 -65 80 112
+WINDOW 0 17 -65 Bottom 2
+WINDOW 3 16 112 Top 2
+SYMATTR Value lm5104
+SYMATTR Prefix X
+SYMATTR ModelFile E:\Documents\Masters\Project\Simulation\LM5104_PSPICE_TRANS\LM5104_TRANS.lib
+PIN -64 -48 LEFT 8
+PINATTR PinName vdd
+PINATTR SpiceOrder 1
+PIN 80 -48 RIGHT 8
+PINATTR PinName hb
+PINATTR SpiceOrder 2
+PIN 80 -16 RIGHT 8
+PINATTR PinName ho
+PINATTR SpiceOrder 3
+PIN 80 16 RIGHT 8
+PINATTR PinName hs
+PINATTR SpiceOrder 4
+PIN -64 16 LEFT 8
+PINATTR PinName in
+PINATTR SpiceOrder 5
+PIN -64 96 LEFT 8
+PINATTR PinName rt
+PINATTR SpiceOrder 6
+PIN 80 96 RIGHT 8
+PINATTR PinName vss
+PINATTR SpiceOrder 7
+PIN 80 48 RIGHT 8
+PINATTR PinName lo
+PINATTR SpiceOrder 8

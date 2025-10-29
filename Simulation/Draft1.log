@@ -1,0 +1,23 @@
+LTspice 24.1.9 for Windows
+Circuit: E:\Documents\Masters\Project\Simulation\Draft1.net
+Start Time: Mon Oct  6 19:53:35 2025
+solver = Normal
+Maximum thread count: 12
+tnom = 27
+temp = 27
+method = trap
+Instance "u1:xhsd:m1": Length shorter than recommended for a level 1 MOSFET.
+Instance "u1:xhsd:m2": Length shorter than recommended for a level 1 MOSFET.
+Instance "u1:xlsd:m1": Length shorter than recommended for a level 1 MOSFET.
+Instance "u1:xlsd:m2": Length shorter than recommended for a level 1 MOSFET.
+E:\Documents\Masters\Project\Simulation\LM5104_PSPICE_TRANS\LM5104_TRANS.lib(106): Missing value, assuming 0V @ DC.
+
+vdummy 101 rt 
+^^^^^^^^^^^^^^
+Direct Newton iteration for .op point succeeded.
+Total elapsed time: 4.174 seconds.
+
+Files loaded:
+E:\Documents\Masters\Project\Simulation\Draft1.net
+E:\Documents\Masters\Project\Simulation\LM5104_PSPICE_TRANS\LM5104_TRANS.lib
+
