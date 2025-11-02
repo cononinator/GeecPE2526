@@ -79,34 +79,3 @@ void motorCtrl(int motorPWM) {
   analogWrite(PWMPin, motorPWM); // Write the PWM signal to the motor control pin
 }
 
-
-float current_PID_realize(float target_current, float Kp, float Ki, float Kd) {
-  static float current_sum_error = 0;
-  static float current_error_last = 0;
-  float PID_out;
-  float actual_current = 0;
-  int SUM_ADC = 0;
-  // Read current sensor from A0, average 30 samples for noise reduction
-  for (int i = 0; i < 30; i++) {
-    SUM_ADC += analogRead(A0);
-  }
-  float PRE_ADC = SUM_ADC / 30.0;
-  // Convert ADC value to real current (adjust scaling as needed for your sensor)
-  actual_current = (PRE_ADC / 1023.0) * 5.0; // Assuming 0-5V range, adjust multiplier for sensor sensitivity
-  float current_error = target_current - actual_current;
-  // Limiting closed-loop deadband
-  if (abs(current_error / target_current) < 0.1 && abs(current_error) < 0.1) {
-    current_error = 0;
-  }
-  current_sum_error += current_error;  // error integrate
-  // Preventing integral saturation
-  if (current_sum_error > 10)
-    current_sum_error = 10;
-  else if (current_sum_error < -10)
-    current_sum_error = -10;
-  // PID calculation
-  PID_out = Kp * current_error + Ki * current_sum_error + Kd * (current_error - current_error_last);
-  current_error_last = current_error; // Error propagation
-  return PID_out;
-}
-

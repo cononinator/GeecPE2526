@@ -1,0 +1,4 @@
+Added Pin To Net: NetName=BGND Pin=Q4-1
+Added Pin To Net: NetName=BGND Pin=Q4-2
+Added Pin To Net: NetName=BGND Pin=Q4-3
+Added Member To Class: ClassName=MainSheet Member=Component U? TSR 0.6-48120WI

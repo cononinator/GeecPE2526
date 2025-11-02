@@ -1,0 +1,4 @@
+Record=DiagramHierarchy|SourceDocument=Schematic.MbsDoc|Kind=Multi-board Schematic Module|Designator=2|Source=..\GeecPC\GeecPC.PrjPcb
+Record=SubProject|SourceDocument=Schematic.MbsDoc|ProjectPath=..\GeecPC\GeecPC.PrjPcb
+Record=DiagramHierarchy|SourceDocument=Schematic.MbsDoc|Kind=Multi-board Schematic Module|Designator=1|Source=..\GeecPE\GeecPE.PrjPcb
+Record=SubProject|SourceDocument=Schematic.MbsDoc|ProjectPath=..\GeecPE\GeecPE.PrjPcb

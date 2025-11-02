@@ -1,0 +1,42 @@
+Change Component Designator: OldDesignator=J? NewDesignator=J1
+Change Component Designator: OldDesignator=MP? NewDesignator=MP1
+Change Component Designator: OldDesignator=MP? NewDesignator=MP2
+Change Component Designator: OldDesignator=MP? NewDesignator=MP3
+Change Component Designator: OldDesignator=MP? NewDesignator=MP4
+Change Component Designator: OldDesignator=R? NewDesignator=R1
+Change Component Designator: OldDesignator=U? NewDesignator=U1
+Add Pin To Net: Unknown Pin: Pin Q1-8
+Add Pin To Net: Unknown Pin: Pin Q1-9
+Change Net Name : Old Net Name=NetJ?_1 New Net Name=NetJ1_1
+Change Net Name : Old Net Name=NetJ?_2 New Net Name=NetJ1_2
+Change Net Name : Old Net Name=NetJ?_3 New Net Name=NetJ1_3
+Change Net Name : Old Net Name=NetJ?_4 New Net Name=NetJ1_4
+Change Net Name : Old Net Name=NetJ?_5 New Net Name=NetJ1_5
+Change Net Name : Old Net Name=NetJ?_6 New Net Name=NetJ1_6
+Change Net Name : Old Net Name=NetJ?_7 New Net Name=NetJ1_7
+Change Net Name : Old Net Name=NetJ?_8 New Net Name=NetJ1_8
+Change Net Name : Old Net Name=NetJ?_9 New Net Name=NetJ1_9
+Change Net Name : Old Net Name=NetJ?_10 New Net Name=NetJ1_10
+Change Net Name : Old Net Name=NetJ?_11 New Net Name=NetJ1_11
+Change Net Name : Old Net Name=NetJ?_12 New Net Name=NetJ1_12
+Change Net Name : Old Net Name=NetMP?_1 New Net Name=NetMP3_1
+Change Net Name : Old Net Name=NetU?_1 New Net Name=NetU1_1
+Change Net Name : Old Net Name=NetU?_9 New Net Name=NetU1_9
+Added Pin To Net: NetName=NetMP1_1 Pin=MP1-1
+Added Pin To Net: NetName=NetMP1_1 Pin=MP1-1
+Added Pin To Net: NetName=NetMP1_1 Pin=MP1-1
+Added Pin To Net: NetName=NetMP1_1 Pin=MP1-1
+Added Pin To Net: NetName=NetMP1_1 Pin=MP1-1
+Added Pin To Net: NetName=NetMP1_1 Pin=MP1-1
+Added Pin To Net: NetName=NetMP1_1 Pin=MP1-1
+Added Pin To Net: NetName=NetMP1_1 Pin=MP1-1
+Added Pin To Net: NetName=NetMP1_1 Pin=MP1-1
+Added Pin To Net: NetName=NetMP1_1 Pin=U1-15
+Added Net: Name=NetMP1_1
+Added Pin To Net: NetName=NetQ1_1 Pin=R1-1
+Added Net: Name=NetQ1_1
+Added Net: Name=NetQ1_6
+Added Member To Class: ClassName=PE Member=Component MP1 7461001
+Added Member To Class: ClassName=PE Member=Component MP2 7461001
+Added Member To Class: ClassName=PE Member=Component MP3 7461001
+Add Class Member: Failed to add class member : Component Q1 ISG0613N04NM6H

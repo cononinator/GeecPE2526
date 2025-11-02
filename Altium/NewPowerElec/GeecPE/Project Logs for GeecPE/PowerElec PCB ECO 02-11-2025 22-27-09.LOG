@@ -1,0 +1,29 @@
+Added Component: Designator=Q1(IFX-PG-VITFN-10-1-V)
+Add component (AddParameter): Name = "Case/Package"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Design Item ID"; Value = "ISG0613N04NM6H"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Frequency"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer"; Value = "Infineon Technologies"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer Order Number"; Value = "ISG0613N04NM6H"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Max Operating Temperature"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Min Operating Temperature"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Mounting Technology"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Nominal Dual Supply"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Nominal Vgs"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "PackageReference"; Value = "PG-VITFN-10-1"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Pins"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Power"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "RoHS Compliant"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Source"; Value = "ISG0613N04NM6H.SchLib"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Transistor Type"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Vgs (Max)"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Vgs(th) (Max) @ Id"; Value = ""; VariantName = "[No Variations]"
+Added Pin To Net: NetName=NetQ1_1 Pin=Q1-1
+Added Pin To Net: NetName=NetQ1_1 Pin=Q1-2
+Added Pin To Net: NetName=NetQ1_1 Pin=Q1-3
+Added Pin To Net: NetName=NetQ1_1 Pin=Q1-4
+Added Pin To Net: NetName=NetQ1_6 Pin=Q1-6
+Added Pin To Net: NetName=NetQ1_6 Pin=Q1-7
+Added Pin To Net: NetName=AGND Pin=Q1-8
+Added Pin To Net: NetName=AGND Pin=Q1-9
+Added Member To Class: ClassName=PE Member=Component MP4 7461001
+Added Member To Class: ClassName=PE Member=Component Q1 ISG0613N04NM6H
