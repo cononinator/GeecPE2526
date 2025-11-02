@@ -1,0 +1,4 @@
+Added Pin To Net: NetName=MOTOR SW Pin=Q3-1
+Added Pin To Net: NetName=MOTOR SW Pin=Q3-2
+Added Pin To Net: NetName=MOTOR SW Pin=Q3-3
+Added Member To Class: ClassName=MainSheet Member=Component U? TSR 0.6-48120WI

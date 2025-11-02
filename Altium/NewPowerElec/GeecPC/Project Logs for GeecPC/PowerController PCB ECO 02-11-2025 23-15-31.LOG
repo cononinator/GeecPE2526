@@ -1,0 +1,60 @@
+Added Component: Designator=J?(691309310012)
+Add component (AddParameter): Name = "Case/Package"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Connector Type"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Gender"; Value = "Female"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Max Current Rating"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Max Operating Temperature"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Min Operating Temperature"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Mounting Technology"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Pins"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "RoHS Compliant"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "System"; Value = "Connector"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Voltage Rating"; Value = ""; VariantName = "[No Variations]"
+Added Pin To Net: NetName=+3V3 Pin=J?-3
+Added Pin To Net: NetName=+3V3 Pin=J?-10A
+Added Pin To Net: NetName=+3V3 Pin=J?-10B
+Added Net: Name=+3V3
+Added Pin To Net: NetName=+12V Pin=J?-12
+Added Pin To Net: NetName=+12V Pin=J?-1A
+Added Pin To Net: NetName=+12V Pin=J?-1B
+Added Net: Name=+12V
+Added Pin To Net: NetName=GND Pin=J?-1
+Added Pin To Net: NetName=GND Pin=J?-11
+Added Pin To Net: NetName=GND Pin=J?-2A
+Added Pin To Net: NetName=GND Pin=J?-2B
+Added Pin To Net: NetName=GND Pin=J?-12A
+Added Pin To Net: NetName=GND Pin=J?-12B
+Added Net: Name=GND
+Added Pin To Net: NetName=IMot Pin=J?-6
+Added Pin To Net: NetName=IMot Pin=J?-7A
+Added Pin To Net: NetName=IMot Pin=J?-7B
+Added Net: Name=IMot
+Added Pin To Net: NetName=PWMH Pin=J?-8
+Added Pin To Net: NetName=PWMH Pin=J?-5A
+Added Pin To Net: NetName=PWMH Pin=J?-5B
+Added Net: Name=PWMH
+Added Pin To Net: NetName=PWML Pin=J?-7
+Added Pin To Net: NetName=PWML Pin=J?-6A
+Added Pin To Net: NetName=PWML Pin=J?-6B
+Added Net: Name=PWML
+Added Pin To Net: NetName=SCL Pin=J?-9
+Added Pin To Net: NetName=SCL Pin=J?-4A
+Added Pin To Net: NetName=SCL Pin=J?-4B
+Added Net: Name=SCL
+Added Pin To Net: NetName=SDA Pin=J?-10
+Added Pin To Net: NetName=SDA Pin=J?-3A
+Added Pin To Net: NetName=SDA Pin=J?-3B
+Added Net: Name=SDA
+Added Pin To Net: NetName=SLEEP Pin=J?-4
+Added Pin To Net: NetName=SLEEP Pin=J?-9A
+Added Pin To Net: NetName=SLEEP Pin=J?-9B
+Added Net: Name=SLEEP
+Added Pin To Net: NetName=SPARE Pin=J?-2
+Added Pin To Net: NetName=SPARE Pin=J?-11A
+Added Pin To Net: NetName=SPARE Pin=J?-11B
+Added Net: Name=SPARE
+Added Pin To Net: NetName=VMot Pin=J?-5
+Added Pin To Net: NetName=VMot Pin=J?-8A
+Added Pin To Net: NetName=VMot Pin=J?-8B
+Added Net: Name=VMot
+Added Member To Class: ClassName=PC Member=Component J? 691309310012
