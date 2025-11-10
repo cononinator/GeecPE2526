@@ -3,8 +3,8 @@
 const int AcclPin = A1;                            // Accelerator potentiometer on pin A1
 const int PWMPin = 11;                             // Motor PWM output on PWM pin 11 (Associated with TCCR2B timer)
 
-const int minAcclSig = 225;                          // Minimum accelerator signal, starting from 0 for full range utilization
-const int maxAcclSig = 1023;                       // Maximum accelerator signal, utilizing full range of the potentiometer
+const int minAcclSig = 200;                          // Minimum accelerator signal, starting from 0 for full range utilization
+const int maxAcclSig = 900;                       // Maximum accelerator signal, utilizing full range of the potentiometer
 
 const int rampUpTime = 10000;                      // Time (in milliseconds) for full ramp up from 0 to max speed
 const float rampUpStep = 255.0 / rampUpTime;       // How much to ramp up PWM value per millisecond
@@ -15,7 +15,7 @@ const float rampDownStep = 255.0 / rampDownTime;   // How much to ramp down PWM 
 const float filterConst = 0.05;                    // Filter constant for input smoothing
 
 const int minMotorPWM = 0;                         // Minimum motor PWM output, for lowest power/speed
-const int maxMotorPWM = 255;                       // Maximum motor PWM output, for highest power/speed
+const int maxMotorPWM = 253;                       // Maximum motor PWM output, for highest power/speed
 
 const int SoftStartPin = 2;                        // SoftStartPin is a digital output on pin 2
 const int softStartDelay = 200;                    // Delay in milliseconds between Arduino startup and soft start disable
@@ -23,7 +23,7 @@ const int softStartDelay = 200;                    // Delay in milliseconds betw
 // SETUP
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 void setup() {
-  TCCR2B = TCCR2B & 0b11111000 | 0x01; // Set PWM frequency for pins 3 and 11 to 31372.55Hz for smoother motor control
+    
   Serial.begin(9600);
   pinMode(AcclPin, INPUT);
   pinMode(PWMPin, OUTPUT);
@@ -60,7 +60,8 @@ int rampMotorPWM(int acclSig, boolean acclApplied) {
   unsigned long timeDiff = currentTime - prevUpdateTime;
   prevUpdateTime = currentTime;
   
-  float targetPWM = map(acclSig, 0, 1023, 0, 255); // Direct mapping for linear response
+  float targetPWM = acclSig;  // already 0–255
+ // Direct mapping for linear response
   float maxChangeUp = rampUpStep * timeDiff;
   float maxChangeDown = rampDownStep * timeDiff;
 
