@@ -1,0 +1,456 @@
+* INFINEON Power Transistors                                    *
+* SPICE Library                                                 *
+*                                                               *
+*                                                               *
+* Version 281024                                                *
+*                                                               *
+*****************************************************************
+*                                                               *
+* The Simulation Model is subject to change without notice. In  *
+* addition, models can be a useful tool in evaluating device    *
+* performance, they cannot reflect the accurate device          *
+* performance under all conditions, nor are they intended to    *
+* replace bread boarding for final verification. Infineon       *
+* therefore does not assume any warranty or liability           *
+* whatsoever arising from their use. Infineon does not assume   *
+* any warranty or liability for the values and functions of the *
+* Simulation Model.                                             *
+* The methods and results of the Simulation Model are to the    *
+* best of our knowledge                                         *
+* correct. However, the user is fully responsible to verify and *
+* validate these results under the operating conditions and in  *
+* the environment of its application. Infineon will not bear    *
+* the responsibility arising out of or in connection with any   *
+* malfunction of the Simulation Models.                         *
+* Models provided by Infineon are not warranted by Infineon as  *
+* completely and comprehensively representing all the           *
+* specifications and operating characteristics of the           *
+* semiconductor products to which these models relate. The      *
+* models describe the characteristics of typical devices. In    *
+* all cases, the current data sheet information for a given     *
+* device is the conclusive design guideline and the only actual *
+* performance specification.                                    *
+*                                                               *
+*                                                               *
+* This library contains electrical models of the following      *
+* Infineon transistors:                                         *
+*                                                               *
+*   ISA170170N04LMDS    ISA250250N04LMDS                        *
+*                                                               *
+*****************************************************************
+* thermal nodes of level 3 dual models:                         *
+*                                                               *
+* .SUBCKT ISA170170N04LMDS drain1 gate1 source1 drain1a drain2  *
+*   gate2 source2 drain2a Tj1 Tsolder_joint1 Tj2 Tsolder_joint2 *
+*                                                               *  
+*  Tj1,Tj2 :                                                    *
+*          potential=temperature (in °C) at junction (typically *
+*          not connected)                                       *
+*  Tsolder_joint1, Tsolder_joint2 :                             *
+*          nodes where the boundary condition - external heat   *
+*          sinks etc - have to be connected (ideal heat sink    *
+*          can be modeled by using a voltage source stating the *
+*          ambient temperature in °C between Tcase and ground.) *
+*                                                               *
+*****************************************************************
+
+
+.SUBCKT S4_40_h1_var dd g s0 sp Tj PARAMS: a=1 Rsp=1 dVth=0 dR=0 dgfs=0 Inn=1
++Unn=1 Rmax=1 gmin=1 Rs=1m Rp=1 dC=0 Rm=1u
+
+.PARAM b0=135.3       p0=7.71        p1=-33m        p2=54u         mubet=1.38     fbet=0
+.PARAM Vth0=2.75      c=1.33         muc=64m        Fm=200m        Fn=500m        al=1m
+.PARAM auth=2.35m     dvx=550m       dvgs=300m      auth_sub=2.35m
+
+.PARAM Rd=6.8m        nmu=3          Rf=660m
+
+.PARAM lnIsj=-27      ndi=1.05       Rdi=2.5m       nmu2=588m      n_Isj=3        UB=45.24
+.PARAM ab=22.2m       ab2=-10u       UT=100m        lB=-23
+
+.PARAM kbq=85.8u      Tref=298       T0=273
+
+.PARAM f3=1.05n
+
+.PARAM f4=6.84p       f5=4.83p       sl=0.306p      ps1=68.07p     ps2=-120.38m   ps3=302.69p
+.PARAM ps4=-2.03      ps5=5.77p      ps6=1.97p      ps7=1.03       pc0=26.22p
+
+.PARAM f2=516.72p     f2b=187.54p    U0=22.27       nd=1.65
+
+.PARAM q85=0          qs1=2.37p      qs2=46.53p     qs3=-912.31m   f2r=0
+
+.PARAM y1={(f4-f5)/sl}          y2={f4/sl}
+.PARAM Vmin=2.35      Vmax=3.15      dCmax=330m
+.PARAM Vth={Vth0+(Vmax-Vth0)*limit(dVth,0,1)-(Vmin-Vth0)*limit(dVth,-1,0)}
+.PARAM q0={b0*((1-fbet)*(T0/Tref)**mubet+fbet)*a}
+.PARAM q1={(Unn-Inn*Rs-Vth0)*q0}
+.PARAM q2={(Fm*SQRT(0.4)-c)*Inn*q0}
+.PARAM Rlim={(q1+2*q2*Rmax-SQRT(q1**2+4*q2))/(2*q2)}
+.PARAM dRd={Rd/a+if(dVth==0,limit(dR,0,1)*max(Rlim-Rd/a-Rs-Rp,0),0)}
+.PARAM bm={c/((1/gmin-Rs)**2*Inn*a*((1-fbet)*(T0/Tref)**mubet+fbet))}
+.PARAM bet={b0+(b0-bm)*if(dR==0,if(dVth==0,limit(dgfs,-1,0),0),0)}
+.PARAM dC1={1+dCmax*limit(dC,0,1)}
+.PARAM dC2={1+dCmax*limit(dC,0,1)}
+
+.PARAM Cgs0={f3*a*dC1}
+
+.PARAM Cds4={(f2*a+f2b*sqrt(a))*dC1}
+.PARAM Cds5={qs1*a*dC1}
+.PARAM Cds6={(a*qs2*(1+f2r/sqrt(a)))*dC1}
+
+.PARAM Cdg1={(ps1*a+pc0*sqrt(a))*dC2}
+.PARAM Cdg2={ps3*a*dC2}
+.PARAM Cdg3={(ps5*a+ps6)*dC2}
+.PARAM Cdg4={f4*a*dC2}
+.PARAM dRdi={Rdi/a}
+
+.FUNC Ue(g,y,w)  {(g-Vth+auth*(w-Tref)+Fm*y**Fn)}
+.FUNC Ue1(g,y,w) {Ue(g,y,w)+(1+limit(Ue(g,y,w)+dvx,0,1)**2*(2*limit(Ue(g,y,w)+dvx,0,1)-3))*(dvgs+(auth_sub-auth)*(w-Tref))}
+
+.FUNC Ia(Uee,p,pp,z1,cc) {if(Uee>pp,(Uee-cc*z1)*z1,p*(pp-p)/cc*exp((Uee-pp)/p))}
+.FUNC Ih(Uds,T,p,Uee,cc) {bet*((1-fbet)*(T0/T)**mubet+fbet)*Ia(Uee,p,min(2*p,p+cc*Uds),min(Uds,Uee/(2*cc)),cc)}
+.FUNC Jh(d,g,w,y,s,x)
++{a*((Ih(s*y+min(d,0),w,(p0+(p1+p2*w)*w)*kbq*w,Ue1(g,y,w),c*(w/Tref)**muc)+exp(min(lB+(d-UB-(ab+ab2*(w-Tref))*(w-Tref))/UT,24))))}
+
+.FUNC Idiode(Usd,Tj,Iss) {exp(min(ln(Iss)+Usd/(ndi*kbq*Tj),7))-Iss}
+.FUNC Idiod(Usd,Tj)      {a*Idiode(Usd,Tj,exp(min(lnIsj+(Tj/Tref-1)*1.12/(ndi*kbq*Tj),7))*(Tj/Tref)**n_Isj)}
+
+.FUNC Pr(Vss0,Vssp)  {Vss0*Vss0/Rm+Vssp*Vssp/Rsp}
+.FUNC Q02(Udg) {a*(limit(Udg,y1,y2)*(f4-sl/2*limit(Udg,y1,y2))+min(Udg-y1,0)*f5-max(y1,0)*(f4-f5)/2)}
+
+C_Cgs  g      s      {Cgs0}
+
+E_Eds4 d      edep4  VALUE {V(d,s)-1/(1-nd)*U0*((limit(1+V(d,s)/U0,0,2*UB))**(1-nd)-1)}
+C_Cds4 edep4  s      {Cds4}
+
+C_Cds5 d      sp     {Cds5}
+E_Eds6 d      edep6  VALUE {if(qs3==0,0,V(d,sp)-(exp(qs3*max(V(d,sp),0))-1)/min(qs3,-1u)-min(V(d,sp),0))}
+C_Cds6 edep6  sp     {Cds6}
+
+E_Edg1 d    ox1 VALUE {if(ps2==0,0,V(d,g)-(exp(ps2*max(V(d,g),0))-1)/min(ps2,-1u)-min(V(d,g),0))}
+C_Cdg1 ox1  g   {Cdg1}
+E_Edg2 d    ox2 VALUE =
++{if(ps4==0,0,V(d,g)-((exp(ps4*(max(V(d,g)+ps7,0)))-exp(ps4*max(ps7,0)))/min(ps4,-1u)+min(V(d,g)+max(ps7,0),max(0,-ps7))))}
+C_Cdg2 ox2  g   {Cdg2}
+C_Cdg3 d    g   {Cdg3}
+E_Edg4 d    ox4 VALUE {V(d,g)-Q02(V(d,g))/Cdg4}
+C_Cdg4 ox4  g   {Cdg4}
+
+Rfp     s sp    {Rsp}
+
+G_chan   d5a   s  VALUE={Jh(V(d5a,s),V(g,s),T0+limit(V(Tj),-200,300),(SQRT(1+4*al*max(V(d5a,s),0))-1)/2/al,sgn(V(d5a,s)),0)}
+Rd06     d5a  d5  1u
+V_sm     d    d5  0
+G_RMos   d1    d  VALUE={V(d1,d)/(Rf*dRd+(1-Rf)*dRd*((limit(V(Tj),-200,999)+T0)/Tref)**nmu)}
+V_sense  dd   d1  0
+G_diode   s   d3  VALUE={Idiod(V(s,d3),T0+limit(V(Tj),-200,499))}
+G_Rdio   d2   d1  VALUE={V(d2,d1)/(dRdi*((limit(V(Tj),-200,999)+T0)/Tref)**nmu2)}
+V_sense2 d2   d3  0
+
+
+
+R1        g    s  1G
+Rd01      d    s  500Meg
+Rd02     d2    s  500Meg
+Rd03     d1    d  1k
+Rd07     d3    s  1G
+Rssp      g   sp  100Meg
+
+Rmet      s    s0 {Rm}
+
+
+G_TH      0   Tj  VALUE =
++{(I(V_sense)-I(V_sense2))*V(d1,d)+I(V_sm)*V(d,s)+I(V_sense2)*V(d1,s)+Pr(V(s,s0),V(s,sp))}
+
+
+.ENDS
+
+**********
+
+.SUBCKT ISA170170N04LMDS_L1 drain1 gate1 source1 drain1a drain2 gate2 source2 drain2a PARAMS: dVth=0 dRdson=0 dgfs=0 dC=0 Ls=1.5n Ld=1n Lg=3n
+
+.PARAM Rs=3.076m    Rg=1.1       Rd=360u      Rm=671u
+.PARAM Inn=9.6      Unn=10       Rmax=17m     gmin=12
+.PARAM act=825m     Rsp=1       
+
+X1  d1 g s sp Tj1 S4_40_h1_var PARAMS: a={act} Rsp={Rsp} dVth={dVth} dR={dRdson} dgfs={dgfs} Inn={Inn} Unn={Unn}
++Rmax={Rmax} gmin={gmin} Rs={Rs} Rp={Rd} dC={dC} Rm={Rm}
+
+Rg    g1      g    {Rg}
+Lg    gate1   g1   {Lg*if(dgfs==99,0,1)}
+Gs    s1      s    VALUE={V(s1,s)/(Rs*(1+(limit(V(Tj),-200,999)-25)*4m)-Rm)}
+Rsa   s1      s    1Meg
+Ls    source1 s1   {Ls*if(dgfs==99,0,1)}
+Rda   d1      d2   {Rd*2}
+Ld    drain1  d2   {Ld*if(dgfs==99,0,1)}
+Rda1  d1      d21  {Rd*2}
+Ld1   drain1a d21  {Ld*if(dgfs==99,0,1)}
+
+X2  d1b gb sb spb Tj1b S4_40_h1_var PARAMS: a={act} Rsp={Rsp} dVth={dVth} dR={dRdson} dgfs={dgfs} Inn={Inn} Unn={Unn}
++Rmax={Rmax} gmin={gmin} Rs={Rs} Rp={Rd} dC={dC} Rm={Rm}
+
+Rgb   g1b     gb    {Rg}
+Lgb   gate2   g1b   {Lg*if(dgfs==99,0,1)}
+Gsb   s1b     sb    VALUE={V(s1b,sb)/(Rs*(1+(limit(V(Tjb),-200,999)-25)*4m)-Rm)}
+Rsab  s1b     sb    1Meg
+Lsb   source2 s1b   {Ls*if(dgfs==99,0,1)}
+Rdab  d1b     d2b   {Rd*2}
+Ldb   drain2  d2b   {Ld*if(dgfs==99,0,1)}
+Rda1b d1b     d21b  {Rd*2}
+Ld1b  drain2a d21b  {Ld*if(dgfs==99,0,1)}
+
+E1       Tj     w    VALUE={TEMP}
+Vp       Tj1    Tj   0
+R1       Tj     Tj1  10u
+G_power  0      Tj   VALUE={V(s1,s)*V(s1,s)/(Rs*(1+(limit(V(Tj),-200,999)-25)*4m)-Rm)+V(g,g1)*V(g,g1)/Rg+V(d1,d2)*V(d1,d2)/(2*Rd)+V(d1,d21)*V(d1,d21)/(2*Rd)+I(Vp)}
+R2       w      0    10u
+E1b      Tjb     wb    VALUE={TEMP}
+Vpb      Tj1b    Tjb   0
+R1b      Tjb     Tj1b  10u
+G_powerb 0       Tjb   VALUE={V(s1b,sb)*V(s1b,sb)/(Rs*(1+(limit(V(Tjb),-200,999)-25)*4m)-Rm)+V(gb,g1b)*V(gb,g1b)/Rg+V(d1b,d2b)*V(d1b,d2b)/(2*Rd)+V(d1b,d21b)*V(d1b,d21b)/(2*Rd)+I(Vpb)}
+R2b      wb      0     10u
+
+.ENDS
+
+**********
+
+.SUBCKT ISA250250N04LMDS_L1 drain1 gate1 source1 drain1a drain2 gate2 source2 drain2a PARAMS: dVth=0 dRdson=0 dgfs=0 dC=0 Ls=1.5n Ld=1n Lg=3n
+
+.PARAM Rs=2.62m     Rg=1.4       Rd=360u      Rm=211u
+.PARAM Inn=7.9      Unn=10       Rmax=25m     gmin=9
+.PARAM act=514.5m   Rsp=1       
+
+X1  d1 g s sp Tj1 S4_40_h1_var PARAMS: a={act} Rsp={Rsp} dVth={dVth} dR={dRdson} dgfs={dgfs} Inn={Inn} Unn={Unn}
++Rmax={Rmax} gmin={gmin} Rs={Rs} Rp={Rd} dC={dC} Rm={Rm}
+
+Rg    g1      g    {Rg}
+Lg    gate1   g1   {Lg*if(dgfs==99,0,1)}
+Gs    s1      s    VALUE={V(s1,s)/(Rs*(1+(limit(V(Tj),-200,999)-25)*4m)-Rm)}
+Rsa   s1      s    1Meg
+Ls    source1 s1   {Ls*if(dgfs==99,0,1)}
+Rda   d1      d2   {Rd*2}
+Ld    drain1  d2   {Ld*if(dgfs==99,0,1)}
+Rda1  d1      d21  {Rd*2}
+Ld1   drain1a d21  {Ld*if(dgfs==99,0,1)}
+
+X2  d1b gb sb spb Tj1b S4_40_h1_var PARAMS: a={act} Rsp={Rsp} dVth={dVth} dR={dRdson} dgfs={dgfs} Inn={Inn} Unn={Unn}
++Rmax={Rmax} gmin={gmin} Rs={Rs} Rp={Rd} dC={dC} Rm={Rm}
+
+Rgb   g1b     gb    {Rg}
+Lgb   gate2   g1b   {Lg*if(dgfs==99,0,1)}
+Gsb   s1b     sb    VALUE={V(s1b,sb)/(Rs*(1+(limit(V(Tjb),-200,999)-25)*4m)-Rm)}
+Rsab  s1b     sb    1Meg
+Lsb   source2 s1b   {Ls*if(dgfs==99,0,1)}
+Rdab  d1b     d2b   {Rd*2}
+Ldb   drain2  d2b   {Ld*if(dgfs==99,0,1)}
+Rda1b d1b     d21b  {Rd*2}
+Ld1b  drain2a d21b  {Ld*if(dgfs==99,0,1)}
+
+E1       Tj     w    VALUE={TEMP}
+Vp       Tj1    Tj   0
+R1       Tj     Tj1  10u
+G_power  0      Tj   VALUE={V(s1,s)*V(s1,s)/(Rs*(1+(limit(V(Tj),-200,999)-25)*4m)-Rm)+V(g,g1)*V(g,g1)/Rg+V(d1,d2)*V(d1,d2)/(2*Rd)+V(d1,d21)*V(d1,d21)/(2*Rd)+I(Vp)}
+R2       w      0    10u
+E1b      Tjb     wb    VALUE={TEMP}
+Vpb      Tj1b    Tjb   0
+R1b      Tjb     Tj1b  10u
+G_powerb 0       Tjb   VALUE={V(s1b,sb)*V(s1b,sb)/(Rs*(1+(limit(V(Tjb),-200,999)-25)*4m)-Rm)+V(gb,g1b)*V(gb,g1b)/Rg+V(d1b,d2b)*V(d1b,d2b)/(2*Rd)+V(d1b,d21b)*V(d1b,d21b)/(2*Rd)+I(Vpb)}
+R2b      wb      0     10u
+
+.ENDS
+
+**********
+
+.SUBCKT ISA170170N04LMDS drain1 gate1 source1 drain1a drain2 gate2 source2 drain2a Tj1 Tsolder_joint1 Tj2 Tsolder_joint2 PARAMS: dVth=0 dRdson=0 dgfs=0 dC=0 Zthtype=0 Ls=1.5n Ld=1n Lg=3n
+
+.PARAM Rs=3.076m    Rg=1.1       Rd=360u      Rm=671u
+.PARAM Inn=9.6      Unn=10       Rmax=17m     gmin=12
+.PARAM act=825m     Rsp=1       
+
+
+X1  d1 g s sp Tj1 S4_40_h1_var PARAMS: a={act} Rsp={Rsp} dVth={dVth} dR={dRdson} dgfs={dgfs} Inn={Inn} Unn={Unn}
++Rmax={Rmax} gmin={gmin} Rs={Rs} Rp={Rd} dC={dC} Rm={Rm}
+Rg    g1      g    {Rg}
+Lg    gate1   g1   {Lg*if(dgfs==99,0,1)}
+Gs    s1      s    VALUE={V(s1,s)/(Rs*(1+(limit(V(Tj1),-200,999)-25)*4m)-Rm)}
+Rsa   s1      s    1Meg
+Ls    source1 s1   {Ls*if(dgfs==99,0,1)}
+Rda   d1      d2   {Rd*2}
+Ld    drain1  d2   {Ld*if(dgfs==99,0,1)}
+Rda1  d1      d21  {Rd*2}
+Ld1   drain1a d21  {Ld*if(dgfs==99,0,1)}
+
+X2  d1b gb sb spb Tj2 S4_40_h1_var PARAMS: a={act} Rsp={Rsp} dVth={dVth} dR={dRdson} dgfs={dgfs} Inn={Inn} Unn={Unn}
++Rmax={Rmax} gmin={gmin} Rs={Rs} Rp={Rd} dC={dC} Rm={Rm}
+Rgb   g1b     gb    {Rg}
+Lgb   gate2   g1b   {Lg*if(dgfs==99,0,1)}
+Gsb   s1b     sb    VALUE={V(s1b,sb)/(Rs*(1+(limit(V(Tj2),-200,999)-25)*4m)-Rm)}
+Rsab  s1b     sb    1Meg
+Lsb   source2 s1b   {Ls*if(dgfs==99,0,1)}
+Rdab  d1b     d2b   {Rd*2}
+Ldb   drain2  d2b   {Ld*if(dgfs==99,0,1)}
+Rda1b d1b     d21b  {Rd*2}
+Ld1b  drain2a d21b  {Ld*if(dgfs==99,0,1)}
+
+Rth1  Tj1     t1                {33.87m+limit(Zthtype,0,1)*12.54m}
+Rth2  t1      t2                {379.09m+limit(Zthtype,0,1)*140.29m}
+Rth3  t2      t3                {5.15+limit(Zthtype,0,1)*545.89m}
+Rth4  t3      t4                {11.2+limit(Zthtype,0,1)*4.4}
+Rth5  t4      Tsolder_joint1    {20.2+limit(Zthtype,0,1)*7.94}
+Cth1  Tj1      0                7.18u
+Cth2  t1      0                 35.2u
+Cth3  t2      0                 340.17u
+Cth4  t3      0                 6m
+Cth5  t4      0                 34m
+Cth6  Tsolder_joint1   0        10m
+
+Rth1b  Tj2      t1b             {33.87m+limit(Zthtype,0,1)*12.54m}
+Rth2b  t1b      t2b             {379.09m+limit(Zthtype,0,1)*140.29m}
+Rth3b  t2b      t3b             {5.15+limit(Zthtype,0,1)*545.89m}
+Rth4b  t3b      t4b             {11.2+limit(Zthtype,0,1)*4.4}
+Rth5b  t4b      Tsolder_joint2  {20.2+limit(Zthtype,0,1)*7.94}
+Cth1b  Tj2      0               7.18u
+Cth2b  t1b      0               35.2u
+Cth3b  t2b      0               340.17u
+Cth4b  t3b      0               6m
+Cth5b  t4b      0               34m
+Cth6b  Tsolder_joint2   0       10m
+
+Ck1    Tcoup    0               3m
+Rk1    t4       Tcoup           114
+Rk2    t4b      Tcoup           114
+
+.ENDS
+
+**********
+
+.SUBCKT ISA250250N04LMDS drain1 gate1 source1 drain1a drain2 gate2 source2 drain2a Tj1 Tsolder_joint1 Tj2 Tsolder_joint2 PARAMS: dVth=0 dRdson=0 dgfs=0 dC=0 Zthtype=0 Ls=1.5n Ld=1n Lg=3n
+
+.PARAM Rs=2.62m     Rg=1.4       Rd=360u      Rm=211u
+.PARAM Inn=7.9      Unn=10       Rmax=25m     gmin=9
+.PARAM act=514.5m   Rsp=1       
+
+X1  d1 g s sp Tj1 S4_40_h1_var PARAMS: a={act} Rsp={Rsp} dVth={dVth} dR={dRdson} dgfs={dgfs} Inn={Inn} Unn={Unn}
++Rmax={Rmax} gmin={gmin} Rs={Rs} Rp={Rd} dC={dC} Rm={Rm}
+Rg    g1      g    {Rg}
+Lg    gate1   g1   {Lg*if(dgfs==99,0,1)}
+Gs    s1      s    VALUE={V(s1,s)/(Rs*(1+(limit(V(Tj1),-200,999)-25)*4m)-Rm)}
+Rsa   s1      s    1Meg
+Ls    source1 s1   {Ls*if(dgfs==99,0,1)}
+Rda   d1      d2   {Rd*2}
+Ld    drain1  d2   {Ld*if(dgfs==99,0,1)}
+Rda1  d1      d21  {Rd*2}
+Ld1   drain1a d21  {Ld*if(dgfs==99,0,1)}
+
+X2  d1b gb sb spb Tj2 S4_40_h1_var PARAMS: a={act} Rsp={Rsp} dVth={dVth} dR={dRdson} dgfs={dgfs} Inn={Inn} Unn={Unn}
++Rmax={Rmax} gmin={gmin} Rs={Rs} Rp={Rd} dC={dC} Rm={Rm}
+Rgb   g1b     gb    {Rg}
+Lgb   gate2   g1b   {Lg*if(dgfs==99,0,1)}
+Gsb   s1b     sb    VALUE={V(s1b,sb)/(Rs*(1+(limit(V(Tj2),-200,999)-25)*4m)-Rm)}
+Rsab  s1b     sb    1Meg
+Lsb   source2 s1b   {Ls*if(dgfs==99,0,1)}
+Rdab  d1b     d2b   {Rd*2}
+Ldb   drain2  d2b   {Ld*if(dgfs==99,0,1)}
+Rda1b d1b     d21b  {Rd*2}
+Ld1b  drain2a d21b  {Ld*if(dgfs==99,0,1)}
+
+Rth1  Tj1     t1                {54.32m+limit(Zthtype,0,1)*20.1m}
+Rth2  t1      t2                {581.75m+limit(Zthtype,0,1)*215.3m}
+Rth3  t2      t3                {7.93+limit(Zthtype,0,1)*886.44m}
+Rth4  t3      t4                {11.2+limit(Zthtype,0,1)*3.18}
+Rth5  t4      Tsolder_joint1    {20.2+limit(Zthtype,0,1)*5.73}
+Cth1  Tj1      0                4.48u
+Cth2  t1      0                 22.94u
+Cth3  t2      0                 221.62u
+Cth4  t3      0                 6m
+Cth5  t4      0                 34m
+Cth6  Tsolder_joint1   0        10m
+
+Rth1b  Tj2      t1b             {54.32m+limit(Zthtype,0,1)*20.1m}
+Rth2b  t1b      t2b             {581.75m+limit(Zthtype,0,1)*215.3m}
+Rth3b  t2b      t3b             {7.93+limit(Zthtype,0,1)*886.44m}
+Rth4b  t3b      t4b             {11.2+limit(Zthtype,0,1)*3.18}
+Rth5b  t4b      Tsolder_joint2  {20.2+limit(Zthtype,0,1)*5.73}
+Cth1b  Tj2      0               4.48u
+Cth2b  t1b      0               22.94u
+Cth3b  t2b      0               221.62u
+Cth4b  t3b      0               6m
+Cth5b  t4b      0               34m
+Cth6b  Tsolder_joint2   0       10m
+
+Ck1    Tcoup    0               3m
+Rk1    t4       Tcoup           114
+Rk2    t4b      Tcoup           114
+
+.ENDS
+
+**********
+
+.SUBCKT ISA170170N04LMDS_L0 drain gate source
+
+Lg     gate   g1   3n
+Ld     drain  d1   1n
+Ls     source s1   1.5n
+Rs     s1     s2   3.076m
+
+Rg     g1     g2   1.1
+
+M1     d2     g2    s2    s2    DMOS    L=1u   W=1u
+.MODEL DMOS NMOS ( KP=74.3  VTO=2.74  THETA=0  VMAX=1.5e5  ETA=0.015  LEVEL=3)
+Rd     d1    d2    8.99m  TC=7m
+
+Dbd     s2    d2    Dbt
+.MODEL     Dbt    D(BV=45  M=0.3  CJO=0.68n  VJ=0.9V)
+Dbody   s2   21    DBODY
+.MODEL DBODY  D(IS=6.3p  N=1.1  RS=0.61u  EG=1.12  TT=3n)
+Rdiode  d1  21    2.21m  TC=7m
+
+.MODEL   sw    NMOS(VTO=0  KP=10   LEVEL=1)
+Maux      g2   c    a    a   sw
+Maux2     b    d    g2    g2   sw
+Eaux      c    a    d2    g2   1
+Eaux2     d    g2   d2    g2   -1
+Cox       b    d2   0.26n
+.MODEL     DGD    D(M=0.6  CJO=0.26n  VJ=0.5)
+Rpar      b    d2   1Meg
+Dgd       a    d2   DGD
+Rpar2     d2   a    10Meg
+Cgs     g2    s2    0.85n
+
+.ENDS ISA170170N04LMDS_L0
+
+*****************
+
+.SUBCKT ISA250250N04LMDS_L0 drain gate source
+
+Lg     gate   g1   3n
+Ld     drain  d1   1n
+Ls     source s1   1.5n
+Rs     s1     s2   2.62m
+
+Rg     g1     g2   1.4
+
+M1     d2     g2    s2    s2    DMOS    L=1u   W=1u
+.MODEL DMOS NMOS ( KP=46.3  VTO=2.74  THETA=0  VMAX=1.5e5  ETA=0.015  LEVEL=3)
+Rd     d1    d2    14.2m  TC=7m
+
+Dbd     s2    d2    Dbt
+.MODEL     Dbt    D(BV=45  M=0.3  CJO=0.45n  VJ=0.9V)
+Dbody   s2   21    DBODY
+.MODEL DBODY  D(IS=3.9p  N=1.1  RS=0.97u  EG=1.12  TT=3n)
+Rdiode  d1  21    3.54m  TC=7m
+
+.MODEL   sw    NMOS(VTO=0  KP=10   LEVEL=1)
+Maux      g2   c    a    a   sw
+Maux2     b    d    g2    g2   sw
+Eaux      c    a    d2    g2   1
+Eaux2     d    g2   d2    g2   -1
+Cox       b    d2   0.18n
+.MODEL     DGD    D(M=0.6  CJO=0.18n  VJ=0.5)
+Rpar      b    d2   1Meg
+Dgd       a    d2   DGD
+Rpar2     d2   a    10Meg
+Cgs     g2    s2    0.53n
+
+.ENDS ISA250250N04LMDS_L0
+
+*****************

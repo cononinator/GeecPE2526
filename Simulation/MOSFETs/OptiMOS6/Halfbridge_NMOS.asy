@@ -1,0 +1,50 @@
+Version 4
+SymbolType CELL
+LINE Normal 48 48 48 96
+LINE Normal 16 80 48 80
+LINE Normal 40 48 48 48
+LINE Normal 16 48 40 44
+LINE Normal 16 48 40 52
+LINE Normal 40 44 40 52
+LINE Normal 16 8 16 24
+LINE Normal 16 40 16 56
+LINE Normal 16 72 16 88
+LINE Normal 0 80 8 80
+LINE Normal 8 16 8 80
+LINE Normal 48 16 16 16
+LINE Normal 48 0 48 16
+LINE Normal 48 -16 48 0
+LINE Normal 16 -16 48 -16
+LINE Normal 16 -24 16 -16
+LINE Normal 16 -9 16 -24
+LINE Normal 16 -56 16 -40
+LINE Normal 16 -88 16 -72
+LINE Normal 48 -80 16 -80
+LINE Normal 48 -96 48 -80
+LINE Normal 48 -48 48 -16
+LINE Normal 8 -16 0 -16
+LINE Normal 8 -80 8 -16
+LINE Normal 40 -52 40 -44
+LINE Normal 16 -48 40 -52
+LINE Normal 40 -44 16 -48
+LINE Normal 40 -48 48 -48
+WINDOW 0 -80 -96 Left 2
+WINDOW 38 -82 130 Left 2
+SYMATTR SpiceModel ISG0616N10NM5HSC_L1
+SYMATTR Prefix X
+SYMATTR Description N-Channel MOSFET with Kelvin source and thermal network
+PIN 48 -96 NONE 8
+PINATTR PinName VIN
+PINATTR SpiceOrder 1
+PIN 48 0 NONE 0
+PINATTR PinName VSW
+PINATTR SpiceOrder 2
+PIN 48 96 NONE 0
+PINATTR PinName GND
+PINATTR SpiceOrder 3
+PIN 0 -16 NONE 8
+PINATTR PinName GATEH
+PINATTR SpiceOrder 4
+PIN 0 80 NONE 0
+PINATTR PinName GATEL
+PINATTR SpiceOrder 5
