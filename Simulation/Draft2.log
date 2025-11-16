@@ -1,0 +1,101 @@
+LTspice 24.1.9 for Windows
+Circuit: E:\Documents\Masters\Project\Simulation\Draft2.net
+Start Time: Sun Nov 16 20:17:09 2025
+Options: Thev_Induc=1
+solver = Normal
+Maximum thread count: 12
+tnom = 27
+temp = 27
+method = trap
+C1: Increased Cpar to 1e-12
+C2: Increased Cpar to 1e-08
+C4: Increased Cpar to 1e-11
+C5: Increased Cpar to 7.5e-11
+Early termination of direct N-R iteration.
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Gmin = 10
+Gmin = 1.07374
+vernier = 0.5
+vernier = 0.25
+vernier = 0.125
+vernier = 0.0625
+vernier = 0.03125
+vernier = 0.015625
+vernier = 0.0078125
+vernier = 0.00390625
+Gmin = 0.858993
+vernier = 0.00195312
+vernier = 0.000976562
+vernier = 0.000488281
+Gmin = 0
+Gmin stepping failed
+
+Starting source stepping with srcstepmethod=0
+Source Step = 3.0303%
+Source Step = 33.3333%
+Source Step = 45.0758%
+Source Step = 45.2829%
+Source Step = 45.3125%
+Source Step = 45.3421%
+Source Step = 45.3717%
+Source Step = 45.4013%
+vernier = 0.00146484
+Source Step = 45.4368%
+Source Step = 45.4812%
+Source Step = 45.5256%
+Source Step = 45.57%
+Source Step = 45.6143%
+Source Step = 45.6587%
+Source Step = 45.7031%
+Source Step = 45.7475%
+Source Step = 45.7919%
+Source Step = 45.8363%
+vernier = 0.00219727
+Source Step = 45.8918%
+Source Step = 45.9584%
+Source Step = 46.0249%
+Source Step = 46.0915%
+Source Step = 46.1581%
+Source Step = 46.2247%
+vernier = 0.0032959
+Source Step = 46.3046%
+Source Step = 46.4045%
+Source Step = 46.5044%
+Source Step = 46.6042%
+Source Step = 46.7041%
+vernier = 0.00494385
+Source Step = 46.819%
+Source Step = 46.9688%
+Source Step = 47.0587%
+Source Step = 47.0961%
+Source Step = 47.1336%
+Source Step = 47.171%
+Source Step = 47.2085%
+vernier = 0.00185394
+Source Step = 47.2515%
+Starting source stepping with srcstepmethod=1
+Source Step = 3.0303%
+Source Step = 33.3333%
+Source Step = 51.5152%
+Source Step = 59.0909%
+Source Step = 63.0208%
+Source stepping failed
+
+Pseudo Transient failed in finding the operating point at 1.05657 ms.
+Trouble finding operating point....skipping operating point for Transient analysis.
+Changing Tseed to 9.76562e-10
+Changing Tseed to 9.76562e-12
+Warning: Simulation tolerance relaxed to achieve convergence from 1.5993270784944151e-05 
+Convergence Failure:  Time step too small; time = 1.59933e-05, timestep = 1.25e-19: trouble with node "u2:x1:v_sm#branch"
+
+Simulation Failed: Iteration limit reached
+
+Total elapsed time: 227.214 seconds.
+
+Files loaded:
+E:\Documents\Masters\Project\Simulation\Draft2.net
+C:\Users\conor\AppData\Local\LTspice\lib\cmp\standard.dio
+E:\Documents\Masters\Project\Simulation\MOSFETS\OptiMOS6\OptiMOS6_40V_Halfbridges_LTSpice.lib
+C:\Users\conor\AppData\Local\LTspice\lib\sub\LTC7066.sub
+
