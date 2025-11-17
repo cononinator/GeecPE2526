@@ -156,6 +156,15 @@ C_Cds2 edep2  s      {Cds2}
 E_Eds3 d      edep3  VALUE {if(q84==0,0,V(d,s)-(exp(q84*max(V(d,s),-1))-1)/min(q84,-1u)+min(V(d,s)+1,0)*exp(-q84))}
 C_Cds3 edep3  s      {Cds3}
 
+* provide very large DC path for internal "edep" and "ox" nodes to avoid floating-node singularities
+R_edep2 edep2 0 1G
+R_edep3 edep3 0 1G
+R_edep6 edep6 0 1G
+R_edep8 edep8 0 1G
+R_ox1   ox1   0 1G
+R_ox2   ox2   0 1G
+R_ox4   ox4   0 1G
+
 C_Cds5 d      sp     {Cds5}
 E_Eds6 d      edep6  VALUE {if(qs3==0,0,V(d,sp)-(exp(qs3*max(V(d,sp),0))-1)/min(qs3,-1u)-min(V(d,sp),0))}
 C_Cds6 edep6  sp     {Cds6}
@@ -247,6 +256,7 @@ Rsbh   VSW    s1h   10
 Rgah   GATEH   g1h   10
 Rdbh   VIN     d2h   10
 Rkel   sh      PHASE 100u
+R_PHASE_PH0 PHASE 0 1G
 
 R2        w        0  1u
 E2        Tj       w  VALUE={TEMP}
@@ -301,6 +311,7 @@ Rsbh   VSW    s1h   10
 Rgah   GATEH   g1h   10
 Rdbh   VIN     d2h   10
 Rkel   sh      PHASE 100u
+R_PHASE_PH0 PHASE 0 1G
 
 R2        w        0  1u
 E2        Tj       w  VALUE={TEMP}
@@ -364,10 +375,10 @@ Rgh    g1h     gh    {Rgh}
 Lgh    GATEH   g1h   {Lgh*if(dgfs==99,0,1)}
 Gsh    s1h     sh    VALUE={V(s1h,sh)/(Rsh*(1+(limit(V(TJH),-200,999)-25)*4m)-Rmh)}
 Rsah   s1h     sh    1Meg
-Lsh    VSW     s1h   {Lsh*if(dgfs==99,0,1)}
+Lsh    VSW    s1h   {Lsh*if(dgfs==99,0,1)}
 Rdah   d1h     d2h   {Rdh}
 Ldh    VIN     d2h   {Ldh*if(dgfs==99,0,1)}
-Rsbh   VSW     s1h   10
+Rsbh   VSW    s1h   10
 Rgah   GATEH   g1h   10
 Rdbh   VIN     d2h   10
 
@@ -407,7 +418,7 @@ Gs    s1      s    VALUE={V(s1,s)/(Rs*(1+(limit(V(TJL),-200,999)-25)*4m)-Rm)}
 Rsa   s1      s    1Meg
 Ls    GND     s1   {Ls*if(dgfs==99,0,1)}
 Rda   d1      d2   {Rd}
-Ld    VSW     d2   {Ld*if(dgfs==99,0,1)}
+Ld    VSW    d2   {Ld*if(dgfs==99,0,1)}
 Rsb   GND     s1   10
 Rga   GATEL   g1   10
 Rdb   VSW     d2   10
@@ -447,10 +458,10 @@ Rgh    g1h     gh    {Rgh}
 Lgh    GATEH   g1h   {Lgh*if(dgfs==99,0,1)}
 Gsh    s1h     sh    VALUE={V(s1h,sh)/(Rsh*(1+(limit(V(TJH),-200,999)-25)*4m)-Rmh)}
 Rsah   s1h     sh    1Meg
-Lsh    VSW     s1h   {Lsh*if(dgfs==99,0,1)}
+Lsh    VSW    s1h   {Lsh*if(dgfs==99,0,1)}
 Rdah   d1h     d2h   {Rdh}
 Ldh    VIN     d2h   {Ldh*if(dgfs==99,0,1)}
-Rsbh   VSW     s1h   10
+Rsbh   VSW    s1h   10
 Rgah   GATEH   g1h   10
 Rdbh   VIN     d2h   10
 
