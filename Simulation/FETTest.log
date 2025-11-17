@@ -1,0 +1,56 @@
+LTspice 24.1.9 for Windows
+Circuit: E:\Documents\Masters\Project\Simulation\FETTest.net
+Start Time: Sun Nov 16 21:16:54 2025
+Options: Thev_Induc=1  reltol=1e-3 abstol=100p
+solver = Normal
+Maximum thread count: 12
+tnom = 27
+temp = 27
+method = trap
+abstol = 1e-10
+Early termination of direct N-R iteration.
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Gmin = 10
+Gmin = 1.07374
+vernier = 0.5
+vernier = 0.25
+vernier = 0.125
+vernier = 0.166667
+Gmin = 0.883795
+vernier = 0.222222
+Gmin = 0.549923
+vernier = 0.111111
+vernier = 0.148148
+Gmin = 0.429955
+vernier = 0.197531
+vernier = 0.263374
+Gmin = 0.270859
+vernier = 0.351165
+Gmin = 0.129285
+vernier = 0.46822
+vernier = 0.624294
+Gmin = 0.0395912
+vernier = 0.832392
+vernier = 1
+Gmin = 0.00659356
+Gmin = 0.000707978
+Gmin = 7.60185e-05
+Gmin = 8.16243e-06
+Gmin = 8.76434e-07
+Gmin = 9.41064e-08
+Gmin = 1.01046e-08
+Gmin = 1.08497e-09
+Gmin = 1.16498e-10
+Gmin = 1.25089e-11
+Gmin = 1.34313e-12
+Gmin = 1.44218e-13
+Gmin = 0
+Gmin stepping succeeded in finding the operating point.
+
+Total elapsed time: 1.104 seconds.
+
+Files loaded:
+E:\Documents\Masters\Project\Simulation\FETTest.net
+E:\Documents\Masters\Project\Simulation\MOSFETS\OptiMOS6\OptiMOS6_40V_Halfbridges_LTSpice.lib
+
