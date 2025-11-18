@@ -1,6 +1,6 @@
 LTspice 24.1.9 for Windows
 Circuit: E:\Documents\Masters\Project\Simulation\Draft2.net
-Start Time: Mon Nov 17 23:21:30 2025
+Start Time: Tue Nov 18 10:27:40 2025
 Options: Thev_Induc=1  reltol=1e-3 abstol=5u
 solver = Normal
 Maximum thread count: 12
@@ -15,58 +15,33 @@ C5: Increased Cpar to 7.5e-11
 Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
 Starting Gmin stepping
 Gmin = 10
+Gmin = 1.07374
 vernier = 0.5
-Gmin = 2.07126
-vernier = 0.666667
-vernier = 0.333333
-vernier = 0.166667
-Gmin = 1.18994
-vernier = 0.0833333
-vernier = 0.0416667
-Gmin = 1.0955
-vernier = 0.0555555
-vernier = 0.0277778
+vernier = 0.25
+vernier = 0.125
+vernier = 0.0625
+vernier = 0.03125
+vernier = 0.015625
+vernier = 0.0078125
+Gmin = 1.33695
+vernier = 0.0104167
 vernier = 0.0138889
-Gmin = 1.05824
+Gmin = 1.30404
 vernier = 0.0185185
-vernier = 0.00925925
-vernier = 0.0123457
-Gmin = 1.03566
-vernier = 0.00617283
-vernier = 0.00823044
-vernier = 0.00411522
-Gmin = 1.02876
+Gmin = 1.25237
+vernier = 0.0246913
+vernier = 0.0329218
+Gmin = 1.17223
+vernier = 0.0438957
+vernier = 0.0219478
+vernier = 0.0109739
 vernier = 0.00548696
+Gmin = 1.14063
 vernier = 0.00274348
-Gmin = 1.02208
-vernier = 0.00365797
-vernier = 0.00182899
-vernier = 0.00243865
-vernier = 0.00121932
-Gmin = 1.01943
-vernier = 0.00162576
-Gmin = 1.01571
-vernier = 0.00216769
-vernier = 0.00108384
-vernier = 0.00144512
-vernier = 0.000722562
-Gmin = 1.01415
-vernier = 0.000963415
-Gmin = 1.01196
-vernier = 0.000481708
-vernier = 0.000642277
-Gmin = 1.01094
-vernier = 0.000856369
-vernier = 0.000428184
-vernier = 0.000570912
-Gmin = 1.00993
-vernier = 0.000428184
-Gmin = 1.00892
-vernier = 0.000570912
-vernier = 0.000428184
-vernier = 0.000570912
-vernier = 0.000428184
-Gmin = 1.00828
+vernier = 0.00137174
+vernier = 0.00068587
+Gmin = 1.13906
+vernier = 0.000514403
 Gmin = 0
 Gmin stepping failed
 
@@ -153,7 +128,7 @@ Source Step = 93.4358%
 Source Step = 97.2753%
 Source stepping succeeded in finding the operating point.
 
-Total elapsed time: 25.226 seconds.
+Total elapsed time: 41.810 seconds.
 
 Files loaded:
 E:\Documents\Masters\Project\Simulation\Draft2.net
@@ -164,5 +139,5 @@ C:\Users\conor\AppData\Local\LTspice\lib\sub\AD8411A.sub
 C:\Users\conor\AppData\Local\LTspice\lib\sub\LTC7063.sub
 C:\Users\conor\AppData\Local\LTspice\lib\sub\MAX9095.sub
 
-e_out: INTEG(V(out)*I(R2))=0.138671200383 FROM 0.0015 TO 0.0025
-e_in: INTEG(V(Vin)*I(V1))=-0.139799042395 FROM 0.0015 TO 0.0025
+e_out: INTEG(V(out)*I(R2))=0.413089863129 FROM 0.0015 TO 0.0025
+e_in: INTEG(V(Vin)*I(V1))=-0.407447878321 FROM 0.0015 TO 0.0025
