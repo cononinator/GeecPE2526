@@ -83,6 +83,15 @@ DItemRevisionGUID=
 GenerateClassCluster=0
 DocumentUniqueId=IEIDKRRV
 
+[ProjectVariant1]
+UniqueId=969f2d00-5db7-486e-906f-c505ca5bf980
+Description=Variant of GeecPE
+AllowFabrication=0
+ParameterCount=0
+VariationCount=1
+Variation1=Designator=J1|UniqueId=\LQQNDJCT|Kind=1|AlternatePart=
+ParamVariationCount=0
+
 [Configuration1]
 Name=Sources
 ParameterCount=0
@@ -320,6 +329,11 @@ OutputName3=Test Point Report
 OutputDocumentPath3=
 OutputVariantName3=[No Variations]
 OutputDefault3=0
+OutputType4=Wire Bonding Table
+OutputName4=Wire Bonding Table Report
+OutputDocumentPath4=
+OutputVariantName4=[No Variations]
+OutputDefault4=0
 
 [OutputGroup5]
 Name=Fabrication Outputs
@@ -732,6 +746,15 @@ Type147=1
 Type148=1
 Type149=1
 Type150=1
+Type151=1
+Type152=1
+Type153=1
+Type154=1
+Type155=1
+Type156=1
+Type157=1
+Type158=1
+Type159=1
 
 [Difference Levels]
 Type1=1
@@ -815,6 +838,12 @@ Type78=1
 Type79=1
 Type80=1
 Type81=1
+Type82=1
+Type83=1
+Type84=1
+Type85=1
+Type86=1
+Type87=1
 
 [Electrical Rules Check]
 Type1=1
@@ -970,6 +999,16 @@ Type150=2
 Type151=2
 Type152=1
 Type153=1
+Type154=0
+Type155=0
+Type156=0
+Type157=0
+Type158=0
+Type159=0
+Type160=0
+Type161=0
+Type162=1
+Type163=1
 
 [ERC Connection Matrix]
 L1=NNNNNNNNNNNWNNNWW
@@ -1018,7 +1057,7 @@ UpdateToLatestRevision=1
 PartTypes=0
 ComponentLibIdentifierKind0=Vault Name
 ComponentLibraryIdentifier0=University of Galway
-ComponentDesignItemID0=CMP-004-000000-3
+ComponentDesignItemID0=CMP-004-000000-4
 ComponentSymbolReference0=PINA780BIDEKR
 ComponentUpdate0=1
 ComponentIsDeviceSheet0=0

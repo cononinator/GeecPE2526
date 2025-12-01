@@ -1,0 +1,51 @@
+StiFile 1.2
+# File generated on Mon Dec  1 11:57:21 2025
+
+Electric 1:
+  name: "U1"
+  voltage: 28.9394
+  current: -60.0001
+  pluspin: 1  voltage: 28.9394  current: -60.0001  name: "U1-8"
+  minpin: 0  voltage: 0  current: 60.0001  name: "U1.min"
+
+Electric 2:
+  name: "Q1"
+  voltage: 28.9062
+  current: 30
+  pluspin: 4  voltage: 28.9063  current: 21.6193  name: "Q1-6"
+  pluspin: 3  voltage: 28.9062  current: 8.38072  name: "Q1-7"
+  minpin: 0  voltage: 0  current: -30  name: "Q1.min"
+
+Electric 3:
+  name: "Q1"
+  voltage: 0.000554513
+  current: 30
+  pluspin: 4  voltage: 28.9063  current: 21.6193  name: "Q1-6"
+  pluspin: 3  voltage: 28.9062  current: 8.38072  name: "Q1-7"
+  minpin: 10  voltage: 28.9057  current: -7.84979  name: "Q1-1"
+  minpin: 9  voltage: 28.9057  current: -7.51315  name: "Q1-2"
+  minpin: 8  voltage: 28.9057  current: -7.91872  name: "Q1-3"
+  minpin: 7  voltage: 28.9057  current: -6.71837  name: "Q1-4"
+
+Electric 4:
+  name: "R1"
+  voltage: 0.0306
+  current: 30
+  pluspin: 11  voltage: 28.8969  current: 30  name: "R1-1"
+  minpin: 12  voltage: 28.8663  current: -30  name: "R1-2"
+
+Electric 5:
+  name: "MP3"
+  voltage: 28.8538
+  current: 30
+  pluspin: 13  voltage: 28.8537  current: 0.440113  name: "MP3-1"
+  pluspin: 14  voltage: 28.8537  current: 8.52659  name: "MP3-1"
+  pluspin: 15  voltage: 28.8537  current: 0.024548  name: "MP3-1"
+  pluspin: 16  voltage: 28.8538  current: 9.99426  name: "MP3-1"
+  pluspin: 17  voltage: 28.8538  current: 9.74577  name: "MP3-1"
+  pluspin: 18  voltage: 28.8537  current: 0.663855  name: "MP3-1"
+  pluspin: 19  voltage: 28.8537  current: 0.0524246  name: "MP3-1"
+  pluspin: 20  voltage: 28.8537  current: 0.0330886  name: "MP3-1"
+  pluspin: 21  voltage: 28.8537  current: 0.519372  name: "MP3-1"
+  minpin: 0  voltage: 0  current: -30  name: "MP3.min"
+
