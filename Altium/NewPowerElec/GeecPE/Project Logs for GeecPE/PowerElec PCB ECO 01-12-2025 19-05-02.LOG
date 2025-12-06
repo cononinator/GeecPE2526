@@ -1,0 +1,118 @@
+Removed Pin From Net: NetName=VBat Pin=U1-8
+Removed Pin From Net: NetName=AGND Pin=U1-13
+Removed Pin From Net: NetName=NetMP1_1 Pin=U1-15
+Removed Pin From Net: NetName=VBat Pin=U?-1
+Removed Pin From Net: NetName=AGND Pin=U?-2
+Removed Pin From Net: NetName=+12V Pin=U?-3
+Removed Member From Class: ClassName=PE Member=U1
+Change Component Footprint: Designator=U? Old Footprint=TSR0P6-WI_TRP New Footprint=VQFN15_DEK_TEX
+Change Component Comment : Designator=U? Old Comment=TSR 0.6-48120WI New Comment=INA780BIDEKR
+Change Managed Component Library Link : Designator=U? Old VaultGUID=A874345B-4659-45B6-922A-F5DCEF1EE603 New VaultGUID=A874345B-4659-45B6-922A-F5DCEF1EE603 Old ItemGUID=76f27a4f-1548-4335-8b88-5d94e8a5e2f5 New ItemGUID=F93E9562-A2B2-47B1-96B4-83BB017F227F Old RevisionGUID=f37f3d39-1983-43b3-a6b1-fdc54183ea56 New RevisionGUID=9d2f1512-3b0d-4608-b271-ba0ff05445fc
+Change component parameters: Designator = "U?" ("U?"); Footprint = "TSR0P6-WI_TRP"; UniqueID = "\TNURNGGM" ("\TNURNGGM")
+Change component parameters (AddParameter): Name = "Case/Package"; Value = "VQFN"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Channels"; Value = ""; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Copyright"; Value = "Copyright (C) 2025 Ultra Librarian. All rights reserved."; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Datasheet"; Value = "https://www.ti.com/lit/gpn/ina780b"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Design Item ID"; Value = "PINA780BIDEKR"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Frequency"; Value = ""; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Manufacturer_Name"; Value = "Texas Instruments"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Manufacturer_Part_Number"; Value = "PINA780BIDEKR"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Max Operating Temperature"; Value = ""; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Max Supply Voltage"; Value = ""; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Min Operating Temperature"; Value = ""; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Min Supply Voltage"; Value = ""; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Mounting Technology"; Value = ""; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Nominal Dual Supply"; Value = ""; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Nominal Gain Bandwidth Product"; Value = ""; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Nominal Supply Voltage"; Value = ""; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Output Type"; Value = ""; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Pins"; Value = "15"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Power"; Value = ""; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "RefDes"; Value = "RefDes"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "RoHS Compliant"; Value = ""; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Source"; Value = "PINA780BIDEKR.SchLib"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Type"; Value = "Linear"; VariantName = "[No Variations]"
+Added Component: Designator=C?(CAPC3216X06N)
+Add component (AddParameter): Name = "Capacitor Type"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Case/Package"; Value = "1206"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Max Operating Temperature"; Value = "125°C"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Min Operating Temperature"; Value = "-55°C"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Mounting Technology"; Value = "Surface Mount"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Pins"; Value = "2"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Ripple Current"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Ripple Current (AC)"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "RoHS Compliant"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Tolerance"; Value = "10%"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Value"; Value = "100nF"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Voltage Rating"; Value = "100V"; VariantName = "[No Variations]"
+Added Component: Designator=D?(DIOM2014X08N)
+Add component (AddParameter): Name = "Case/Package"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Forward Current"; Value = "200mA"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Forward Voltage"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Max Operating Temperature"; Value = "125°C"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Max Surge Current"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Min Operating Temperature"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Mounting Technology"; Value = "Surface Mount"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Peak Inverse Voltage"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Pins"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "RoHS Compliant"; Value = ""; VariantName = "[No Variations]"
+Added Component: Designator=R?(RESC3215X06N)
+Add component (AddParameter): Name = "Case/Package"; Value = "1206"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Max Operating Temperature"; Value = "155°C"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Min Operating Temperature"; Value = "-55°C"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Mounting Technology"; Value = "Surface Mount"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Pins"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Power"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "RoHS Compliant"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Tolerance"; Value = "1%"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Value"; Value = "1k"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Voltage Rating"; Value = "200V"; VariantName = "[No Variations]"
+Added Pin To Net: NetName=NetQ1_1 Pin=C?-1
+Added Pin To Net: NetName=+12V Pin=D?-2
+Added Pin To Net: NetName=+12V Pin=J1-1A
+Added Pin To Net: NetName=+12V Pin=J1-1B
+Added Pin To Net: NetName=AGND Pin=R?-1
+Added Pin To Net: NetName=VBat Pin=U?-8
+Added Pin To Net: NetName=AGND Pin=U?-13
+Added Pin To Net: NetName=NetMP1_1 Pin=U?-14
+Added Pin To Net: NetName=NetMP1_1 Pin=U?-15
+Change Net Name : Old Net Name=NetJ1_6 New Net Name=PWML
+Change Net Name : Old Net Name=NetJ1_7 New Net Name=IMot
+Change Net Name : Old Net Name=NetJ1_8 New Net Name=VMot
+Change Net Name : Old Net Name=NetJ1_9 New Net Name=SLEEP
+Change Net Name : Old Net Name=NetJ1_11 New Net Name=SPARE
+Change Net Name : Old Net Name=NetQ1_1 New Net Name=NetC?_1
+Added Pin To Net: NetName=+3V3 Pin=U?-12
+Added Pin To Net: NetName=+3V3 Pin=J1-10A
+Added Pin To Net: NetName=+3V3 Pin=J1-10B
+Added Net: Name=+3V3
+Added Pin To Net: NetName=GND Pin=J1-2A
+Added Pin To Net: NetName=GND Pin=J1-2B
+Added Pin To Net: NetName=GND Pin=J1-12A
+Added Pin To Net: NetName=GND Pin=J1-12B
+Added Net: Name=GND
+Added Pin To Net: NetName=NetC?_2 Pin=C?-2
+Added Pin To Net: NetName=NetC?_2 Pin=D?-1
+Added Net: Name=NetC?_2
+Added Pin To Net: NetName=NetU?_1 Pin=U?-1
+Added Pin To Net: NetName=NetU?_1 Pin=U?-2
+Added Net: Name=NetU?_1
+Added Pin To Net: NetName=NetU?_9 Pin=U?-9
+Added Pin To Net: NetName=NetU?_9 Pin=U?-10
+Added Net: Name=NetU?_9
+Added Pin To Net: NetName=PWMH Pin=R?-2
+Added Net: Name=PWMH
+Added Pin To Net: NetName=SCL Pin=U?-3
+Added Pin To Net: NetName=SCL Pin=U?-4
+Added Pin To Net: NetName=SCL Pin=U?-6
+Added Pin To Net: NetName=SCL Pin=J1-4A
+Added Pin To Net: NetName=SCL Pin=J1-4B
+Added Net: Name=SCL
+Added Pin To Net: NetName=SDA Pin=U?-5
+Added Pin To Net: NetName=SDA Pin=J1-3A
+Added Pin To Net: NetName=SDA Pin=J1-3B
+Added Net: Name=SDA
+Added Member To Class: ClassName=PE Member=Component C? C1206C104K1RACTU
+Added Member To Class: ClassName=PE Member=Component D? RB021VAM90TR
+Added Member To Class: ClassName=PE Member=Component R? CRGP1206F1K0
+Added Rule: Name=Schematic Supply Nets_3

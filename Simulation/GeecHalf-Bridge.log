@@ -1,6 +1,6 @@
 LTspice 24.1.9 for Windows
 Circuit: E:\Documents\Masters\Project\Simulation\GeecHalf-Bridge.net
-Start Time: Tue Nov 25 20:29:16 2025
+Start Time: Tue Dec  2 19:29:04 2025
 Options: Thev_Induc=1  reltol=1e-3 abstol=5u
 solver = Normal
 Maximum thread count: 12
@@ -15,33 +15,19 @@ C5: Increased Cpar to 7.5e-11
 Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
 Starting Gmin stepping
 Gmin = 10
+Gmin = 1.07374
 vernier = 0.5
-Gmin = 1.67772
 vernier = 0.25
 vernier = 0.125
 vernier = 0.0625
 vernier = 0.03125
 vernier = 0.015625
-Gmin = 1.64533
-vernier = 0.0208333
-vernier = 0.0277778
-Gmin = 1.5513
-vernier = 0.037037
-vernier = 0.0493827
-Gmin = 1.41257
-vernier = 0.0658435
-Gmin = 1.21941
-vernier = 0.0877914
-vernier = 0.0438957
-Gmin = 1.07023
-vernier = 0.0219478
-vernier = 0.0109739
-vernier = 0.00548696
-vernier = 0.00274348
-vernier = 0.00137174
-vernier = 0.00068587
-Gmin = 1.06436
-vernier = 0.000514403
+vernier = 0.0078125
+Gmin = 1.18892
+vernier = 0.00390625
+vernier = 0.00195312
+vernier = 0.000976562
+vernier = 0.000488281
 Gmin = 0
 Gmin stepping failed
 
@@ -128,7 +114,7 @@ Source Step = 93.4358%
 Source Step = 97.2753%
 Source stepping succeeded in finding the operating point.
 
-Total elapsed time: 12.005 seconds.
+Total elapsed time: 38.283 seconds.
 
 Files loaded:
 E:\Documents\Masters\Project\Simulation\GeecHalf-Bridge.net
@@ -139,5 +125,5 @@ C:\Users\conor\AppData\Local\LTspice\lib\sub\AD8411A.sub
 C:\Users\conor\AppData\Local\LTspice\lib\sub\LTC7063.sub
 C:\Users\conor\AppData\Local\LTspice\lib\sub\MAX9095.sub
 
-e_out: INTEG(V(out)*I(R2))=0.21714779295 FROM 0.0015 TO 0.0025
-e_in: INTEG(V(Vin)*I(V1))=-0.21724343655 FROM 0.0015 TO 0.0025
+e_out: INTEG(V(out)*I(R2))=0.195005993546 FROM 0.0015 TO 0.0025
+e_in: INTEG(V(Vin)*I(V1))=-0.204372204241 FROM 0.0015 TO 0.0025
