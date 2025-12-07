@@ -83,6 +83,74 @@ DItemRevisionGUID=
 GenerateClassCluster=0
 DocumentUniqueId=IEIDKRRV
 
+[Document3]
+DocumentPath=Power_Stage.SchDoc
+AnnotationEnabled=1
+AnnotateStartValue=1
+AnnotationIndexControlEnabled=0
+AnnotateSuffix=
+AnnotateScope=All
+AnnotateOrder=1
+DoLibraryUpdate=1
+DoDatabaseUpdate=1
+ClassGenCCAutoEnabled=1
+ClassGenCCAutoRoomEnabled=0
+ClassGenNCAutoScope=None
+DItemRevisionGUID=
+GenerateClassCluster=0
+DocumentUniqueId=DPEEFADS
+
+[Document4]
+DocumentPath=Isolation.SchDoc
+AnnotationEnabled=1
+AnnotateStartValue=1
+AnnotationIndexControlEnabled=0
+AnnotateSuffix=
+AnnotateScope=All
+AnnotateOrder=2
+DoLibraryUpdate=1
+DoDatabaseUpdate=1
+ClassGenCCAutoEnabled=1
+ClassGenCCAutoRoomEnabled=0
+ClassGenNCAutoScope=None
+DItemRevisionGUID=
+GenerateClassCluster=0
+DocumentUniqueId=LXRTSOXG
+
+[Document5]
+DocumentPath=Power_Supply.SchDoc
+AnnotationEnabled=1
+AnnotateStartValue=1
+AnnotationIndexControlEnabled=0
+AnnotateSuffix=
+AnnotateScope=All
+AnnotateOrder=3
+DoLibraryUpdate=1
+DoDatabaseUpdate=1
+ClassGenCCAutoEnabled=1
+ClassGenCCAutoRoomEnabled=0
+ClassGenNCAutoScope=None
+DItemRevisionGUID=
+GenerateClassCluster=0
+DocumentUniqueId=TNTHRJMF
+
+[Document6]
+DocumentPath=Soft_Start.SchDoc
+AnnotationEnabled=1
+AnnotateStartValue=1
+AnnotationIndexControlEnabled=0
+AnnotateSuffix=
+AnnotateScope=All
+AnnotateOrder=4
+DoLibraryUpdate=1
+DoDatabaseUpdate=1
+ClassGenCCAutoEnabled=1
+ClassGenCCAutoRoomEnabled=0
+ClassGenNCAutoScope=None
+DItemRevisionGUID=
+GenerateClassCluster=0
+DocumentUniqueId=JRDGWVUK
+
 [ProjectVariant1]
 UniqueId=969f2d00-5db7-486e-906f-c505ca5bf980
 Description=Variant of GeecPE
@@ -461,6 +529,11 @@ OutputName9=Report Single Pin Nets
 OutputDocumentPath9=
 OutputVariantName9=[No Variations]
 OutputDefault9=0
+OutputType10=BOM_ReportManufacturing
+OutputName10=Manufacturing Data
+OutputDocumentPath10=
+OutputVariantName10=[No Variations]
+OutputDefault10=0
 
 [OutputGroup7]
 Name=Other Outputs
@@ -755,6 +828,8 @@ Type156=1
 Type157=1
 Type158=1
 Type159=1
+Type160=1
+Type161=1
 
 [Difference Levels]
 Type1=1
@@ -844,6 +919,7 @@ Type84=1
 Type85=1
 Type86=1
 Type87=1
+Type88=1
 
 [Electrical Rules Check]
 Type1=1
@@ -1009,6 +1085,8 @@ Type160=0
 Type161=0
 Type162=1
 Type163=1
+Type164=1
+Type165=2
 
 [ERC Connection Matrix]
 L1=NNNNNNNNNNNWNNNWW
@@ -1057,11 +1135,11 @@ UpdateToLatestRevision=1
 PartTypes=0
 ComponentLibIdentifierKind0=Vault Name
 ComponentLibraryIdentifier0=University of Galway
-ComponentDesignItemID0=CMP-004-000000-4
-ComponentSymbolReference0=PINA780BIDEKR
+ComponentDesignItemID0=CMP-00024-00008-2
+ComponentSymbolReference0=LTC7063RMSE#PBF-Symbol-1
 ComponentUpdate0=1
 ComponentIsDeviceSheet0=0
-FullReplace=1
+FullReplace=0
 UpdateDesignatorLock=1
 UpdatePartIDLock=1
 PreserveParameterLocations=1
@@ -1076,62 +1154,34 @@ RemoveModels=1
 UpdateCurrentModels=1
 ParameterName0=Case/Package
 ParameterUpdate0=1
-ParameterName1=Channels
+ParameterName1=Comment
 ParameterUpdate1=1
-ParameterName2=Comment
+ParameterName2=Component Kind
 ParameterUpdate2=1
-ParameterName3=Component Kind
+ParameterName3=Description
 ParameterUpdate3=1
-ParameterName4=Copyright
+ParameterName4=Library Reference
 ParameterUpdate4=1
-ParameterName5=Datasheet
+ParameterName5=Max Operating Temperature
 ParameterUpdate5=1
-ParameterName6=Description
+ParameterName6=Min Operating Temperature
 ParameterUpdate6=1
-ParameterName7=Design Item ID
+ParameterName7=Mounting Technology
 ParameterUpdate7=1
-ParameterName8=Frequency
+ParameterName8=Nominal Supply Current
 ParameterUpdate8=1
-ParameterName9=Library Reference
+ParameterName9=Nominal Supply Voltage
 ParameterUpdate9=1
-ParameterName10=Manufacturer_Name
+ParameterName10=Pins
 ParameterUpdate10=1
-ParameterName11=Manufacturer_Part_Number
+ParameterName11=RoHS Compliant
 ParameterUpdate11=1
-ParameterName12=Max Operating Temperature
+ParameterName12=Voltage Rating
 ParameterUpdate12=1
-ParameterName13=Max Supply Voltage
-ParameterUpdate13=1
-ParameterName14=Min Operating Temperature
-ParameterUpdate14=1
-ParameterName15=Min Supply Voltage
-ParameterUpdate15=1
-ParameterName16=Mounting Technology
-ParameterUpdate16=1
-ParameterName17=Nominal Dual Supply
-ParameterUpdate17=1
-ParameterName18=Nominal Gain Bandwidth Product
-ParameterUpdate18=1
-ParameterName19=Nominal Supply Voltage
-ParameterUpdate19=1
-ParameterName20=Output Type
-ParameterUpdate20=1
-ParameterName21=Pins
-ParameterUpdate21=1
-ParameterName22=Power
-ParameterUpdate22=1
-ParameterName23=RefDes
-ParameterUpdate23=1
-ParameterName24=RoHS Compliant
-ParameterUpdate24=1
-ParameterName25=Source
-ParameterUpdate25=1
-ParameterName26=Type
-ParameterUpdate26=1
 ModelTypeGroup0=PCBLIB
 ModelTypeUpdate0=1
 ModelType0=PCBLIB
-ModelName0=VQFN15_DEK_TEX
+ModelName0=TSOP65P490X110_HS-13N
 ModelUpdate0=1
 
 [DatabaseUpdateOptions]

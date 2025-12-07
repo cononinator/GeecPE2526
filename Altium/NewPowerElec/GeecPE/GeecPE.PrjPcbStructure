@@ -1,1 +1,5 @@
 Record=TopLevelDocument|FileName=PE.SchDoc|SheetNumber=1
+Record=SheetSymbol|SourceDocument=PE.SchDoc|Designator=Isolation|SchDesignator=Isolation|FileName=Isolation.SchDoc|SheetNumber=3|SymbolType=Normal|RawFileName=Isolation.SchDoc|DesignItemId= |SourceLibraryName= |ObjectKind=Sheet Symbol|RevisionGUID= |ItemGUID= |VaultGUID= 
+Record=SheetSymbol|SourceDocument=PE.SchDoc|Designator=Power Stage|SchDesignator=Power Stage|FileName=Power_Stage.SchDoc|SheetNumber=2|SymbolType=Normal|RawFileName=Power_Stage.SchDoc|DesignItemId= |SourceLibraryName= |ObjectKind=Sheet Symbol|RevisionGUID= |ItemGUID= |VaultGUID= 
+Record=SheetSymbol|SourceDocument=PE.SchDoc|Designator=Power Supply|SchDesignator=Power Supply|FileName=Power_Supply.SchDoc|SheetNumber=4|SymbolType=Normal|RawFileName=Power_Supply.SchDoc|DesignItemId= |SourceLibraryName= |ObjectKind=Sheet Symbol|RevisionGUID= |ItemGUID= |VaultGUID= 
+Record=SheetSymbol|SourceDocument=PE.SchDoc|Designator=Soft Start|SchDesignator=Soft Start|FileName=Soft_Start.SchDoc|SheetNumber=5|SymbolType=Normal|RawFileName=Soft_Start.SchDoc|DesignItemId= |SourceLibraryName= |ObjectKind=Sheet Symbol|RevisionGUID= |ItemGUID= |VaultGUID= 
