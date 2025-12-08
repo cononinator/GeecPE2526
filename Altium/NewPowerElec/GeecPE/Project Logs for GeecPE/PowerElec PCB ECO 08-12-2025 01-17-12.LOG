@@ -1,0 +1,13 @@
+Change Component Designator: OldDesignator=C? NewDesignator=C66
+Change Component Designator: OldDesignator=C? NewDesignator=C67
+Change Component Designator: OldDesignator=C? NewDesignator=C68
+Change Component Designator: OldDesignator=C? NewDesignator=C69
+Change Component Designator: OldDesignator=C? NewDesignator=C70
+Change Component Designator: OldDesignator=C? NewDesignator=C71
+Change Component Designator: OldDesignator=C? NewDesignator=C72
+Added Member To Class: ClassName=Power_Stage Member=Component C66 ECA-1HM471
+Added Member To Class: ClassName=Power_Stage Member=Component C68 TPSD227K010R0150
+Added Member To Class: ClassName=Power_Stage Member=Component C69 Capacitor 0.5 pF +/- 0.1pF 25 V 0402
+Added Member To Class: ClassName=Power_Stage Member=Component C70 Capacitor 0.5 pF +/- 0.1pF 25 V 0402
+Added Member To Class: ClassName=Power_Stage Member=Component C71 Capacitor 0.5 pF +/- 0.1pF 25 V 0402
+Added Member To Class: ClassName=Power_Stage Member=Component C72 Capacitor 0.5 pF +/- 0.1pF 25 V 0402
