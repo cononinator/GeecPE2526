@@ -1,0 +1,99 @@
+Added Component: Designator=U1(VQFN15_DEK_TEX)
+Add component (AddParameter): Name = "Case/Package"; Value = "VQFN"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Channels"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Copyright"; Value = "Copyright (C) 2025 Ultra Librarian. All rights reserved."; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Datasheet"; Value = "https://www.ti.com/lit/gpn/ina780b"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Design Item ID"; Value = "PINA780BIDEKR"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Frequency"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer_Name"; Value = "Texas Instruments"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer_Part_Number"; Value = "PINA780BIDEKR"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Max Operating Temperature"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Max Supply Voltage"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Min Operating Temperature"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Min Supply Voltage"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Mounting Technology"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Nominal Dual Supply"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Nominal Gain Bandwidth Product"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Nominal Supply Voltage"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Output Type"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Pins"; Value = "15"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Power"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "RefDes"; Value = "RefDes"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "RoHS Compliant"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Source"; Value = "PINA780BIDEKR.SchLib"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Type"; Value = "Linear"; VariantName = "[No Variations]"
+Added Pin To Net: NetName=NetU1_1 Pin=U1-1
+Added Pin To Net: NetName=NetU1_1 Pin=U1-2
+Added Pin To Net: NetName=VBat Pin=U1-8
+Added Pin To Net: NetName=NetU1_9 Pin=U1-9
+Added Pin To Net: NetName=NetU1_9 Pin=U1-10
+Added Pin To Net: NetName=+3V3 Pin=U1-12
+Added Pin To Net: NetName=AGND Pin=U1-13
+Added Pin To Net: NetName=NetMP1_1 Pin=U1-14
+Added Pin To Net: NetName=NetMP1_1 Pin=U1-15
+Added Member To Class: ClassName=Power_Stage Member=Component C? GCM32EC71H106KA03L
+Added Member To Class: ClassName=Power_Stage Member=Component C? GCM32EC71H106KA03L
+Added Member To Class: ClassName=Power_Stage Member=Component C? GCM32EC71H106KA03L
+Added Member To Class: ClassName=Power_Stage Member=Component C? GCM32EC71H106KA03L
+Added Member To Class: ClassName=Power_Stage Member=Component C? GCM32EC71H106KA03L
+Added Member To Class: ClassName=Power_Stage Member=Component C? GCM32EC71H106KA03L
+Added Member To Class: ClassName=Power_Stage Member=Component C? GCM32EC71H106KA03L
+Added Member To Class: ClassName=Power_Stage Member=Component C? GCM32EC71H106KA03L
+Added Member To Class: ClassName=Power_Stage Member=Component C? GCM32EC71H106KA03L
+Added Member To Class: ClassName=Power_Stage Member=Component C? GCM32EC71H106KA03L
+Added Member To Class: ClassName=Power_Stage Member=Component C? GCM32EC71H106KA03L
+Added Member To Class: ClassName=Power_Stage Member=Component C? GCM32EC71H106KA03L
+Added Member To Class: ClassName=Power_Stage Member=Component C? GCM32EC71H106KA03L
+Added Member To Class: ClassName=Power_Stage Member=Component C? GCM32EC71H106KA03L
+Added Member To Class: ClassName=Power_Stage Member=Component C? GCM32EC71H106KA03L
+Added Member To Class: ClassName=Power_Stage Member=Component C? GCM32EC71H106KA03L
+Added Member To Class: ClassName=Power_Stage Member=Component C? GCM32EC71H106KA03L
+Added Member To Class: ClassName=Power_Stage Member=Component C? GCM32EC71H106KA03L
+Added Member To Class: ClassName=Power_Stage Member=Component C? GCM32EC71H106KA03L
+Added Member To Class: ClassName=Power_Stage Member=Component C? GCM32EC71H106KA03L
+Added Member To Class: ClassName=Power_Stage Member=Component C? GCM32EC71H106KA03L
+Added Member To Class: ClassName=Power_Stage Member=Component C? GCM32EC71H106KA03L
+Added Member To Class: ClassName=Power_Stage Member=Component C? GCM32EC71H106KA03L
+Added Member To Class: ClassName=Power_Stage Member=Component C? GCM32EC71H106KA03L
+Added Member To Class: ClassName=Power_Stage Member=Component C? GCM32EC71H106KA03L
+Added Member To Class: ClassName=Power_Stage Member=Component C? GCM32EC71H106KA03L
+Added Member To Class: ClassName=Power_Stage Member=Component C? GCM32EC71H106KA03L
+Added Member To Class: ClassName=Power_Stage Member=Component C? GCM32EC71H106KA03L
+Added Member To Class: ClassName=Power_Stage Member=Component C? GCM32EC71H106KA03L
+Added Member To Class: ClassName=Power_Stage Member=Component C? GCM32EC71H106KA03L
+Added Member To Class: ClassName=Power_Stage Member=Component C? GCM32EC71H106KA03L
+Added Member To Class: ClassName=Power_Stage Member=Component C? GCM32EC71H106KA03L
+Added Member To Class: ClassName=Power_Stage Member=Component C? GCM32EC71H106KA03L
+Added Member To Class: ClassName=Power_Stage Member=Component C? GCM32EC71H106KA03L
+Added Member To Class: ClassName=Power_Stage Member=Component C? GCM32EC71H106KA03L
+Added Member To Class: ClassName=Power_Stage Member=Component C? GCM32EC71H106KA03L
+Added Member To Class: ClassName=Power_Stage Member=Component C? GCM32EC71H106KA03L
+Added Member To Class: ClassName=Power_Stage Member=Component C? GCM32EC71H106KA03L
+Added Member To Class: ClassName=Power_Stage Member=Component C? GCM32EC71H106KA03L
+Added Member To Class: ClassName=Power_Stage Member=Component C? GCM32EC71H106KA03L
+Added Member To Class: ClassName=Power_Stage Member=Component C? C1206C104K1RACTU
+Added Member To Class: ClassName=Power_Stage Member=Component C? GCM32EC71H106KA03L
+Added Member To Class: ClassName=Power_Stage Member=Component C? GCM32EC71H106KA03L
+Added Member To Class: ClassName=Power_Stage Member=Component C? GCM32EC71H106KA03L
+Added Member To Class: ClassName=Power_Stage Member=Component C? GCM32EC71H106KA03L
+Added Member To Class: ClassName=Power_Stage Member=Component C? GCM32EC71H106KA03L
+Added Member To Class: ClassName=Power_Stage Member=Component C? GCM32EC71H106KA03L
+Added Member To Class: ClassName=Power_Stage Member=Component C? GCM32EC71H106KA03L
+Added Member To Class: ClassName=Power_Stage Member=Component C? GCM32EC71H106KA03L
+Added Member To Class: ClassName=Power_Stage Member=Component C? GCM32EC71H106KA03L
+Added Member To Class: ClassName=Power_Stage Member=Component C? GCM32EC71H106KA03L
+Added Member To Class: ClassName=Power_Stage Member=Component C? GCM32EC71H106KA03L
+Added Member To Class: ClassName=Power_Stage Member=Component C? GCM32EC71H106KA03L
+Added Member To Class: ClassName=Power_Stage Member=Component C? GCM32EC71H106KA03L
+Added Member To Class: ClassName=Power_Stage Member=Component C? GCM32EC71H106KA03L
+Added Member To Class: ClassName=Power_Stage Member=Component C? GCM32EC71H106KA03L
+Added Member To Class: ClassName=Power_Stage Member=Component C? GCM32EC71H106KA03L
+Added Member To Class: ClassName=Power_Stage Member=Component C? GCM32EC71H106KA03L
+Added Member To Class: ClassName=Power_Stage Member=Component C? GCM32EC71H106KA03L
+Added Member To Class: ClassName=Power_Stage Member=Component C? GCM32EC71H106KA03L
+Added Member To Class: ClassName=Power_Stage Member=Component C? GCM32EC71H106KA03L
+Added Member To Class: ClassName=Power_Stage Member=Component C? GCM32EC71H106KA03L
+Added Member To Class: ClassName=Power_Stage Member=Component C? GCM32EC71H106KA03L
+Added Member To Class: ClassName=Power_Stage Member=Component C? GCM32EC71H106KA03L
+Added Member To Class: ClassName=PE Member=Component U1 INA780BIDEKR
+Added Member To Class: ClassName=Power_Stage Member=Component U? AD8411AWBRZ

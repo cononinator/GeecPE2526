@@ -1,0 +1,5 @@
+Removed Pin From Net: NetName=PIN Pin=C67-1
+Removed Pin From Net: NetName=AGND Pin=C67-2
+Removed Pin From Net: NetName=PIN Pin=C68-1
+Removed Pin From Net: NetName=AGND Pin=C68-2
+Removed Member From Class: ClassName=Power_Stage Member=C68
