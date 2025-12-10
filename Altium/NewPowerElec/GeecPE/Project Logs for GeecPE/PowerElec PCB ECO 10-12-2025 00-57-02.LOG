@@ -1,0 +1,122 @@
+Change Component Footprint: Designator=C? Old Footprint=LGW2G271MELZ50-Footprint-1 New Footprint=UVR1J472MRD-Footprint-1
+Change Component Footprint: Designator=C? Old Footprint=LGW2G271MELZ50-Footprint-1 New Footprint=UVR1J472MRD-Footprint-1
+Change Component Footprint: Designator=C? Old Footprint=LGW2G271MELZ50-Footprint-1 New Footprint=UVR1J472MRD-Footprint-1
+Change Component Footprint: Designator=C? Old Footprint=LGW2G271MELZ50-Footprint-1 New Footprint=UVR1J472MRD-Footprint-1
+Change Component Footprint: Designator=C? Old Footprint=LGW2G271MELZ50-Footprint-1 New Footprint=UVR1J472MRD-Footprint-1
+Change Component Comment : Designator=C? Old Comment=lgw2g271melz50 New Comment=UVR1J472MRD
+Change Component Comment : Designator=C? Old Comment=lgw2g271melz50 New Comment=UVR1J472MRD
+Change Component Comment : Designator=C? Old Comment=lgw2g271melz50 New Comment=UVR1J472MRD
+Change Component Comment : Designator=C? Old Comment=lgw2g271melz50 New Comment=UVR1J472MRD
+Change Component Comment : Designator=C? Old Comment=lgw2g271melz50 New Comment=UVR1J472MRD
+Change Managed Component Library Link : Designator=C? Old VaultGUID=A874345B-4659-45B6-922A-F5DCEF1EE603 New VaultGUID=A874345B-4659-45B6-922A-F5DCEF1EE603 Old ItemGUID=5ade7980-8329-4ff7-93bc-99c9a174a35b New ItemGUID=99230392-9d84-4fd2-9d52-ba06ff7f2b06 Old RevisionGUID=216b547d-8d66-45f1-beb4-64c29d1c8b9a New RevisionGUID=bc7766fd-06cc-4749-a8e0-393101952a77
+Change Managed Component Library Link : Designator=C? Old VaultGUID=A874345B-4659-45B6-922A-F5DCEF1EE603 New VaultGUID=A874345B-4659-45B6-922A-F5DCEF1EE603 Old ItemGUID=5ade7980-8329-4ff7-93bc-99c9a174a35b New ItemGUID=99230392-9d84-4fd2-9d52-ba06ff7f2b06 Old RevisionGUID=216b547d-8d66-45f1-beb4-64c29d1c8b9a New RevisionGUID=bc7766fd-06cc-4749-a8e0-393101952a77
+Change Managed Component Library Link : Designator=C? Old VaultGUID=A874345B-4659-45B6-922A-F5DCEF1EE603 New VaultGUID=A874345B-4659-45B6-922A-F5DCEF1EE603 Old ItemGUID=5ade7980-8329-4ff7-93bc-99c9a174a35b New ItemGUID=99230392-9d84-4fd2-9d52-ba06ff7f2b06 Old RevisionGUID=216b547d-8d66-45f1-beb4-64c29d1c8b9a New RevisionGUID=bc7766fd-06cc-4749-a8e0-393101952a77
+Change Managed Component Library Link : Designator=C? Old VaultGUID=A874345B-4659-45B6-922A-F5DCEF1EE603 New VaultGUID=A874345B-4659-45B6-922A-F5DCEF1EE603 Old ItemGUID=5ade7980-8329-4ff7-93bc-99c9a174a35b New ItemGUID=99230392-9d84-4fd2-9d52-ba06ff7f2b06 Old RevisionGUID=216b547d-8d66-45f1-beb4-64c29d1c8b9a New RevisionGUID=bc7766fd-06cc-4749-a8e0-393101952a77
+Change Managed Component Library Link : Designator=C? Old VaultGUID=A874345B-4659-45B6-922A-F5DCEF1EE603 New VaultGUID=A874345B-4659-45B6-922A-F5DCEF1EE603 Old ItemGUID=5ade7980-8329-4ff7-93bc-99c9a174a35b New ItemGUID=99230392-9d84-4fd2-9d52-ba06ff7f2b06 Old RevisionGUID=216b547d-8d66-45f1-beb4-64c29d1c8b9a New RevisionGUID=bc7766fd-06cc-4749-a8e0-393101952a77
+Change component parameters: Designator = "C?" ("C?"); Footprint = "LGW2G271MELZ50-Footprint-1"; UniqueID = "\WXBEFRRD\KZGYWRII" ("\WXBEFRRD\KZGYWRII")
+Change component parameters (AddParameter): Name = "Capacitor Type"; Value = ""; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Case/Package"; Value = "Radial"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Max Operating Temperature"; Value = "85°C"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Min Operating Temperature"; Value = "-40°C"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Mounting Technology"; Value = "Through Hole"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Pins"; Value = "2"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Ripple Current"; Value = "3.2A"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Ripple Current (AC)"; Value = ""; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "RoHS Compliant"; Value = ""; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Tolerance"; Value = "20%"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Value"; Value = "4.7mF"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Voltage Rating"; Value = "63V"; VariantName = "[No Variations]"
+Change component parameters: Designator = "C?" ("C?"); Footprint = "LGW2G271MELZ50-Footprint-1"; UniqueID = "\WXBEFRRD\BXJWEWLY" ("\WXBEFRRD\BXJWEWLY")
+Change component parameters (AddParameter): Name = "Capacitor Type"; Value = ""; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Case/Package"; Value = "Radial"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Max Operating Temperature"; Value = "85°C"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Min Operating Temperature"; Value = "-40°C"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Mounting Technology"; Value = "Through Hole"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Pins"; Value = "2"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Ripple Current"; Value = "3.2A"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Ripple Current (AC)"; Value = ""; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "RoHS Compliant"; Value = ""; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Tolerance"; Value = "20%"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Value"; Value = "4.7mF"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Voltage Rating"; Value = "63V"; VariantName = "[No Variations]"
+Change component parameters: Designator = "C?" ("C?"); Footprint = "LGW2G271MELZ50-Footprint-1"; UniqueID = "\WXBEFRRD\TCUDLUJT" ("\WXBEFRRD\TCUDLUJT")
+Change component parameters (AddParameter): Name = "Capacitor Type"; Value = ""; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Case/Package"; Value = "Radial"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Max Operating Temperature"; Value = "85°C"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Min Operating Temperature"; Value = "-40°C"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Mounting Technology"; Value = "Through Hole"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Pins"; Value = "2"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Ripple Current"; Value = "3.2A"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Ripple Current (AC)"; Value = ""; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "RoHS Compliant"; Value = ""; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Tolerance"; Value = "20%"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Value"; Value = "4.7mF"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Voltage Rating"; Value = "63V"; VariantName = "[No Variations]"
+Change component parameters: Designator = "C?" ("C?"); Footprint = "LGW2G271MELZ50-Footprint-1"; UniqueID = "\WXBEFRRD\NQRQFDFW" ("\WXBEFRRD\NQRQFDFW")
+Change component parameters (AddParameter): Name = "Capacitor Type"; Value = ""; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Case/Package"; Value = "Radial"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Max Operating Temperature"; Value = "85°C"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Min Operating Temperature"; Value = "-40°C"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Mounting Technology"; Value = "Through Hole"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Pins"; Value = "2"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Ripple Current"; Value = "3.2A"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Ripple Current (AC)"; Value = ""; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "RoHS Compliant"; Value = ""; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Tolerance"; Value = "20%"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Value"; Value = "4.7mF"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Voltage Rating"; Value = "63V"; VariantName = "[No Variations]"
+Change component parameters: Designator = "C?" ("C?"); Footprint = "LGW2G271MELZ50-Footprint-1"; UniqueID = "\WXBEFRRD\IQYRYTLT" ("\WXBEFRRD\IQYRYTLT")
+Change component parameters (AddParameter): Name = "Capacitor Type"; Value = ""; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Case/Package"; Value = "Radial"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Max Operating Temperature"; Value = "85°C"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Min Operating Temperature"; Value = "-40°C"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Mounting Technology"; Value = "Through Hole"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Pins"; Value = "2"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Ripple Current"; Value = "3.2A"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Ripple Current (AC)"; Value = ""; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "RoHS Compliant"; Value = ""; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Tolerance"; Value = "20%"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Value"; Value = "4.7mF"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Voltage Rating"; Value = "63V"; VariantName = "[No Variations]"
+Add Net: Net with name "+12V" already exists
+Add Net: Net with name "NetC?_2" already exists
+Add Net: Net with name "NetC?_2" already exists
+Add Net: Net with name "NetR?_1" already exists
+Add Net: Net with name "NetR?_1" already exists
+Add Net: Net with name "NetR?_1" already exists
+Add Net: Net with name "NetR?_1" already exists
+Add Net: Net with name "NetR?_2" already exists
+Add Net: Net with name "NetU?_12" already exists
+Add Net: Net with name "NetU?_13" already exists
+Add Net: Net with name "VBAT" already exists
+Added Member To Class: ClassName=Isolation Member=Component C? CL31B105KBHNNNE
+Added Member To Class: ClassName=Isolation Member=Component C? C1206C104K1RACTU
+Added Member To Class: ClassName=Isolation Member=Component C? CL31B105KBHNNNE
+Added Member To Class: ClassName=Isolation Member=Component C? CL31B105KBHNNNE
+Added Member To Class: ClassName=Isolation Member=Component C? C1206C104K1RACTU
+Added Member To Class: ClassName=Isolation Member=Component C? CL31B105KBHNNNE
+Added Member To Class: ClassName=Isolation Member=Component C? C1206C104K1RACTU
+Added Member To Class: ClassName=Isolation Member=Component C? C1206C104K1RACTU
+Added Member To Class: ClassName=Power Stage Member=Component C? UVR1J472MRD
+Added Member To Class: ClassName=Power Stage Member=Component C? CL31B102KGFNNNE
+Added Member To Class: ClassName=Power Stage Member=Component C? UVR1J472MRD
+Added Member To Class: ClassName=Power Stage Member=Component C? GCM32EC71H106KA03L
+Added Member To Class: ClassName=Power Stage Member=Component C? GCM32EC71H106KA03L
+Added Member To Class: ClassName=Power Stage Member=Component C? GCM32EC71H106KA03L
+Added Member To Class: ClassName=Power Stage Member=Component C? UVR1J472MRD
+Added Member To Class: ClassName=Power Stage Member=Component C? GCM32EC71H106KA03L
+Added Member To Class: ClassName=Power Stage Member=Component C? GCM32EC71H106KA03L
+Added Member To Class: ClassName=Power Stage Member=Component C? UVR1J472MRD
+Added Member To Class: ClassName=Power Stage Member=Component C? GCM32EC71H106KA03L
+Added Member To Class: ClassName=Power Stage Member=Component C? UVR1J472MRD
+Added Member To Class: ClassName=Power Stage Member=Component C? CL31B105KBHNNNE
+Added Member To Class: ClassName=Power Stage Member=Component C? GCM32EC71H106KA03L
+Added Member To Class: ClassName=Soft Start Member=Component C? C1206C104K1RACTU
+Added Member To Class: ClassName=Soft Start Member=Component Q? IPB014N06NATMA1
+Added Member To Class: ClassName=Isolation Member=Component R? 1206W4F1002T5E
+Added Member To Class: ClassName=Isolation Member=Component R? 1206W4F1002T5E
+Added Member To Class: ClassName=Isolation Member=Component R? 1206W4F1002T5E
+Added Member To Class: ClassName=Isolation Member=Component R? 1206W4F1002T5E
+Added Member To Class: ClassName=Power Stage Member=Component R? CHSA2512R0010F
+Added Member To Class: ClassName=Isolation Member=Component U? ADUM3190BRQZ
+Added Member To Class: ClassName=Isolation Member=Component U? ADUM1252AWA+
