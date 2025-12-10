@@ -1125,8 +1125,8 @@ UpdateToLatestRevision=1
 PartTypes=0
 ComponentLibIdentifierKind0=Vault Name
 ComponentLibraryIdentifier0=University of Galway
-ComponentDesignItemID0=CMP-014-00003-3
-ComponentSymbolReference0=AD8411AWBRZ-Symbol-1
+ComponentDesignItemID0=CMP-014-00002-2
+ComponentSymbolReference0=ADUM3190BRQZ-Symbol-1
 ComponentUpdate0=1
 ComponentIsDeviceSheet0=0
 FullReplace=0
@@ -1154,7 +1154,7 @@ ParameterName4=Description
 ParameterUpdate4=1
 ParameterName5=Frequency
 ParameterUpdate5=1
-ParameterName6=JLCPN
+ParameterName6=JLCPCB
 ParameterUpdate6=1
 ParameterName7=Library Reference
 ParameterUpdate7=1
@@ -1187,7 +1187,7 @@ ParameterUpdate20=1
 ModelTypeGroup0=PCBLIB
 ModelTypeUpdate0=1
 ModelType0=PCBLIB
-ModelName0=SOIC127P600X175-8N
+ModelName0=SOP64P600X175-16N
 ModelUpdate0=1
 
 [DatabaseUpdateOptions]
@@ -1195,6 +1195,9 @@ SelectedOnly=0
 UpdateVariants=1
 UpdateToLatestRevision=1
 PartTypes=0
+
+[NetInfos]
+Net1=NetName=DGND|NetColor=clBlack
 
 [Comparison Options]
 ComparisonOptions0=Kind=Net|MinPercent=75|MinMatch=3|ShowMatch=0|UseName=-1|InclAllRules=0
