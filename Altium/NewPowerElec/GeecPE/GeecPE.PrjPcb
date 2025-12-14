@@ -47,6 +47,7 @@ CrossRefPorts=3
 CrossRefCrossSheets=1
 CrossRefSheetEntries=0
 CrossRefFollowFromMainSettings=1
+CurrentVariant=Variant of GeecPE
 
 [Preferences]
 PrefsVaultGUID=
@@ -154,13 +155,54 @@ DItemRevisionGUID=
 GenerateClassCluster=0
 DocumentUniqueId=JRDGWVUK
 
+[Document7]
+DocumentPath=GeecPE.Annotation
+AnnotationEnabled=1
+AnnotateStartValue=1
+AnnotationIndexControlEnabled=0
+AnnotateSuffix=
+AnnotateScope=All
+AnnotateOrder=-1
+DoLibraryUpdate=1
+DoDatabaseUpdate=1
+ClassGenCCAutoEnabled=1
+ClassGenCCAutoRoomEnabled=0
+ClassGenNCAutoScope=None
+DItemRevisionGUID=
+GenerateClassCluster=0
+DocumentUniqueId=
+
 [ProjectVariant1]
 UniqueId=969f2d00-5db7-486e-906f-c505ca5bf980
 Description=Variant of GeecPE
 AllowFabrication=0
 ParameterCount=0
-VariationCount=1
-Variation1=Designator=J1|UniqueId=\LQQNDJCT|Kind=1|AlternatePart=
+VariationCount=0
+ParamVariationCount=0
+
+[ProjectVariant2]
+UniqueId=349f13db-aad4-463b-8ce7-b15642b2664f
+Description=Assembly Variant
+AllowFabrication=0
+ParameterCount=0
+VariationCount=17
+Variation1=Designator=R?|UniqueId=\YUANDUXF|Kind=1|AlternatePart=
+Variation2=Designator=R?|UniqueId=\FKDCHZLS|Kind=1|AlternatePart=
+Variation3=Designator=Q1|UniqueId=\WXBEFRRD\SWVZAZPF|Kind=1|AlternatePart=
+Variation4=Designator=Q2|UniqueId=\WXBEFRRD\BADPCNSN|Kind=1|AlternatePart=
+Variation5=Designator=J1|UniqueId=\LQQNDJCT|Kind=1|AlternatePart=
+Variation6=Designator=MP1|UniqueId=\PEIWFDPK|Kind=1|AlternatePart=
+Variation7=Designator=MP2|UniqueId=\BUSLXPXW|Kind=1|AlternatePart=
+Variation8=Designator=MP?|UniqueId=\OUJIGEJE|Kind=1|AlternatePart=
+Variation9=Designator=C17|UniqueId=\WXBEFRRD\BXJWEWLY|Kind=1|AlternatePart=
+Variation10=Designator=C33|UniqueId=\WXBEFRRD\TCUDLUJT|Kind=1|AlternatePart=
+Variation11=Designator=C26|UniqueId=\WXBEFRRD\KZGYWRII|Kind=1|AlternatePart=
+Variation12=Designator=C21|UniqueId=\WXBEFRRD\IQYRYTLT|Kind=1|AlternatePart=
+Variation13=Designator=C37|UniqueId=\WXBEFRRD\NQRQFDFW|Kind=1|AlternatePart=
+Variation14=Designator=R?|UniqueId=\YPITDDJK|Kind=1|AlternatePart=
+Variation15=Designator=R?|UniqueId=\BKMTIWLY|Kind=1|AlternatePart=
+Variation16=Designator=C41|UniqueId=\WXBEFRRD\KZPQKMLL|Kind=0|AlternatePart=
+Variation17=Designator=R14|UniqueId=\MWKOWCID\CQCPAANL|Kind=1|AlternatePart=
 ParamVariationCount=0
 
 [Configuration1]
@@ -1111,6 +1153,46 @@ MatchStrictly2=1
 PhysicalNamingFormat=$Component_$RoomName
 GlobalIndexSortOrder=3
 GlobalIndexSortLocation=0
+UniqueIDPath0=\IYABJECR
+DocumentName0=Isolation.SchDoc
+IsEnabled0=1
+SelectionScope0=All
+Order0=1
+IndexEnabled0=0
+IndexStartValue0=1
+Suffix0=
+UniqueIDPath1=
+DocumentName1=PE.SchDoc
+IsEnabled1=1
+SelectionScope1=All
+Order1=2
+IndexEnabled1=0
+IndexStartValue1=1
+Suffix1=
+UniqueIDPath2=\WXBEFRRD
+DocumentName2=Power_Stage.SchDoc
+IsEnabled2=1
+SelectionScope2=All
+Order2=3
+IndexEnabled2=0
+IndexStartValue2=1
+Suffix2=
+UniqueIDPath3=\CMFHIYYD
+DocumentName3=Power_Supply.SchDoc
+IsEnabled3=1
+SelectionScope3=All
+Order3=4
+IndexEnabled3=0
+IndexStartValue3=1
+Suffix3=
+UniqueIDPath4=\MWKOWCID
+DocumentName4=Soft_Start.SchDoc
+IsEnabled4=1
+SelectionScope4=All
+Order4=5
+IndexEnabled4=0
+IndexStartValue4=1
+Suffix4=
 
 [PrjClassGen]
 CompClassManualEnabled=0
@@ -1132,12 +1214,6 @@ ComponentDesignItemID0=CMP-00000-4
 ComponentSymbolReference0=CMP-00089-6
 ComponentUpdate0=1
 ComponentIsDeviceSheet0=0
-ComponentLibIdentifierKind1=Vault Name
-ComponentLibraryIdentifier1=University of Galway
-ComponentDesignItemID1=CMP-001-00084-4
-ComponentSymbolReference1=CAP-P-2
-ComponentUpdate1=1
-ComponentIsDeviceSheet1=0
 FullReplace=0
 UpdateDesignatorLock=1
 UpdatePartIDLock=1
@@ -1151,72 +1227,57 @@ RemoveParameters=0
 AddModels=1
 RemoveModels=1
 UpdateCurrentModels=1
-ParameterName0=Capacitor Type
+ParameterName0=Case/Package
 ParameterUpdate0=1
-ParameterName1=Case/Package
+ParameterName1=Comment
 ParameterUpdate1=1
-ParameterName2=Comment
+ParameterName2=Component Kind
 ParameterUpdate2=1
-ParameterName3=Component Kind
+ParameterName3=Continuous Drain Current (ID)
 ParameterUpdate3=1
-ParameterName4=Continuous Drain Current (ID)
+ParameterName4=Description
 ParameterUpdate4=1
-ParameterName5=Description
+ParameterName5=Drain to Source Breakdown Voltage
 ParameterUpdate5=1
-ParameterName6=Drain to Source Breakdown Voltage
+ParameterName6=Drain to Source Resistance
 ParameterUpdate6=1
-ParameterName7=Drain to Source Resistance
+ParameterName7=Drain to Source Voltage (Vdss)
 ParameterUpdate7=1
-ParameterName8=Drain to Source Voltage (Vdss)
+ParameterName8=Frequency
 ParameterUpdate8=1
-ParameterName9=Frequency
+ParameterName9=Gate to Source Voltage (Vgs)
 ParameterUpdate9=1
-ParameterName10=Gate to Source Voltage (Vgs)
+ParameterName10=Library Reference
 ParameterUpdate10=1
-ParameterName11=Library Reference
+ParameterName11=Max Operating Temperature
 ParameterUpdate11=1
-ParameterName12=Max Operating Temperature
+ParameterName12=Max Power Dissipation
 ParameterUpdate12=1
-ParameterName13=Max Power Dissipation
+ParameterName13=Min Operating Temperature
 ParameterUpdate13=1
-ParameterName14=Min Operating Temperature
+ParameterName14=Mounting Technology
 ParameterUpdate14=1
-ParameterName15=Mounting Technology
+ParameterName15=Nominal Dual Supply
 ParameterUpdate15=1
-ParameterName16=Nominal Dual Supply
+ParameterName16=Nominal Vgs
 ParameterUpdate16=1
-ParameterName17=Nominal Vgs
+ParameterName17=Pins
 ParameterUpdate17=1
-ParameterName18=Pins
+ParameterName18=Power
 ParameterUpdate18=1
-ParameterName19=Power
+ParameterName19=RoHS Compliant
 ParameterUpdate19=1
-ParameterName20=Ripple Current
+ParameterName20=Transistor Type
 ParameterUpdate20=1
-ParameterName21=Ripple Current (AC)
+ParameterName21=Vgs (Max)
 ParameterUpdate21=1
-ParameterName22=RoHS Compliant
+ParameterName22=Vgs(th) (Max) @ Id
 ParameterUpdate22=1
-ParameterName23=Tolerance
-ParameterUpdate23=1
-ParameterName24=Transistor Type
-ParameterUpdate24=1
-ParameterName25=Value
-ParameterUpdate25=1
-ParameterName26=Vgs (Max)
-ParameterUpdate26=1
-ParameterName27=Vgs(th) (Max) @ Id
-ParameterUpdate27=1
-ParameterName28=Voltage Rating
-ParameterUpdate28=1
 ModelTypeGroup0=PCBLIB
 ModelTypeUpdate0=1
 ModelType0=PCBLIB
 ModelName0=INF-PG-TO263-7-1_M
 ModelUpdate0=1
-ModelType1=PCBLIB
-ModelName1=UVR1J472MRD-Footprint-1
-ModelUpdate1=1
 
 [DatabaseUpdateOptions]
 SelectedOnly=0
