@@ -47,7 +47,6 @@ CrossRefPorts=3
 CrossRefCrossSheets=1
 CrossRefSheetEntries=0
 CrossRefFollowFromMainSettings=1
-CurrentVariant=Variant of GeecPE
 
 [Preferences]
 PrefsVaultGUID=
@@ -204,6 +203,10 @@ Variation15=Designator=R?|UniqueId=\BKMTIWLY|Kind=1|AlternatePart=
 Variation16=Designator=C41|UniqueId=\WXBEFRRD\KZPQKMLL|Kind=0|AlternatePart=
 Variation17=Designator=R14|UniqueId=\MWKOWCID\CQCPAANL|Kind=1|AlternatePart=
 ParamVariationCount=0
+
+[GeneratedDocument1]
+DocumentPath=Project Outputs for GeecPE\Design Rule Check - PowerElec.html
+DItemRevisionGUID=
 
 [Configuration1]
 Name=Sources
