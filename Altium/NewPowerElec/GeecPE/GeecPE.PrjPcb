@@ -33,7 +33,7 @@ FSMCodingStyle=eFMSDropDownList_OneProcess
 FSMEncodingStyle=eFMSDropDownList_OneHot
 IsProjectConflictPreventionWarningsEnabled=0
 ConstraintManagerFlow=0
-IsVirtualBomDocumentRemoved=0
+IsVirtualBomDocumentRemoved=1
 OutputPath=
 LogFolderPath=
 ManagedProjectGUID=26E6E7B0-06EF-4E54-B481-690587E593D5
@@ -51,6 +51,9 @@ CrossRefFollowFromMainSettings=1
 [Preferences]
 PrefsVaultGUID=
 PrefsRevisionGUID=
+
+[Release]
+ReleaseTarget=3
 
 [Document1]
 DocumentPath=PE.SchDoc
@@ -171,6 +174,40 @@ DItemRevisionGUID=
 GenerateClassCluster=0
 DocumentUniqueId=
 
+[Document8]
+DocumentPath=Assembly.OutJob
+AnnotationEnabled=1
+AnnotateStartValue=1
+AnnotationIndexControlEnabled=0
+AnnotateSuffix=
+AnnotateScope=All
+AnnotateOrder=-1
+DoLibraryUpdate=1
+DoDatabaseUpdate=1
+ClassGenCCAutoEnabled=1
+ClassGenCCAutoRoomEnabled=0
+ClassGenNCAutoScope=None
+DItemRevisionGUID=
+GenerateClassCluster=0
+DocumentUniqueId=
+
+[Document9]
+DocumentPath=Fabrication.OutJob
+AnnotationEnabled=1
+AnnotateStartValue=1
+AnnotationIndexControlEnabled=0
+AnnotateSuffix=
+AnnotateScope=All
+AnnotateOrder=-1
+DoLibraryUpdate=1
+DoDatabaseUpdate=1
+ClassGenCCAutoEnabled=1
+ClassGenCCAutoRoomEnabled=0
+ClassGenNCAutoScope=None
+DItemRevisionGUID=
+GenerateClassCluster=0
+DocumentUniqueId=
+
 [ProjectVariant1]
 UniqueId=969f2d00-5db7-486e-906f-c505ca5bf980
 Description=Variant of GeecPE
@@ -184,7 +221,7 @@ UniqueId=349f13db-aad4-463b-8ce7-b15642b2664f
 Description=Assembly Variant
 AllowFabrication=0
 ParameterCount=0
-VariationCount=17
+VariationCount=16
 Variation1=Designator=R?|UniqueId=\YUANDUXF|Kind=1|AlternatePart=
 Variation2=Designator=R?|UniqueId=\FKDCHZLS|Kind=1|AlternatePart=
 Variation3=Designator=Q1|UniqueId=\WXBEFRRD\SWVZAZPF|Kind=1|AlternatePart=
@@ -200,8 +237,7 @@ Variation12=Designator=C21|UniqueId=\WXBEFRRD\IQYRYTLT|Kind=1|AlternatePart=
 Variation13=Designator=C37|UniqueId=\WXBEFRRD\NQRQFDFW|Kind=1|AlternatePart=
 Variation14=Designator=R?|UniqueId=\YPITDDJK|Kind=1|AlternatePart=
 Variation15=Designator=R?|UniqueId=\BKMTIWLY|Kind=1|AlternatePart=
-Variation16=Designator=C41|UniqueId=\WXBEFRRD\KZPQKMLL|Kind=0|AlternatePart=
-Variation17=Designator=R14|UniqueId=\MWKOWCID\CQCPAANL|Kind=1|AlternatePart=
+Variation16=Designator=R14|UniqueId=\MWKOWCID\CQCPAANL|Kind=1|AlternatePart=
 ParamVariationCount=0
 
 [GeneratedDocument1]
@@ -212,11 +248,59 @@ DItemRevisionGUID=
 Name=Sources
 ParameterCount=0
 ConstraintFileCount=0
-ReleaseItemId=
+ReleaseItemId=7321A5A4-041E-4C0A-811E-7E73EF337C17
 Variant=[No Variations]
 OutputJobsCount=0
 ContentTypeGUID=CB6F2064-E317-11DF-B822-12313F0024A2
 ConfigurationType=Source
+
+[Configuration2]
+Name=Fabrication
+ParameterCount=0
+ConstraintFileCount=0
+ReleaseItemId=EE78F844-177D-4BCE-BBF1-9049490B7778
+Variant=[No Variations]
+OutputJobsCount=1
+DocumentReferenceClass1=DocumentReference
+OutputJobFileName1=Fabrication.OutJob
+ContentTypeGUID=0C520D2A-E60C-11DF-B822-12313F0024A2
+ConfigurationType=Fabrication
+
+[Configuration3]
+Name=Assembly Variant of GeecPE
+ParameterCount=0
+ConstraintFileCount=0
+ReleaseItemId=A773D1BC-A74D-4623-B6A7-897D9B4143FB
+Variant=Variant of GeecPE
+OutputJobsCount=1
+DocumentReferenceClass1=DocumentReference
+OutputJobFileName1=Assembly.OutJob
+ContentTypeGUID=0D12F8DC-E60C-11DF-B822-12313F0024A2
+ConfigurationType=Assembly
+
+[Configuration4]
+Name=Assembly Assembly Variant
+ParameterCount=0
+ConstraintFileCount=0
+ReleaseItemId=7534F108-DC70-4185-BD83-B56CE31412E1
+Variant=Assembly Variant
+OutputJobsCount=1
+DocumentReferenceClass1=DocumentReference
+OutputJobFileName1=Assembly.OutJob
+ContentTypeGUID=0D12F8DC-E60C-11DF-B822-12313F0024A2
+ConfigurationType=Assembly
+
+[Configuration5]
+Name=Assembly
+ParameterCount=0
+ConstraintFileCount=0
+ReleaseItemId=08919FCE-9EC0-45AF-BB4A-8439BD9F6504
+Variant=[No Variations]
+OutputJobsCount=1
+DocumentReferenceClass1=DocumentReference
+OutputJobFileName1=Assembly.OutJob
+ContentTypeGUID=0D12F8DC-E60C-11DF-B822-12313F0024A2
+ConfigurationType=Assembly
 
 [OutputGroup1]
 Name=Netlist Outputs
@@ -577,6 +661,11 @@ OutputName9=Report Single Pin Nets
 OutputDocumentPath9=
 OutputVariantName9=[No Variations]
 OutputDefault9=0
+OutputType10=BOM_ReportManufacturing
+OutputName10=Manufacturing Data
+OutputDocumentPath10=
+OutputVariantName10=[No Variations]
+OutputDefault10=0
 
 [OutputGroup7]
 Name=Other Outputs
@@ -871,6 +960,8 @@ Type156=1
 Type157=1
 Type158=1
 Type159=1
+Type160=1
+Type161=1
 
 [Difference Levels]
 Type1=1
@@ -960,6 +1051,7 @@ Type84=1
 Type85=1
 Type86=1
 Type87=1
+Type88=1
 
 [Electrical Rules Check]
 Type1=1
@@ -1125,6 +1217,8 @@ Type160=0
 Type161=0
 Type162=1
 Type163=1
+Type164=1
+Type165=2
 
 [ERC Connection Matrix]
 L1=NNNNNNNNNNNWNNNWW
