@@ -239,9 +239,9 @@ UniqueId=349f13db-aad4-463b-8ce7-b15642b2664f
 Description=Assembly Variant
 AllowFabrication=0
 ParameterCount=0
-VariationCount=16
-Variation1=Designator=R?|UniqueId=\YUANDUXF|Kind=1|AlternatePart=
-Variation2=Designator=R?|UniqueId=\FKDCHZLS|Kind=1|AlternatePart=
+VariationCount=25
+Variation1=Designator=R?|UniqueId=\YUANDUXF|Kind=0|AlternatePart=
+Variation2=Designator=R?|UniqueId=\FKDCHZLS|Kind=0|AlternatePart=
 Variation3=Designator=Q1|UniqueId=\WXBEFRRD\SWVZAZPF|Kind=1|AlternatePart=
 Variation4=Designator=Q2|UniqueId=\WXBEFRRD\BADPCNSN|Kind=1|AlternatePart=
 Variation5=Designator=J1|UniqueId=\LQQNDJCT|Kind=1|AlternatePart=
@@ -256,6 +256,15 @@ Variation13=Designator=C37|UniqueId=\WXBEFRRD\NQRQFDFW|Kind=1|AlternatePart=
 Variation14=Designator=R?|UniqueId=\YPITDDJK|Kind=1|AlternatePart=
 Variation15=Designator=R?|UniqueId=\BKMTIWLY|Kind=1|AlternatePart=
 Variation16=Designator=R14|UniqueId=\MWKOWCID\CQCPAANL|Kind=1|AlternatePart=
+Variation17=Designator=P4|UniqueId=\MWKOWCID\TWHSMNZT|Kind=1|AlternatePart=
+Variation18=Designator=P2|UniqueId=\CMFHIYYD\JVLPDEQJ|Kind=1|AlternatePart=
+Variation19=Designator=P3|UniqueId=\CMFHIYYD\UNNOUBEZ|Kind=1|AlternatePart=
+Variation20=Designator=MP4|UniqueId=\JOGXANNV|Kind=1|AlternatePart=
+Variation21=Designator=P1|UniqueId=\WXBEFRRD\QAJYHUYC|Kind=1|AlternatePart=
+Variation22=Designator=MH1|UniqueId=\JCCZFJPO\PJIRDLTX|Kind=1|AlternatePart=
+Variation23=Designator=MH2|UniqueId=\JCCZFJPO\DTZZSSAD|Kind=1|AlternatePart=
+Variation24=Designator=MH3|UniqueId=\JCCZFJPO\GXWZOEKQ|Kind=1|AlternatePart=
+Variation25=Designator=MH4|UniqueId=\JCCZFJPO\SUJRHCSG|Kind=1|AlternatePart=
 ParamVariationCount=0
 
 [GeneratedDocument1]
