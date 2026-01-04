@@ -209,6 +209,23 @@ DItemRevisionGUID=
 GenerateClassCluster=0
 DocumentUniqueId=
 
+[Document10]
+DocumentPath=Mechanical.SchDoc
+AnnotationEnabled=1
+AnnotateStartValue=1
+AnnotationIndexControlEnabled=0
+AnnotateSuffix=
+AnnotateScope=All
+AnnotateOrder=-1
+DoLibraryUpdate=1
+DoDatabaseUpdate=1
+ClassGenCCAutoEnabled=1
+ClassGenCCAutoRoomEnabled=0
+ClassGenNCAutoScope=None
+DItemRevisionGUID=
+GenerateClassCluster=0
+DocumentUniqueId=XZWTPSBP
+
 [ProjectVariant1]
 UniqueId=969f2d00-5db7-486e-906f-c505ca5bf980
 Description=Variant of GeecPE
@@ -662,11 +679,6 @@ OutputName9=Report Single Pin Nets
 OutputDocumentPath9=
 OutputVariantName9=[No Variations]
 OutputDefault9=0
-OutputType10=BOM_ReportManufacturing
-OutputName10=Manufacturing Data
-OutputDocumentPath10=
-OutputVariantName10=[No Variations]
-OutputDefault10=0
 
 [OutputGroup7]
 Name=Other Outputs
@@ -961,8 +973,6 @@ Type156=1
 Type157=1
 Type158=1
 Type159=1
-Type160=1
-Type161=1
 
 [Difference Levels]
 Type1=1
@@ -1052,7 +1062,6 @@ Type84=1
 Type85=1
 Type86=1
 Type87=1
-Type88=1
 
 [Electrical Rules Check]
 Type1=1
@@ -1218,8 +1227,6 @@ Type160=0
 Type161=0
 Type162=1
 Type163=1
-Type164=1
-Type165=2
 
 [ERC Connection Matrix]
 L1=NNNNNNNNNNNWNNNWW
@@ -1306,10 +1313,10 @@ SelectedOnly=1
 UpdateVariants=1
 UpdateToLatestRevision=1
 PartTypes=0
-ComponentLibIdentifierKind0=Vault Name
-ComponentLibraryIdentifier0=University of Galway
-ComponentDesignItemID0=CMP-014-00003-4
-ComponentSymbolReference0=AD8411AWBRZ-Symbol-1
+ComponentLibIdentifierKind0=Any
+ComponentLibraryIdentifier0=
+ComponentDesignItemID0=SMCJ30A-TR
+ComponentSymbolReference0=SMCJ30A-TR
 ComponentUpdate0=1
 ComponentIsDeviceSheet0=0
 FullReplace=0
@@ -1325,52 +1332,32 @@ RemoveParameters=0
 AddModels=1
 RemoveModels=1
 UpdateCurrentModels=1
-ParameterName0=Case/Package
+ParameterName0=Arrow Part Number
 ParameterUpdate0=1
-ParameterName1=Channels
+ParameterName1=Arrow Price/Stock
 ParameterUpdate1=1
 ParameterName2=Comment
 ParameterUpdate2=1
 ParameterName3=Component Kind
 ParameterUpdate3=1
-ParameterName4=Description
+ParameterName4=Datasheet Link
 ParameterUpdate4=1
-ParameterName5=Frequency
+ParameterName5=Description
 ParameterUpdate5=1
-ParameterName6=JLCPN
+ParameterName6=Library Reference
 ParameterUpdate6=1
-ParameterName7=Library Reference
+ParameterName7=Manufacturer_Name
 ParameterUpdate7=1
-ParameterName8=Max Operating Temperature
+ParameterName8=Manufacturer_Part_Number
 ParameterUpdate8=1
-ParameterName9=Max Supply Voltage
+ParameterName9=Mouser Part Number
 ParameterUpdate9=1
-ParameterName10=Min Operating Temperature
+ParameterName10=Mouser Price/Stock
 ParameterUpdate10=1
-ParameterName11=Min Supply Voltage
-ParameterUpdate11=1
-ParameterName12=Mounting Technology
-ParameterUpdate12=1
-ParameterName13=MPN
-ParameterUpdate13=1
-ParameterName14=Nominal Dual Supply
-ParameterUpdate14=1
-ParameterName15=Nominal Gain Bandwidth Product
-ParameterUpdate15=1
-ParameterName16=Nominal Supply Voltage
-ParameterUpdate16=1
-ParameterName17=Output Type
-ParameterUpdate17=1
-ParameterName18=Pins
-ParameterUpdate18=1
-ParameterName19=Power
-ParameterUpdate19=1
-ParameterName20=RoHS Compliant
-ParameterUpdate20=1
 ModelTypeGroup0=PCBLIB
 ModelTypeUpdate0=1
 ModelType0=PCBLIB
-ModelName0=SOIC127P600X175-8N
+ModelName0=SMCJ15ATR
 ModelUpdate0=1
 
 [DatabaseUpdateOptions]
