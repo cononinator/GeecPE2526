@@ -47,7 +47,7 @@ CrossRefPorts=3
 CrossRefCrossSheets=1
 CrossRefSheetEntries=0
 CrossRefFollowFromMainSettings=1
-CurrentVariant=Assembly Variant
+CurrentVariant=Variant of GeecPE
 
 [Preferences]
 PrefsVaultGUID=
@@ -239,7 +239,7 @@ UniqueId=349f13db-aad4-463b-8ce7-b15642b2664f
 Description=Assembly Variant
 AllowFabrication=0
 ParameterCount=0
-VariationCount=25
+VariationCount=26
 Variation1=Designator=R?|UniqueId=\YUANDUXF|Kind=0|AlternatePart=
 Variation2=Designator=R?|UniqueId=\FKDCHZLS|Kind=0|AlternatePart=
 Variation3=Designator=Q1|UniqueId=\WXBEFRRD\SWVZAZPF|Kind=1|AlternatePart=
@@ -265,6 +265,7 @@ Variation22=Designator=MH1|UniqueId=\JCCZFJPO\PJIRDLTX|Kind=1|AlternatePart=
 Variation23=Designator=MH2|UniqueId=\JCCZFJPO\DTZZSSAD|Kind=1|AlternatePart=
 Variation24=Designator=MH3|UniqueId=\JCCZFJPO\GXWZOEKQ|Kind=1|AlternatePart=
 Variation25=Designator=MH4|UniqueId=\JCCZFJPO\SUJRHCSG|Kind=1|AlternatePart=
+Variation26=Designator=R21|UniqueId=\MWKOWCID\LKVITWHR|Kind=1|AlternatePart=
 ParamVariationCount=0
 
 [GeneratedDocument1]
