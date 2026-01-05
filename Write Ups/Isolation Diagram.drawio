@@ -1,6 +1,6 @@
 <mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/29.0.3 Chrome/140.0.7339.249 Electron/38.7.0 Safari/537.36" version="29.0.3">
   <diagram name="Page-1" id="d5h94j7oxQUs26A81DKD">
-    <mxGraphModel dx="983" dy="609" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="1426" dy="883" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -87,7 +87,7 @@
             <mxPoint x="185" y="440" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="Bap70pfjqkTkLz9fhn7Z-16" value="ISO7041&lt;div&gt;15 μA per channel at 100 kbps (3.3 V)&amp;nbsp;&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+        <mxCell id="Bap70pfjqkTkLz9fhn7Z-16" value="ADuM1411&lt;br&gt;&lt;div&gt;800&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;μ&lt;/span&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;A per channel at 2 Mbps (3.3 V)&amp;nbsp;&lt;/span&gt;&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="100" y="280" width="170" height="80" as="geometry" />
         </mxCell>
         <mxCell id="Bap70pfjqkTkLz9fhn7Z-17" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.25;exitY=1;exitDx=0;exitDy=0;entryX=0.863;entryY=0.008;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" source="Bap70pfjqkTkLz9fhn7Z-2" target="Bap70pfjqkTkLz9fhn7Z-16" edge="1">
@@ -111,7 +111,7 @@
         <mxCell id="Bap70pfjqkTkLz9fhn7Z-22" value="ADuM1252&lt;br&gt;142μA (typ) per Channel at 400kHz" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" parent="1" vertex="1">
           <mxGeometry x="320" y="295" width="140" height="50" as="geometry" />
         </mxCell>
-        <mxCell id="Bap70pfjqkTkLz9fhn7Z-24" value="MicroController &amp;amp; Gate Control" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+        <mxCell id="Bap70pfjqkTkLz9fhn7Z-24" value="Microcontroller &amp;amp; Gate Control" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="150" y="440" width="380" height="120" as="geometry" />
         </mxCell>
         <mxCell id="Bap70pfjqkTkLz9fhn7Z-25" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.629;entryY=-0.003;entryDx=0;entryDy=0;entryPerimeter=0;startArrow=classic;startFill=1;" parent="1" target="Bap70pfjqkTkLz9fhn7Z-24" edge="1">
@@ -135,7 +135,7 @@
             <mxPoint x="745" y="290" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="twjZ6GX2Ig3jUD68tSdU-2" value="Soft Start" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+        <mxCell id="twjZ6GX2Ig3jUD68tSdU-2" value="Soft Start" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="140" y="110" width="85" height="50" as="geometry" />
         </mxCell>
       </root>

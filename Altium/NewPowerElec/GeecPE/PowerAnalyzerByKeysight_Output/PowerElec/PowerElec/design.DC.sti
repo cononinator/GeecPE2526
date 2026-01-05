@@ -1,51 +1,36 @@
 StiFile 1.2
-# File generated on Mon Dec  1 11:57:21 2025
+# File generated on Mon Jan  5 14:48:11 2026
 
 Electric 1:
-  name: "U1"
-  voltage: 28.9394
-  current: -60.0001
-  pluspin: 1  voltage: 28.9394  current: -60.0001  name: "U1-8"
-  minpin: 0  voltage: 0  current: 60.0001  name: "U1.min"
+  name: "R21"
+  voltage: 29.3935
+  current: -6.4362
+  pluspin: 1  voltage: 29.3935  current: -6.4362  name: "R21-1"
+  minpin: 0  voltage: 0  current: 6.4362  name: "R21.min"
 
 Electric 2:
-  name: "Q1"
-  voltage: 28.9062
-  current: 30
-  pluspin: 4  voltage: 28.9063  current: 21.6193  name: "Q1-6"
-  pluspin: 3  voltage: 28.9062  current: 8.38072  name: "Q1-7"
-  minpin: 0  voltage: 0  current: -30  name: "Q1.min"
+  name: "Q4"
+  voltage: -nan(ind)
+  current: -29400
+  pluspin: 7  voltage: 0  current: -29400  name: "Q4.plus"
+  minpin: 0  voltage: 0  current: 29400  name: "Q4.min"
 
 Electric 3:
-  name: "Q1"
-  voltage: 0.000554513
-  current: 30
-  pluspin: 4  voltage: 28.9063  current: 21.6193  name: "Q1-6"
-  pluspin: 3  voltage: 28.9062  current: 8.38072  name: "Q1-7"
-  minpin: 10  voltage: 28.9057  current: -7.84979  name: "Q1-1"
-  minpin: 9  voltage: 28.9057  current: -7.51315  name: "Q1-2"
-  minpin: 8  voltage: 28.9057  current: -7.91872  name: "Q1-3"
-  minpin: 7  voltage: 28.9057  current: -6.71837  name: "Q1-4"
+  name: "Q5"
+  voltage: 29.3864
+  current: -13.5638
+  pluspin: 12  voltage: 29.3864  current: -0.420901  name: "Q5-2"
+  pluspin: 11  voltage: 29.3863  current: -10.062  name: "Q5-3"
+  pluspin: 10  voltage: 29.3864  current: -3.1984  name: "Q5-5"
+  pluspin: 9  voltage: 29.3864  current: -0.046728  name: "Q5-6"
+  pluspin: 8  voltage: 29.3864  current: 0.164227  name: "Q5-7"
+  minpin: 0  voltage: 0  current: 13.5638  name: "Q5.min"
 
 Electric 4:
-  name: "R1"
-  voltage: 0.0306
-  current: 30
-  pluspin: 11  voltage: 28.8969  current: 30  name: "R1-1"
-  minpin: 12  voltage: 28.8663  current: -30  name: "R1-2"
-
-Electric 5:
-  name: "MP3"
-  voltage: 28.8538
-  current: 30
-  pluspin: 13  voltage: 28.8537  current: 0.440113  name: "MP3-1"
-  pluspin: 14  voltage: 28.8537  current: 8.52659  name: "MP3-1"
-  pluspin: 15  voltage: 28.8537  current: 0.024548  name: "MP3-1"
-  pluspin: 16  voltage: 28.8538  current: 9.99426  name: "MP3-1"
-  pluspin: 17  voltage: 28.8538  current: 9.74577  name: "MP3-1"
-  pluspin: 18  voltage: 28.8537  current: 0.663855  name: "MP3-1"
-  pluspin: 19  voltage: 28.8537  current: 0.0524246  name: "MP3-1"
-  pluspin: 20  voltage: 28.8537  current: 0.0330886  name: "MP3-1"
-  pluspin: 21  voltage: 28.8537  current: 0.519372  name: "MP3-1"
-  minpin: 0  voltage: 0  current: -30  name: "MP3.min"
+  name: "Q3"
+  voltage: 29.3736
+  current: 20
+  pluspin: 14  voltage: 29.3736  current: 10.8054  name: "Q3-6"
+  pluspin: 13  voltage: 29.3736  current: 9.19467  name: "Q3-7"
+  minpin: 0  voltage: 0  current: -20  name: "Q3.min"
 
