@@ -226,6 +226,23 @@ DItemRevisionGUID=
 GenerateClassCluster=0
 DocumentUniqueId=XZWTPSBP
 
+[Document11]
+DocumentPath=PowerElec.pdnaK
+AnnotationEnabled=1
+AnnotateStartValue=1
+AnnotationIndexControlEnabled=0
+AnnotateSuffix=
+AnnotateScope=All
+AnnotateOrder=-1
+DoLibraryUpdate=1
+DoDatabaseUpdate=1
+ClassGenCCAutoEnabled=1
+ClassGenCCAutoRoomEnabled=0
+ClassGenNCAutoScope=None
+DItemRevisionGUID=
+GenerateClassCluster=0
+DocumentUniqueId=
+
 [ProjectVariant1]
 UniqueId=969f2d00-5db7-486e-906f-c505ca5bf980
 Description=Variant of GeecPE
