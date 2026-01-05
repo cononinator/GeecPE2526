@@ -2,180 +2,112 @@
   "electric_devices":[
   {
     "device_nr":1,
-    "name":"U1",
-    "voltage":28.9394,
-    "current":-60.0001,
+    "name":"R21",
+    "voltage":29.3935,
+    "current":-6.4362,
     "plus_pins":[
     {
       "pinId":1,
-      "voltage":28.9394,
-      "current":-60.0001,
-      "name":"U1-8"
+      "voltage":29.3935,
+      "current":-6.4362,
+      "name":"R21-1"
     }],
     "min_pins":[
     {
       "pinId":0,
       "voltage":0,
-      "current":60.0001,
-      "name":"U1.min"
+      "current":6.4362,
+      "name":"R21.min"
     }]
   },
   {
     "device_nr":2,
-    "name":"Q1",
-    "voltage":28.9062,
-    "current":30,
+    "name":"Q4",
+    "voltage":-nan(ind),
+    "current":-29400,
     "plus_pins":[
     {
-      "pinId":4,
-      "voltage":28.9063,
-      "current":21.6193,
-      "name":"Q1-6"
-    },
-    {
-      "pinId":3,
-      "voltage":28.9062,
-      "current":8.38072,
-      "name":"Q1-7"
+      "pinId":7,
+      "voltage":0,
+      "current":-29400,
+      "name":"Q4.plus"
     }],
     "min_pins":[
     {
       "pinId":0,
       "voltage":0,
-      "current":-30,
-      "name":"Q1.min"
+      "current":29400,
+      "name":"Q4.min"
     }]
   },
   {
     "device_nr":3,
-    "name":"Q1",
-    "voltage":0.000554513,
-    "current":30,
+    "name":"Q5",
+    "voltage":29.3864,
+    "current":-13.5638,
     "plus_pins":[
     {
-      "pinId":4,
-      "voltage":28.9063,
-      "current":21.6193,
-      "name":"Q1-6"
+      "pinId":12,
+      "voltage":29.3864,
+      "current":-0.420901,
+      "name":"Q5-2"
     },
     {
-      "pinId":3,
-      "voltage":28.9062,
-      "current":8.38072,
-      "name":"Q1-7"
-    }],
-    "min_pins":[
+      "pinId":11,
+      "voltage":29.3863,
+      "current":-10.062,
+      "name":"Q5-3"
+    },
     {
       "pinId":10,
-      "voltage":28.9057,
-      "current":-7.84979,
-      "name":"Q1-1"
+      "voltage":29.3864,
+      "current":-3.1984,
+      "name":"Q5-5"
     },
     {
       "pinId":9,
-      "voltage":28.9057,
-      "current":-7.51315,
-      "name":"Q1-2"
+      "voltage":29.3864,
+      "current":-0.046728,
+      "name":"Q5-6"
     },
     {
       "pinId":8,
-      "voltage":28.9057,
-      "current":-7.91872,
-      "name":"Q1-3"
-    },
-    {
-      "pinId":7,
-      "voltage":28.9057,
-      "current":-6.71837,
-      "name":"Q1-4"
-    }]
-  },
-  {
-    "device_nr":4,
-    "name":"R1",
-    "voltage":0.0306,
-    "current":30,
-    "plus_pins":[
-    {
-      "pinId":11,
-      "voltage":28.8969,
-      "current":30,
-      "name":"R1-1"
-    }],
-    "min_pins":[
-    {
-      "pinId":12,
-      "voltage":28.8663,
-      "current":-30,
-      "name":"R1-2"
-    }]
-  },
-  {
-    "device_nr":5,
-    "name":"MP3",
-    "voltage":28.8538,
-    "current":30,
-    "plus_pins":[
-    {
-      "pinId":13,
-      "voltage":28.8537,
-      "current":0.440113,
-      "name":"MP3-1"
-    },
-    {
-      "pinId":14,
-      "voltage":28.8537,
-      "current":8.52659,
-      "name":"MP3-1"
-    },
-    {
-      "pinId":15,
-      "voltage":28.8537,
-      "current":0.024548,
-      "name":"MP3-1"
-    },
-    {
-      "pinId":16,
-      "voltage":28.8538,
-      "current":9.99426,
-      "name":"MP3-1"
-    },
-    {
-      "pinId":17,
-      "voltage":28.8538,
-      "current":9.74577,
-      "name":"MP3-1"
-    },
-    {
-      "pinId":18,
-      "voltage":28.8537,
-      "current":0.663855,
-      "name":"MP3-1"
-    },
-    {
-      "pinId":19,
-      "voltage":28.8537,
-      "current":0.0524246,
-      "name":"MP3-1"
-    },
-    {
-      "pinId":20,
-      "voltage":28.8537,
-      "current":0.0330886,
-      "name":"MP3-1"
-    },
-    {
-      "pinId":21,
-      "voltage":28.8537,
-      "current":0.519372,
-      "name":"MP3-1"
+      "voltage":29.3864,
+      "current":0.164227,
+      "name":"Q5-7"
     }],
     "min_pins":[
     {
       "pinId":0,
       "voltage":0,
-      "current":-30,
-      "name":"MP3.min"
+      "current":13.5638,
+      "name":"Q5.min"
+    }]
+  },
+  {
+    "device_nr":4,
+    "name":"Q3",
+    "voltage":29.3736,
+    "current":20,
+    "plus_pins":[
+    {
+      "pinId":14,
+      "voltage":29.3736,
+      "current":10.8054,
+      "name":"Q3-6"
+    },
+    {
+      "pinId":13,
+      "voltage":29.3736,
+      "current":9.19467,
+      "name":"Q3-7"
+    }],
+    "min_pins":[
+    {
+      "pinId":0,
+      "voltage":0,
+      "current":-20,
+      "name":"Q3.min"
     }]
   }]
 }

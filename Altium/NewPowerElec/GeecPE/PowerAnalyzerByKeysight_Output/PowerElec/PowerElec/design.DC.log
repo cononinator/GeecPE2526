@@ -1,5 +1,5 @@
 
-Starting the DC solver at Mon Dec  1 11:57:20 2025
+Starting the DC solver at Mon Jan  5 14:48:06 2026
 Creating the DC design
 ..parsing the options file 
 ..using NUMBER_OF_PROCESSORS = 12
@@ -10,23 +10,24 @@ Creating the DC design
 Initializing electric analysis
 Electric analysis
 ..loading the electric component models
-..electric matrix size: 28234
+..electric matrix size: 192155
 ..loading the electric matrix equation
 ..solving the electric matrix equation
 .........|.........|.........|.........|
-..max voltage: 28.94
+..max voltage: 29.3936
 ..writing the output files
 Electric N-port analysis
-..number of ports: 5
+..number of ports: 4
 ..loading the electric component models
-..electric matrix size: 28234
+..electric matrix size: 192155
 ..loading the electric matrix equation
 ..solving the electric matrix equation
 .........|.........|.........|.........|
 ..writing the model file
+ERROR: Failed to solve the matrix equation, matrix is singular.
 DC solver resources
-..elapsed time: 1.0 s
-..user time: 6.4 s
-..physical memory: 61 MB
-..virtual memory: 86 MB
+..elapsed time: 6.4 s
+..user time: 18.7 s
+..physical memory: 369 MB
+..virtual memory: 432 MB
 

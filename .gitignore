@@ -4,3 +4,7 @@
 *.raw
 ~*
 .$*
+*.log
+*.LOG
+*.tmp
+*.TMP
