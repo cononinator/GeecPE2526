@@ -248,7 +248,10 @@ UniqueId=969f2d00-5db7-486e-906f-c505ca5bf980
 Description=Variant of GeecPE
 AllowFabrication=0
 ParameterCount=0
-VariationCount=0
+VariationCount=3
+Variation1=Designator=AGND3|UniqueId=\IREWTUUV|Kind=0|AlternatePart=
+Variation2=Designator=AGND2|UniqueId=\KJGNEHYB|Kind=0|AlternatePart=
+Variation3=Designator=AGND1|UniqueId=\NTCBIEYN|Kind=0|AlternatePart=
 ParamVariationCount=0
 
 [ProjectVariant2]
@@ -256,7 +259,7 @@ UniqueId=349f13db-aad4-463b-8ce7-b15642b2664f
 Description=Assembly Variant
 AllowFabrication=0
 ParameterCount=0
-VariationCount=21
+VariationCount=37
 Variation1=Designator=Q1|UniqueId=\WXBEFRRD\SWVZAZPF|Kind=1|AlternatePart=
 Variation2=Designator=Q2|UniqueId=\WXBEFRRD\BADPCNSN|Kind=1|AlternatePart=
 Variation3=Designator=J1|UniqueId=\LQQNDJCT|Kind=1|AlternatePart=
@@ -278,6 +281,22 @@ Variation18=Designator=MH2|UniqueId=\JCCZFJPO\DTZZSSAD|Kind=1|AlternatePart=
 Variation19=Designator=MH3|UniqueId=\JCCZFJPO\GXWZOEKQ|Kind=1|AlternatePart=
 Variation20=Designator=MH4|UniqueId=\JCCZFJPO\SUJRHCSG|Kind=1|AlternatePart=
 Variation21=Designator=R21|UniqueId=\MWKOWCID\LKVITWHR|Kind=1|AlternatePart=
+Variation22=Designator=AGND2|UniqueId=\KJGNEHYB|Kind=1|AlternatePart=
+Variation23=Designator=AGND1|UniqueId=\NTCBIEYN|Kind=1|AlternatePart=
+Variation24=Designator=AGND3|UniqueId=\IREWTUUV|Kind=1|AlternatePart=
+Variation25=Designator=VBAT|UniqueId=\SZAUUQSZ|Kind=1|AlternatePart=
+Variation26=Designator=SCL|UniqueId=\CHUVWOKS|Kind=1|AlternatePart=
+Variation27=Designator=SDA|UniqueId=\EVMYYCOZ|Kind=1|AlternatePart=
+Variation28=Designator=SOFT|UniqueId=\MMVLJESL|Kind=1|AlternatePart=
+Variation29=Designator=P IN2|UniqueId=\HLCPPAVV|Kind=1|AlternatePart=
+Variation30=Designator=P IN1|UniqueId=\LTQOQPPP|Kind=1|AlternatePart=
+Variation31=Designator=FAULT|UniqueId=\CMCVJQWJ|Kind=1|AlternatePart=
+Variation32=Designator=I_Sense|UniqueId=\LDVLPAHG|Kind=1|AlternatePart=
+Variation33=Designator=PWM|UniqueId=\WGBGEMRE|Kind=1|AlternatePart=
+Variation34=Designator=EN|UniqueId=\FQJMNAXH|Kind=1|AlternatePart=
+Variation35=Designator=MOT|UniqueId=\QLUGEGRL|Kind=1|AlternatePart=
+Variation36=Designator=+3V3|UniqueId=\CMFHIYYD\JHDFHQHR|Kind=1|AlternatePart=
+Variation37=Designator=+11V|UniqueId=\CMFHIYYD\NKJHDVUS|Kind=1|AlternatePart=
 ParamVariationCount=0
 
 [GeneratedDocument1]
@@ -1337,8 +1356,8 @@ UpdateToLatestRevision=1
 PartTypes=0
 ComponentLibIdentifierKind0=Vault Name
 ComponentLibraryIdentifier0=University of Galway
-ComponentDesignItemID0=CMP-002-00075-3
-ComponentSymbolReference0=WP-SHFU
+ComponentDesignItemID0=CMP-00028-00008-2
+ComponentSymbolReference0=SEM LOGO-Symbol-1
 ComponentUpdate0=1
 ComponentIsDeviceSheet0=0
 FullReplace=0
@@ -1360,38 +1379,24 @@ ParameterName1=Comment
 ParameterUpdate1=1
 ParameterName2=Component Kind
 ParameterUpdate2=1
-ParameterName3=Connector Type
+ParameterName3=Description
 ParameterUpdate3=1
-ParameterName4=Current Rating
+ParameterName4=Library Reference
 ParameterUpdate4=1
-ParameterName5=Description
+ParameterName5=Max Operating Temperature
 ParameterUpdate5=1
-ParameterName6=Gender
+ParameterName6=Min Operating Temperature
 ParameterUpdate6=1
-ParameterName7=Height
+ParameterName7=Mounting Technology
 ParameterUpdate7=1
-ParameterName8=Library Reference
+ParameterName8=Pins
 ParameterUpdate8=1
-ParameterName9=Material
+ParameterName9=RoHS Compliant
 ParameterUpdate9=1
-ParameterName10=Max Current Rating
-ParameterUpdate10=1
-ParameterName11=Max Operating Temperature
-ParameterUpdate11=1
-ParameterName12=Min Operating Temperature
-ParameterUpdate12=1
-ParameterName13=Mounting Technology
-ParameterUpdate13=1
-ParameterName14=Pins
-ParameterUpdate14=1
-ParameterName15=RoHS Compliant
-ParameterUpdate15=1
-ParameterName16=Voltage Rating
-ParameterUpdate16=1
 ModelTypeGroup0=PCBLIB
 ModelTypeUpdate0=1
 ModelType0=PCBLIB
-ModelName0=7461001_chemical surface
+ModelName0=SEM LOGO-Footprint-1
 ModelUpdate0=1
 
 [DatabaseUpdateOptions]
