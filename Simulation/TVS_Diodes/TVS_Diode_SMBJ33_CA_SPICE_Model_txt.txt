@@ -1,0 +1,14 @@
+**************************************************
+** Littelfuse SMBJ33CA, TVS, bi-directional     **
+**                                              **
+** T. Chenoski, 04/08/08                        **
+** Irving Technical Center                      **
+** Littelfuse, LP                               **
+**************************************************
+.SUBCKT SMBJ33CA  1   2
+*    TERMINALS:  T1  T2
+Dpri  1 3 Dtvs
+Dsec  2 3 Dtvs
+Rleak 1 2 13meg
+.MODEL Dtvs D (RS=0.05 N=1.5 IBV=1m BV=36.0 CJO=290p)
+.ENDS

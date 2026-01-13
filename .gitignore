@@ -8,3 +8,5 @@
 *.LOG
 *.tmp
 *.TMP
+*.SchDocPreview
+*_Previews*
