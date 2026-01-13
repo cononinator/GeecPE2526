@@ -1,7 +1,10 @@
+// Libraries:  Grove RGB LCD Backlight, Longan_I2C_CAN_Arduino
+
 #include <Wire.h>
 #include "Longan_I2C_CAN_Arduino.h" // communicates with CAN Bus module
 #include "rgb_lcd.h"                 // LCD screen
 #include <SoftwareSerial.h>          // serial monitor / Wio-E5
+#include <avr/wdt.h>                 // Watchdog timer
 
 // LCD Variables
 rgb_lcd lcd; 
@@ -60,7 +63,8 @@ unsigned long prevRecTime = 0;
 
 // Schedulers 
 const uint16_t LCD_PERIOD_MS      = 100;  // Update LDC at 10 Hz (every 100ms)
-const uint16_t LORA_MIN_PERIOD_MS = 200;  // Cap LoRa transmission at <= 5 Hz
+const uint16_t LORA_MIN_PERIOD_MS = 1000; // Cap LoRa transmission at 1 Hz (was 200ms/5Hz)
+const uint8_t  CAN_MSG_LIMIT      = 10;   // Max CAN messages to process per loop
 unsigned long lastLcdMs = 0; // Tracks last time LCD was updated
 unsigned long lastLoRaMs = 0; // Tracks last time LoRa was updated
 unsigned long lastSentTimestamp = 0;
@@ -84,14 +88,19 @@ void loraSend();
 void lapButtonPress();
 void buttonPressed();
 void timerSetup();
+void watchdogSetup();
+void watchdogReset();
 
 
 // SETUP
 void setup() {
   delay(200);
-  // Start I2C and increase speed to 400 kHz
+  
+  // Initialize watchdog timer for I2C deadlock recovery
+  watchdogSetup();
+  // Start I2C and set speed to 100 kHz
   Wire.begin();
-  Wire.setClock(400000);
+  Wire.setClock(100000);
 
   // Initialise LCD
   lcd.begin(16, 2);
@@ -131,6 +140,9 @@ void setup() {
 
 // LOOP
 void loop() {
+  // Reset watchdog timer to prevent system reset
+  watchdogReset();
+  
   if (pressed) {
     pressed = false;
     buttonPressed();
@@ -172,9 +184,12 @@ void loop() {
 // CAN Read for both the LCD and LoRa done ONCE per loop
 void readMsg() {
   const unsigned long now = millis();
-  while (CAN_MSGAVAIL == CAN.checkReceive()) {
+  uint8_t msgCount = 0;
+  
+  while (CAN_MSGAVAIL == CAN.checkReceive() && msgCount < CAN_MSG_LIMIT) {
     CAN.readMsgBuf(&len, buff.bytes);
     canId = CAN.getCanId();
+    msgCount++;
 
     switch (canId) {
       case 1: // GPS Speed
@@ -304,8 +319,13 @@ void writeToLCD() {
   const unsigned long now = millis();
 
   // 4) Print Lap time
+  // Use interrupt protection when reading volatile timer variables to prevent torn reads
   {
-    unsigned long lapMs = now - lapStartTime;
+    noInterrupts();
+    unsigned long lapStartTime_copy = lapStartTime;
+    interrupts();
+    
+    unsigned long lapMs = now - lapStartTime_copy;
     unsigned int lsec = lapMs / 1000;
     unsigned int mm = lsec / 60;
     unsigned int ss = lsec % 60;
@@ -315,8 +335,13 @@ void writeToLCD() {
   }
 
   // 5) Print Run time
+  // Use interrupt protection when reading volatile timer variables to prevent torn reads
   {
-    unsigned long runMs = now - runStartTime;
+    noInterrupts();
+    unsigned long runStartTime_copy = runStartTime;
+    interrupts();
+    
+    unsigned long runMs = now - runStartTime_copy;
     unsigned int rsec = runMs / 1000;
     unsigned int mm = rsec / 60;
     unsigned int ss = rsec % 60;
@@ -407,4 +432,17 @@ void buttonPressed() {
       timerSetup();
     }
   }
+}
+
+// Watchdog Timer Setup - enables automatic system reset if I2C deadlock occurs
+void watchdogSetup() {
+  // Set watchdog timer to 2-second timeout
+  // If watchdogReset() is not called within 2 seconds, system automatically resets
+  wdt_enable(WDTO_2S);
+  Serial.println("Watchdog timer enabled (2s timeout)");
+}
+
+// Reset watchdog timer - must be called regularly to prevent system reset
+void watchdogReset() {
+  wdt_reset();
 }
