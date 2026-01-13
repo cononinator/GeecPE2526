@@ -1,15 +1,10 @@
-Project Outputs Generation Report
----------------------------------
-Start Output Generation At 23:46:57 On 04/01/2026
-
-Output: Copy of Generates pick and place files
-Type  : Pick Place
-From  : Variant [Assembly Variant] of PCB Document [PowerElec.PcbDoc]
-   Generated File[Pick Place for PowerElec(Assembly Variant).txt]
-   Generated File[Pick Place for PowerElec(Assembly Variant).csv]
+Output: IPC-2581 Files
+Type  : IPC2581
+From  : PCB Document [PowerElec.PcbDoc]
+   Generated File[PowerElec.cvg]
 
 
-Files Generated   : 2
+Files Generated   : 1
 Documents Printed : 0
 
-Finished Output Generation At 23:46:58 On 04/01/2026
+Finished Output Generation At 13:50:27 On 12/01/2026

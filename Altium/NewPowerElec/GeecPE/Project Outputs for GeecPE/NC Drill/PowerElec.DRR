@@ -1,0 +1,26 @@
+----------------------------------------------------------------------------------------------------------------------------------
+NCDrill File Report For: PowerElec.PcbDoc   12/01/2026  13:50:23
+----------------------------------------------------------------------------------------------------------------------------------
+
+Layer Pair : Top Layer to Bottom Layer
+ASCII RoundHoles File : PowerElec.TXT
+
+Tool       Hole Size               Hole Tolerance               Hole Type       Hole Count   Plated         Tool Travel
+----------------------------------------------------------------------------------------------------------------------------------
+T1      12mil (0.3mm)                                             Round             651       PTH        102.03inch (2591.49mm)
+T2      12mil (0.305mm)                                           Round             85        PTH        29.01inch (736.84mm)
+T3      39mil (1mm)                                               Round             2         PTH        0.14inch (3.50mm)
+T4      40mil (1.016mm)                                           Round             4         PTH        11.42inch (290.03mm)
+T5      40mil (1.02mm)                                            Round             14        PTH        13.33inch (338.71mm)
+T6      43mil (1.1mm)                                             Round             8         PTH        0.96inch (24.29mm)
+T7      47mil (1.2mm)                                             Round             42        PTH        14.30inch (363.15mm)
+T8      58mil (1.475mm)                                           Round             36        PTH        6.19inch (157.20mm)
+T9      126mil (3.2mm)                                            Round             4         PTH        14.17inch (360.00mm)
+----------------------------------------------------------------------------------------------------------------------------------
+Totals                                                                              846
+
+Two holes at same point : 1
+-----------------------
+6334,2056
+
+Total Processing Time (hh:mm:ss) : 00:00:00
