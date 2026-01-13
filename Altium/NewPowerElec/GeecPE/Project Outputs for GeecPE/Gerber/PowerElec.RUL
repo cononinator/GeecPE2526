@@ -1,0 +1,9 @@
+DRC Rules Export File for PCB: C:\Users\conor\Documents\College\Masters\Thesis\GeecPE2526\Altium\NewPowerElec\GeecPE\PowerElec.PcbDoc
+RuleKind=SolderMaskExpansion|RuleName=SolderMaskExpansion_ADuM3190|Scope=Board|Minimum=1.00
+RuleKind=SolderMaskExpansion|RuleName=SolderMaskExpansion_LTC7004|Scope=Board|Minimum=2.00
+RuleKind=SolderMaskExpansion|RuleName=SolderMaskExpansion_LTC7063|Scope=Board|Minimum=1.00
+RuleKind=Clearance|RuleName=Clearance_LTC7063|Scope=Board|Minimum=10.00
+RuleKind=SolderMaskExpansion|RuleName=SolderMaskExpansion|Scope=Board|Minimum=4.00
+RuleKind=Width|RuleName=Width|Scope=Board|Minimum=10.00
+RuleKind=Clearance|RuleName=Clearance|Scope=Board|Minimum=10.00
+RuleKind=ShortCircuit|RuleName=ShortCircuit|Scope=Board|Allowed=0

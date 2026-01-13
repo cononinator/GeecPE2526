@@ -1,0 +1,10 @@
+Output: PCB 3D Print
+Type  : PCB 3D Print
+From  : Variant [Assembly Variant] of PCB Document [PowerElec.PcbDoc]
+   Generated File[PowerElec(Assembly Variant).png]
+
+
+Files Generated   : 1
+Documents Printed : 0
+
+Finished Output Generation At 13:51:43 On 12/01/2026

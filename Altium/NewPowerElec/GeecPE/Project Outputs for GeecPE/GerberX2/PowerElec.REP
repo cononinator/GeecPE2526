@@ -72,86 +72,6 @@ Used DCodes :
     D68
     D69
     D70
-*************************************************************
-
-*************************************************************
-Generating : GND
-      File : PowerElec.G1
-
-    Adding Layer      : GND
-
-    Adding Layer      : Multi-Layer
-
-
-Used DCodes :
-    D60
-    D61
-    D62
-    D63
-    D64
-    D65
-    D66
-    D67
-    D68
-    D69
-    D70
-*************************************************************
-
-*************************************************************
-Generating : PWR
-      File : PowerElec.G2
-
-    Adding Layer      : PWR
-
-    Adding Layer      : Multi-Layer
-
-
-Used DCodes :
-    D60
-    D61
-    D62
-    D63
-    D64
-    D65
-    D66
-    D67
-    D68
-    D69
-    D70
-*************************************************************
-
-*************************************************************
-Generating : Bottom Layer
-      File : PowerElec.GBL
-
-    Adding Layer      : Bottom Layer
-
-    Adding Layer      : Multi-Layer
-
-
-Used DCodes :
-    D58
-    D60
-    D61
-    D62
-    D63
-    D64
-    D65
-    D66
-    D67
-    D68
-    D69
-    D70
-*************************************************************
-
-*************************************************************
-Generating : Top Overlay
-      File : PowerElec.GTO
-
-    Adding Layer      : Top Overlay
-
-
-Used DCodes :
     D71
     D72
     D73
@@ -161,40 +81,6 @@ Used DCodes :
     D77
     D78
     D79
-*************************************************************
-
-*************************************************************
-Generating : Bottom Overlay
-      File : PowerElec.GBO
-
-    Adding Layer      : Bottom Overlay
-
-
-Used DCodes :
-    D72
-    D73
-*************************************************************
-
-*************************************************************
-Generating : Top Solder
-      File : PowerElec.GTS
-
-    Adding Layer      : Top Solder
-
-    Adding Layer      : Top Layer
-
-    Adding Layer      : Multi-Layer
-
-
-Used DCodes :
-    D23
-    D24
-    D31
-    D39
-    D45
-    D49
-    D54
-    D57
     D80
     D81
     D82
@@ -215,6 +101,94 @@ Used DCodes :
     D97
     D98
     D99
+*************************************************************
+
+*************************************************************
+Generating : GND
+      File : PowerElec.G1
+
+    Adding Layer      : GND
+
+    Adding Layer      : Multi-Layer
+
+
+Used DCodes :
+    D88
+    D89
+    D90
+    D91
+    D92
+    D93
+    D94
+    D95
+    D96
+    D97
+    D98
+    D99
+*************************************************************
+
+*************************************************************
+Generating : PWR
+      File : PowerElec.G2
+
+    Adding Layer      : PWR
+
+    Adding Layer      : Multi-Layer
+
+
+Used DCodes :
+    D64
+    D70
+    D88
+    D89
+    D90
+    D91
+    D92
+    D93
+    D94
+    D95
+    D96
+    D97
+    D98
+    D99
+*************************************************************
+
+*************************************************************
+Generating : Bottom Layer
+      File : PowerElec.GBL
+
+    Adding Layer      : Bottom Layer
+
+    Adding Layer      : Multi-Layer
+
+
+Used DCodes :
+    D59
+    D60
+    D70
+    D81
+    D88
+    D89
+    D90
+    D91
+    D92
+    D93
+    D94
+    D95
+    D96
+    D97
+    D98
+    D99
+*************************************************************
+
+*************************************************************
+Generating : Top Overlay
+      File : PowerElec.GTO
+
+    Adding Layer      : Top Overlay
+
+
+Used DCodes :
     D100
     D101
     D102
@@ -224,8 +198,43 @@ Used DCodes :
     D106
     D107
     D108
+*************************************************************
+
+*************************************************************
+Generating : Bottom Overlay
+      File : PowerElec.GBO
+
+    Adding Layer      : Bottom Overlay
+
+
+Used DCodes :
+    D103
+    D104
     D109
     D110
+*************************************************************
+
+*************************************************************
+Generating : Top Solder
+      File : PowerElec.GTS
+
+    Adding Layer      : Top Solder
+
+    Adding Layer      : Top Layer
+
+    Adding Layer      : Multi-Layer
+
+
+Used DCodes :
+    D10
+    D17
+    D18
+    D20
+    D28
+    D38
+    D53
+    D57
+    D88
     D111
     D112
     D113
@@ -244,6 +253,38 @@ Used DCodes :
     D126
     D127
     D128
+    D129
+    D130
+    D131
+    D132
+    D133
+    D134
+    D135
+    D136
+    D137
+    D138
+    D139
+    D140
+    D141
+    D142
+    D143
+    D144
+    D145
+    D146
+    D147
+    D148
+    D149
+    D150
+    D151
+    D152
+    D153
+    D154
+    D155
+    D156
+    D157
+    D158
+    D159
+    D160
 *************************************************************
 
 *************************************************************
@@ -258,17 +299,18 @@ Generating : Bottom Solder
 
 
 Used DCodes :
-    D118
-    D119
-    D120
-    D121
-    D122
-    D123
-    D124
-    D125
-    D126
-    D127
-    D128
+    D88
+    D150
+    D151
+    D152
+    D153
+    D154
+    D155
+    D156
+    D157
+    D158
+    D159
+    D160
 *************************************************************
 
 *************************************************************
@@ -293,7 +335,6 @@ Used DCodes :
     D17
     D18
     D19
-    D20
     D21
     D22
     D23
@@ -315,7 +356,7 @@ Used DCodes :
     D39
     D40
     D41
-    D43
+    D42
     D44
     D47
     D48
@@ -324,8 +365,10 @@ Used DCodes :
     D51
     D52
     D54
+    D55
     D56
-    D129
+    D57
+    D161
 *************************************************************
 
 *************************************************************
@@ -348,7 +391,7 @@ Generating : Profile
 
 
 Used DCodes :
-    D130
+    D162
 *************************************************************
 
 *************************************************************
@@ -365,14 +408,17 @@ Generating : Plated through-hole drill file
 
 
 Used DCodes :
-    D131
-    D132
-    D133
-    D134
-    D135
-    D136
-    D137
-    D138
-    D139
+    D163
+    D164
+    D165
+    D166
+    D167
+    D168
+    D169
+    D170
+    D171
+    D172
+    D173
+    D174
 *************************************************************
 
