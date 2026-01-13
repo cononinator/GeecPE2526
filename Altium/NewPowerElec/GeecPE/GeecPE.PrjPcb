@@ -47,7 +47,7 @@ CrossRefPorts=3
 CrossRefCrossSheets=1
 CrossRefSheetEntries=0
 CrossRefFollowFromMainSettings=1
-CurrentVariant=Variant of GeecPE
+CurrentVariant=Assembly Variant
 
 [Preferences]
 PrefsVaultGUID=
@@ -329,23 +329,6 @@ GenerateClassCluster=0
 DocumentUniqueId=
 
 [Document17]
-DocumentPath=..\..\..\Simulation\GeecHalf-Bridge.asc
-AnnotationEnabled=1
-AnnotateStartValue=1
-AnnotationIndexControlEnabled=0
-AnnotateSuffix=
-AnnotateScope=All
-AnnotateOrder=-1
-DoLibraryUpdate=1
-DoDatabaseUpdate=1
-ClassGenCCAutoEnabled=1
-ClassGenCCAutoRoomEnabled=0
-ClassGenNCAutoScope=None
-DItemRevisionGUID=
-GenerateClassCluster=0
-DocumentUniqueId=
-
-[Document18]
 DocumentPath=..\..\..\Simulation\GeecHalf-Bridge.log
 AnnotationEnabled=1
 AnnotateStartValue=1
@@ -375,7 +358,7 @@ UniqueId=349f13db-aad4-463b-8ce7-b15642b2664f
 Description=Assembly Variant
 AllowFabrication=0
 ParameterCount=0
-VariationCount=37
+VariationCount=38
 Variation1=Designator=Q1|UniqueId=\WXBEFRRD\SWVZAZPF|Kind=1|AlternatePart=
 Variation2=Designator=Q2|UniqueId=\WXBEFRRD\BADPCNSN|Kind=1|AlternatePart=
 Variation3=Designator=J1|UniqueId=\LQQNDJCT|Kind=1|AlternatePart=
@@ -413,6 +396,7 @@ Variation34=Designator=EN|UniqueId=\FQJMNAXH|Kind=1|AlternatePart=
 Variation35=Designator=MOT|UniqueId=\QLUGEGRL|Kind=1|AlternatePart=
 Variation36=Designator=+3V3|UniqueId=\CMFHIYYD\JHDFHQHR|Kind=1|AlternatePart=
 Variation37=Designator=+11V|UniqueId=\CMFHIYYD\NKJHDVUS|Kind=1|AlternatePart=
+Variation38=Designator=P?|UniqueId=\IYABJECR\GNAOIUWD|Kind=1|AlternatePart=
 ParamVariationCount=0
 
 [GeneratedDocument1]
@@ -836,11 +820,6 @@ OutputName9=Report Single Pin Nets
 OutputDocumentPath9=
 OutputVariantName9=[No Variations]
 OutputDefault9=0
-OutputType10=BOM_ReportManufacturing
-OutputName10=Manufacturing Data
-OutputDocumentPath10=
-OutputVariantName10=[No Variations]
-OutputDefault10=0
 
 [OutputGroup7]
 Name=Other Outputs
@@ -1135,8 +1114,6 @@ Type156=1
 Type157=1
 Type158=1
 Type159=1
-Type160=1
-Type161=1
 
 [Difference Levels]
 Type1=1
@@ -1226,7 +1203,6 @@ Type84=1
 Type85=1
 Type86=1
 Type87=1
-Type88=1
 
 [Electrical Rules Check]
 Type1=1
@@ -1392,8 +1368,6 @@ Type160=0
 Type161=0
 Type162=1
 Type163=1
-Type164=1
-Type165=2
 
 [ERC Connection Matrix]
 L1=NNNNNNNNNNNWNNNWW
