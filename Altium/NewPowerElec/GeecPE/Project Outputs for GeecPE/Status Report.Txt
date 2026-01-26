@@ -1,10 +1,10 @@
-Output: IPC-2581 Files
-Type  : IPC2581
-From  : PCB Document [PowerElec.PcbDoc]
-   Generated File[PowerElec.cvg]
+Output: Bill of Materials
+Type  : BOM
+From  : Variant [Assembly Variant] of Project [GeecPE.PrjPcb]
+   Generated File[Bill of Materials-GeecPE(Assembly Variant).xlsx]
 
 
 Files Generated   : 1
 Documents Printed : 0
 
-Finished Output Generation At 13:50:27 On 12/01/2026
+Finished Output Generation At 15:47:57 On 16/01/2026
