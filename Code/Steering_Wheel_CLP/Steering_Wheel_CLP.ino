@@ -1,7 +1,6 @@
 #include <Wire.h>
 #include "Longan_I2C_CAN_Arduino.h" // communicates with CAN Bus module
 #include "rgb_lcd.h"                 // LCD screen
-#include <SoftwareSerial.h>          // serial monitor / Wio-E5
 
 // LCD Variables
 rgb_lcd lcd; 
@@ -10,80 +9,61 @@ const int colorR = 0;
 const int colorG = 50;
 const int colorB = 0;
 
-// Button / interrupts / timers
+// Lap button 
 const byte interruptPin = 2; // lap button is on pin 2
-volatile int  lapNumber = 0;
-const int debounceTime = 250;
-volatile unsigned long runStartTime   = 0;
-volatile unsigned long lastPress      = 0;
-volatile unsigned long lapStartTime   = 0;
-volatile boolean running              = false;
-volatile boolean restartTimer         = false;
-volatile unsigned long firstPress     = 0;
-volatile unsigned long resetTimerPressDelay = 1500;
-volatile int  numPresses              = 0;
-volatile boolean pressed              = false;
+unsigned int  lapNumber = 0;
+const unsigned long debounceMs = 500;
+unsigned long lastLapMs = 0;
+bool running = false;
+volatile bool pressed = false;
+unsigned long lapStartMs = 0;     // when current lap started
 
-// CAN decode helpers 
-typedef union {
-  float val;
-  byte  bytes[4];
-} FLOATUNION_t;
-
-FLOATUNION_t buff;
-unsigned char  len = 0;
-unsigned long  canId;
+// CAN
 I2C_CAN        CAN(0x25);  // Set I2C Address
+unsigned char  len = 0;
+unsigned long  canId = 0;
+uint8_t rxBuf[8];    // 8 bytes
 
-//  Wio-E5 
-SoftwareSerial WioE5(5, 4); 
 
 // Telemetry 
-struct Telemetry {
-  float wheelSpeed = 0.0f;
-  float motorCurr  = 0.0f;
-  float motorVolt  = 0.0f;
-  float battVolt   = 0.0f;
-  float battCurr   = 0.0f;
-  float lat        = 0.0f;
-  float lon        = 0.0f;
-  unsigned long timestamp = 0;
-
-  // Timestamps (ms)
-  unsigned long t_wheel=0, t_mcurr=0, t_mvolt=0, t_bvolt=0, t_bcurr=0, t_gps=0, t_stamp=0;
-} T;
-
-// Energy 
-float power = 0.0f;
-float energy = 0.0f;
-unsigned long prevRecTime = 0;
+float wheelSpeedKph = 0.0f;
+unsigned long lastSpeedRxMs = 0;
 
 // Schedulers 
-const uint16_t LCD_PERIOD_MS      = 100;  // Update LDC at 10 Hz (every 100ms)
-const uint16_t LORA_MIN_PERIOD_MS = 200;  // Cap LoRa transmission at <= 5 Hz
+const unsigned long LCD_PERIOD_MS = 100; // Update LDC at 10 Hz (every 100ms)
 unsigned long lastLcdMs = 0; // Tracks last time LCD was updated
-unsigned long lastLoRaMs = 0; // Tracks last time LoRa was updated
-unsigned long lastSentTimestamp = 0;
+// Store previously printed text
+char prevLine0[17] = "";
+char prevLine1[17] = "";
 
 // Prints only new text onto LCD screen
-char prevSpeed[6]    = ""; 
-char prevThr[4]      = "";  
-char prevCurr[6]     = ""; 
-char prevLap[4]      = "";  
-char prevLapTime[6]  = "";  
-char prevRunTime[6]  = "";  
+static void printLineIfChanged(uint8_t row, const char* line, char* cache) {
+  // compare new line with previous line, returns non-zero value if different
+  if (strncmp(line, cache, 16) != 0) { 
+    lcd.setCursor(0, row);
+    // write  16 chars (2x16 screen)
+    for (uint8_t i = 0; i < 16; i++) {
+      char c = line[i];
+      lcd.print(c ? c : ' '); // print space if string ended
+      if (!c) { 
+        for (uint8_t j = i + 1; j < 16; j++) lcd.print(' ');
+        break;
+      }
+    }
+    strncpy(cache, line, 16);
+    cache[16] = '\0';
+  }
+}
 
-bool layoutPromptShown = false;   // Press lap button to print text onto screen
-bool layoutRunningDrawn = false;  // one time labels while running
+static float readFloatLE(const uint8_t* b) {
+  float f;
+  memcpy(&f, b, sizeof(float));
+  return f;
+}
 
-// Functions
-void readMsg();
-void writeToLCD();
-bool shouldSendLoRa(unsigned long now);
-void loraSend();
-void lapButtonPress();
-void buttonPressed();
-void timerSetup();
+void pressLapButton(){
+  pressed = true; 
+}
 
 
 // SETUP
@@ -96,315 +76,100 @@ void setup() {
   // Initialise LCD
   lcd.begin(16, 2);
   lcd.setRGB(colorR, colorG, colorB);
+  lcd.clear();
+  lcd.setCursor(0, 0); 
+  lcd.print("Starting...");
 
   Serial.begin(9600);
-  Serial.println("Entered setup()");
-  WioE5.begin(9600); 
 
-  Serial.println("begin to init can");
   while (CAN_OK != CAN.begin(CAN_500KBPS)) { // baud rate of 500k
     Serial.println("CAN BUS FAIL!");
-    delay(100);
+    delay(200);
   }
   Serial.println("CAN BUS OK!");
 
-  lcd.setCursor(0,0); lcd.print("Starting");
-  delay(600);
-  lcd.clear();
-
   // Initialize lap button interrupt pin and interrupt
   pinMode(interruptPin, INPUT_PULLUP);
-  attachInterrupt(digitalPinToInterrupt(interruptPin), lapButtonPress, FALLING);
-  Serial.println("Finished setup");
+  attachInterrupt(digitalPinToInterrupt(interruptPin), pressLapButton, FALLING);
 
-  // Wio-E5 
-  Serial.println("Initializing Wio-E5");
-  delay(300);
-  WioE5.print("AT+MODE=TEST\r\n");
-  delay(300);
-  WioE5.print("AT+TEST=RFCFG,868,7,125,12,15,22,ON,OFF,OFF\r\n");
-  delay(300);
-
-  // Prime timer for energy calcs
-  prevRecTime = millis();
+  delay(500);
+  lcd.clear();
+  lcd.setCursor(0, 0); lcd.print("Press button");
+  lcd.setCursor(0, 1); lcd.print("to start");
 }
+
+// Read speed only from CAN
+void readSpeed() {
+  const unsigned long now = millis();
+
+  while (CAN_MSGAVAIL == CAN.checkReceive()) {
+    CAN.readMsgBuf(&len, rxBuf);
+    canId = CAN.getCanId();
+
+    if (canId == 1 && len >= 4) {
+      float sp = readFloatLE(rxBuf);
+      if (!isfinite(sp) || sp < 0) sp = 0;
+      if (sp > 999.9f) sp = 999.9f;
+      wheelSpeedKph = sp;
+      lastSpeedRxMs = now;
+    }
+  }
+}
+
+void writeToLCD() {
+  char line0[17];
+  char line1[17];
+
+  if (!running) {
+    snprintf(line0, sizeof(line0), "Press button");
+    snprintf(line1, sizeof(line1), "to start");
+  } else {
+    int sp = (int)(wheelSpeedKph + 0.5f);  // round to whole number
+    if (sp < 0) sp = 0;
+    if (sp > 999) sp = 999;
+    // Lap time elapsed
+    unsigned long lapMs = millis() - lapStartMs;
+    unsigned int lapSec = lapMs / 1000;
+    unsigned int min = lapSec / 60;
+    unsigned int sec = lapSec % 60;
+
+    snprintf(line0, sizeof(line0), "SPD:%3d km/h", sp);
+    snprintf(line1, sizeof(line1), "L%3u %2u:%02u", lapNumber, min, sec);
+   }
+
+  printLineIfChanged(0, line0, prevLine0);
+  printLineIfChanged(1, line1, prevLine1);
+}
+
 
 // LOOP
 void loop() {
-  if (pressed) {
-    pressed = false;
-    buttonPressed();
-  }
 
-  // Restarts everything for new race
-  if (restartTimer) {
-    restartTimer = false;
-    lapNumber = 0;
-    numPresses = 0;
-    energy = 0;
-    running = false;
-
-    // resets LCD 
-    prevSpeed[0]=prevThr[0]=prevCurr[0]=prevLap[0]=prevLapTime[0]=prevRunTime[0]='\0';
-    layoutPromptShown   = false;
-    layoutRunningDrawn  = false;
-    lcd.clear();
-  }
-
-  // Read data once per loop and update message
-  readMsg();
+  readSpeed();
 
   const unsigned long now = millis();
+  
+  if (pressed) {
+    pressed = false;
+    if (now - lastLapMs >= debounceMs) {
+      lastLapMs = now;
+
+      if (!running) {
+        running = true;
+        lapNumber = 1;
+        lapStartMs = now;   // start lap timer
+        prevLine0[0] = prevLine1[0] = '\0';   // write to screen
+      } else {
+        lapNumber++;
+        lapStartMs = now;   // start new lap
+      }
+    }
+  }
 
   // Update LCD at 10 Hz
   if (now - lastLcdMs >= LCD_PERIOD_MS) {
     lastLcdMs = now;
     writeToLCD();
   }
-
-  // update LoRa only on at new timestamp and maximum of 5 Hz
-  if (shouldSendLoRa(now)) {
-    loraSend();
-  }
-  delay(10);
 }
 
-// CAN Read for both the LCD and LoRa done ONCE per loop
-void readMsg() {
-  const unsigned long now = millis();
-  while (CAN_MSGAVAIL == CAN.checkReceive()) {
-    CAN.readMsgBuf(&len, buff.bytes);
-    canId = CAN.getCanId();
-
-    switch (canId) {
-      case 1: // GPS Speed
-        T.wheelSpeed = buff.val;
-        T.t_wheel = now;
-        break;
-
-      case 2: // Battery Current
-        T.battCurr = buff.val;
-        T.t_bcurr = now;
-        break;
-
-      case 3: { // Battery Voltage
-        unsigned long currRecTime = now;
-        T.battVolt = buff.val;
-        T.t_bvolt = now;
-
-        // Energy calcs
-        if (prevRecTime == 0) prevRecTime = currRecTime;
-        power  = T.battCurr * T.battVolt; 
-        energy += power * (currRecTime - prevRecTime) / 3600000.0f; 
-        prevRecTime = currRecTime;
-        break;
-      }
-
-      case 4: // Motor Current
-        T.motorCurr = buff.val;
-        T.t_mcurr = now;
-        break;
-
-      case 5: // Timestamp
-        T.timestamp = *(unsigned long*)buff.bytes;
-        T.t_stamp   = now;
-        break;
-
-      case 6: // Motor Voltage
-        T.motorVolt = buff.val;
-        T.t_mvolt = now;
-        break;
-
-      case 7: // Latitude
-        T.lat = buff.val;
-        T.t_gps = now;
-        break;
-
-      case 8: // Longitude
-        T.lon = buff.val;
-        T.t_gps = now;
-        break;
-    }
-  }
-}
-
-// LCD Print Function (prints only new data)
-static void printAtIfChanged(uint8_t col, uint8_t row, const char* s, char* cache, size_t cacheLen) {
-  if (strncmp(s, cache, cacheLen-1) != 0) {
-    lcd.setCursor(col, row);
-    lcd.print(s);
-    strncpy(cache, s, cacheLen-1);
-    cache[cacheLen-1] = '\0';
-  }
-}
-
-static void drawRunningLabels() {
-  if (layoutRunningDrawn) return;
-  // Units/labels printed once to reduce I2C traffic
-  lcd.setCursor(4, 0); lcd.print("kph"); // speed units
-  lcd.setCursor(9, 0); lcd.print("%");   // throttle 
-  lcd.setCursor(15,0); lcd.print("A");   // current 
-  lcd.setCursor(13,1); lcd.print("L");   // Lap label
-  layoutRunningDrawn = true;
-}
-
-void writeToLCD() {
-  if (!running) {
-    if (!layoutPromptShown) {
-      lcd.clear();
-      lcd.setCursor(0,0); lcd.print("Press lap button");
-      lcd.setCursor(0,1); lcd.print("to start timer");
-      layoutPromptShown = true;
-    }
-    return;
-  }
-
-  // Draw labels once when run starts
-  drawRunningLabels();
-
-  // 1) Print speed 
-  {
-    char s[8];
-    float sp = T.wheelSpeed;
-    if (sp < 0) sp = 0; if (sp > 999.9f) sp = 999.9f;
-    int whole = (int)sp;
-    int tenths = (int)((sp - whole) * 10 + 0.5f);
-    snprintf(s, sizeof(s), "%02d.%1d", whole%100, tenths%10);
-    printAtIfChanged(0, 0, s, prevSpeed, sizeof(prevSpeed));
-  }
-
-  // 2) Print Throttle
-  {
-    char s[4];
-    float thr = 0.0f;
-    if (T.battVolt > 1.0f && isfinite(T.motorVolt)) {
-      thr = (T.motorVolt / T.battVolt) * 100.0f;
-    }
-    if (thr < 0) thr = 0;
-    if (thr > 99) thr = 99; // 2 digits
-    snprintf(s, sizeof(s), "%02d", (int)(thr + 0.5f));
-    printAtIfChanged(7, 0, s, prevThr, sizeof(prevThr));
-  }
-
-  // 3) Print battery current 
-  {
-    char s[8];
-    float ia = T.battCurr;
-    if (!isfinite(ia)) ia = 0.0f;
-    // Format to width 4 with one decimal; pad with zeros
-    // We'll print at (11,0) and leave "A" at 15
-    int whole = (int)fabs(ia);
-    int tenths = (int)((fabs(ia) - whole) * 10 + 0.5f);
-    // If negative, clamp to zero for driver display (optional)
-    if (ia < 0) { whole = 0; tenths = 0; }
-    snprintf(s, sizeof(s), "%02d.%1d", whole%100, tenths%10);
-    printAtIfChanged(11, 0, s, prevCurr, sizeof(prevCurr));
-  }
-
-  const unsigned long now = millis();
-
-  // 4) Print Lap time
-  {
-    unsigned long lapMs = now - lapStartTime;
-    unsigned int lsec = lapMs / 1000;
-    unsigned int mm = lsec / 60;
-    unsigned int ss = lsec % 60;
-    char s[8];
-    snprintf(s, sizeof(s), "%01u:%02u", mm, ss);
-    printAtIfChanged(0, 1, s, prevLapTime, sizeof(prevLapTime));
-  }
-
-  // 5) Print Run time
-  {
-    unsigned long runMs = now - runStartTime;
-    unsigned int rsec = runMs / 1000;
-    unsigned int mm = rsec / 60;
-    unsigned int ss = rsec % 60;
-    char s[8];
-    snprintf(s, sizeof(s), "%01u:%02u", mm, ss);
-    printAtIfChanged(6, 1, s, prevRunTime, sizeof(prevRunTime));
-  }
-
-  // 6) Print Lap number
-  {
-    char s[4];
-    snprintf(s, sizeof(s), "%02d", lapNumber % 100);
-    printAtIfChanged(14, 1, s, prevLap, sizeof(prevLap));
-  }
-}
-
-// LoRa Transmition (new data only)
-bool shouldSendLoRa(unsigned long now) {
-  if (T.timestamp == 0) return false;                     // need data
-  if (T.timestamp == lastSentTimestamp) return false;     // only new
-  if (now - lastLoRaMs < LORA_MIN_PERIOD_MS) return false; // rate limit
-  return true;
-}
-
-void loraSend() {
-  lastLoRaMs = millis();
-  lastSentTimestamp = T.timestamp;
-
-  // Throttle calculation 
-  float throttle = 0.0f;
-  if (T.battVolt > 1.0f && isfinite(T.motorVolt)) {
-    throttle = (T.motorVolt / T.battVolt) * 100.0f;
-    if (throttle < 0) throttle = 0;
-    if (throttle > 100) throttle = 100;
-  }
-
-  // Buffer
-  char payload[128];
-  // timestamp,Imot,Vmot,Ibatt,Vbatt,spd,lat,lon
-  snprintf(payload, sizeof(payload), "%lu,%.2f,%.2f,%.2f,%.2f,%.1f,%.4f,%.4f",
-           T.timestamp, T.motorCurr, T.motorVolt, T.battCurr, T.battVolt,
-           T.wheelSpeed, T.lat, T.lon);
-
-  // Send AT once
-  WioE5.print("AT+TEST=TXLRSTR,\"");
-  WioE5.print(payload);
-  WioE5.print("\"\r\n");
-
-}
-
-// Timers / Buttons / ISR
-void timerSetup() {
-  const unsigned long t = millis();
-  runStartTime = t;
-  lapStartTime = t;
-  running = true;
-
-  // Reset LCD layout flags 
-  layoutPromptShown  = false;
-  layoutRunningDrawn = false;
-  // Clear once before running
-  lcd.clear();
-}
-
-void lapButtonPress() {
-  pressed = true; 
-}
-
-void buttonPressed() {
-  const unsigned long now = millis();
-  if (now - lastPress > (unsigned long)debounceTime) {
-    lapNumber++;
-    // Triple-press within resetTimerPressDelay restarts overall timer
-    if (now - firstPress < resetTimerPressDelay) {
-      numPresses++;
-      if (numPresses > 2) {
-        restartTimer = true;
-      }
-    } else {
-      firstPress = now;  // restart run
-      numPresses = 1;
-    }
-
-    lastPress = now;
-    lapStartTime = now;
-
-    if (lapNumber == 1) {
-      timerSetup();
-    }
-  }
-}
