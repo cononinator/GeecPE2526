@@ -23,7 +23,7 @@ const int softStartDelay = 200;                    // Delay in milliseconds betw
 // SETUP
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 void setup() {
-    
+  TCCR2B = TCCR2B & 0b11111000 | 0x01; // Set PWM frequency for pins 3 and 11 to 31372.55Hz for smoother motor control
   Serial.begin(9600);
   pinMode(AcclPin, INPUT);
   pinMode(PWMPin, OUTPUT);
