@@ -11,6 +11,10 @@ void setup() {
   mcpwm_gpio_init(MCPWM_UNIT_0, MCPWM0A, PWM_PIN_A);
   mcpwm_gpio_init(MCPWM_UNIT_0, MCPWM0B, PWM_PIN_B);
   
+  // Enable pulldown resistors
+  gpio_pulldown_en((gpio_num_t)PWM_PIN_A);
+  gpio_pulldown_en((gpio_num_t)PWM_PIN_B);
+  
   // Configure MCPWM parameters
   mcpwm_config_t pwm_config;
   pwm_config.frequency = 30000;      // Frequency in Hz (1 kHz)
