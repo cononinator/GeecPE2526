@@ -40,6 +40,12 @@ void commandTask(void *parameter) {
           powerMeter.reset();
           Serial.println("Power Meter Reset");
           break;
+
+        case 'H': // Help commands
+          Serial.println("\nCommands:");
+          Serial.println("  0-100: Set duty cycle (%)");
+          Serial.println("  S: Stop (set duty cycle to 0%)");
+          Serial.println("  R: Reset power meter");
           
         default:
           // Check if it's a numeric value for duty cycle
@@ -74,6 +80,11 @@ void commandTask(void *parameter) {
             }
           } else {
             Serial.println("Unknown Command");
+            Serial.println("\nCommands:");
+            Serial.println("  0-100: Set duty cycle (%)");
+            Serial.println("  S: Stop (set duty cycle to 0%)");
+            Serial.println("  R: Reset power meter");
+          
           }
           break;
       }
@@ -150,7 +161,7 @@ void sensorTask(void *parameter) {
 void setup() {
   Serial.begin(115200);
   delay(1000);  // Allow time for serial monitor to connect
-  
+  while(!Serial);
   Serial.println("System Starting...");
   
   // Initialize I2C for INA780
@@ -176,6 +187,12 @@ void setup() {
   // Enable pulldown resistors
   gpio_pulldown_en((gpio_num_t)PWM_PIN_A);
   gpio_pulldown_en((gpio_num_t)PWM_PIN_B);
+  
+  // Set Group resolution to 80MHz
+  mcpwm_group_set_resolution(MCPWM_UNIT_0, 80000000);
+
+  // Set timer resolution to 80MHz (same as group for maximum resolution)
+  mcpwm_timer_set_resolution(MCPWM_UNIT_0, MCPWM_TIMER_0, 80000000);
   
   // Configure MCPWM parameters
   mcpwm_config_t pwm_config;
