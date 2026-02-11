@@ -12,12 +12,14 @@
 // Global variables
 INA780 powerMeter(INA780_ADDRESS);
 volatile float currentDutyCycle = 0.0;
+volatile unsigned long lastCommandTime = 0;  // Timestamp of last command
 SemaphoreHandle_t dutyCycleMutex;
 
 // Task handles
 TaskHandle_t commandTaskHandle = NULL;
 TaskHandle_t pwmTaskHandle = NULL;
 TaskHandle_t sensorTaskHandle = NULL;
+TaskHandle_t watchdogTaskHandle = NULL;
 
 // Command handling task
 void commandTask(void *parameter) {
@@ -33,11 +35,13 @@ void commandTask(void *parameter) {
           xSemaphoreTake(dutyCycleMutex, portMAX_DELAY);
           currentDutyCycle = 0.0;
           xSemaphoreGive(dutyCycleMutex);
+          lastCommandTime = millis();
           Serial.println("PWM Stopped (0%)");
           break;
           
         case 'R':  // Reset power meter
           powerMeter.reset();
+          lastCommandTime = millis();
           Serial.println("Power Meter Reset");
           break;
 
@@ -72,6 +76,7 @@ void commandTask(void *parameter) {
               xSemaphoreTake(dutyCycleMutex, portMAX_DELAY);
               currentDutyCycle = dutyCycle;
               xSemaphoreGive(dutyCycleMutex);
+              lastCommandTime = millis();
               Serial.print("Duty Cycle Set to: ");
               Serial.print(currentDutyCycle, 2);
               Serial.println("%");
@@ -109,6 +114,29 @@ void pwmTask(void *parameter) {
     mcpwm_set_duty(MCPWM_UNIT_0, MCPWM_TIMER_0, MCPWM_OPR_B, localDutyCycle);
     
     vTaskDelay(pdMS_TO_TICKS(10));  // Update PWM every 10ms
+  }
+}
+
+// Watchdog task - sets PWM to 0 if no command received for 20 seconds
+void watchdogTask(void *parameter) {
+  const unsigned long timeoutMs = 20000;  // 20 seconds
+  
+  while (1) {
+    unsigned long timeSinceLastCommand = millis() - lastCommandTime;
+    
+    if (timeSinceLastCommand > timeoutMs) {
+      xSemaphoreTake(dutyCycleMutex, portMAX_DELAY);
+      if (currentDutyCycle != 0.0) {
+        currentDutyCycle = 0.0;
+        xSemaphoreGive(dutyCycleMutex);
+        Serial.println("\n*** WATCHDOG TIMEOUT: PWM set to 0% (no input for 20s) ***\n");
+      } else {
+        xSemaphoreGive(dutyCycleMutex);
+      }
+      lastCommandTime = millis();  // Reset to prevent repeated messages
+    }
+    
+    vTaskDelay(pdMS_TO_TICKS(1000));  // Check every second
   }
 }
 
@@ -163,6 +191,9 @@ void setup() {
   delay(1000);  // Allow time for serial monitor to connect
   while(!Serial);
   Serial.println("System Starting...");
+  
+  // Initialize watchdog timer
+  lastCommandTime = millis();
   
   // Initialize I2C for INA780
   // Wire.begin();
@@ -238,6 +269,16 @@ void setup() {
     NULL,              // Parameters
     1,                 // Priority
     &sensorTaskHandle, // Task handle
+    0                  // Core ID (core 0)
+  );
+  
+  xTaskCreatePinnedToCore(
+    watchdogTask,      // Task function
+    "WatchdogTask",    // Task name
+    2048,              // Stack size
+    NULL,              // Parameters
+    2,                 // Priority (high priority for safety)
+    &watchdogTaskHandle, // Task handle
     0                  // Core ID (core 0)
   );
   
