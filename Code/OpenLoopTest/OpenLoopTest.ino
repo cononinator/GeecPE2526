@@ -12,11 +12,17 @@
 // Global variables
 INA780 powerMeter(INA780_ADDRESS);
 volatile float currentDutyCycle = 0.0;
+volatile float targetDutyCycle = 0.0;
 volatile unsigned long lastCommandTime = 0;  // Timestamp of last command
 SemaphoreHandle_t dutyCycleMutex;
 
+// Constants
+const float RAMP_UP_STEP = 0.5;   // 0.5% change per 10ms (100% in 2s)
+const float RAMP_DOWN_STEP = 2.0; // 2.0% change per 10ms (100% in 0.5s)
+
+
 // Task handles
-TaskHandle_t commandTaskHandle = NULL;
+TaskHandle_t commandTaskHandle = NULL;\
 TaskHandle_t pwmTaskHandle = NULL;
 TaskHandle_t sensorTaskHandle = NULL;
 TaskHandle_t watchdogTaskHandle = NULL;
@@ -33,10 +39,10 @@ void commandTask(void *parameter) {
       switch (command) {
         case 'S':  // Stop - Set duty cycle to 0%
           xSemaphoreTake(dutyCycleMutex, portMAX_DELAY);
-          currentDutyCycle = 0.0;
+          targetDutyCycle = 0.0;
           xSemaphoreGive(dutyCycleMutex);
           lastCommandTime = millis();
-          Serial.println("PWM Stopped (0%)");
+          Serial.println("Stopping (Ramping to 0%)");
           break;
           
         case 'R':  // Reset power meter
@@ -74,11 +80,11 @@ void commandTask(void *parameter) {
             // Validate duty cycle range (0-100)
             if (dutyCycle >= 0.0 && dutyCycle <= 100.0) {
               xSemaphoreTake(dutyCycleMutex, portMAX_DELAY);
-              currentDutyCycle = dutyCycle;
+              targetDutyCycle = dutyCycle;
               xSemaphoreGive(dutyCycleMutex);
               lastCommandTime = millis();
-              Serial.print("Duty Cycle Set to: ");
-              Serial.print(currentDutyCycle, 2);
+              Serial.print("Target Duty Cycle Set to: ");
+              Serial.print(targetDutyCycle, 2);
               Serial.println("%");
             } else {
               Serial.println("Error: Duty cycle must be between 0 and 100");
@@ -101,12 +107,27 @@ void commandTask(void *parameter) {
 
 // PWM control task
 void pwmTask(void *parameter) {
-  float localDutyCycle;
   
   while (1) {
     // Get the current duty cycle value safely
     xSemaphoreTake(dutyCycleMutex, portMAX_DELAY);
-    localDutyCycle = currentDutyCycle;
+    
+    // Ramp logic
+    if (currentDutyCycle < targetDutyCycle) {
+      if (fabs(targetDutyCycle - currentDutyCycle) < RAMP_UP_STEP) {
+        currentDutyCycle = targetDutyCycle;
+      } else {
+        currentDutyCycle += RAMP_UP_STEP;
+      }
+    } else if (currentDutyCycle > targetDutyCycle) {
+      if (fabs(currentDutyCycle - targetDutyCycle) < RAMP_DOWN_STEP) {
+        currentDutyCycle = targetDutyCycle;
+      } else {
+        currentDutyCycle -= RAMP_DOWN_STEP;
+      }
+    }
+    
+    float localDutyCycle = currentDutyCycle;
     xSemaphoreGive(dutyCycleMutex);
     
     // Update PWM duty cycle
@@ -126,10 +147,10 @@ void watchdogTask(void *parameter) {
     
     if (timeSinceLastCommand > timeoutMs) {
       xSemaphoreTake(dutyCycleMutex, portMAX_DELAY);
-      if (currentDutyCycle != 0.0) {
-        currentDutyCycle = 0.0;
+      if (targetDutyCycle != 0.0) {
+        targetDutyCycle = 0.0; // Ramp down on timeout
         xSemaphoreGive(dutyCycleMutex);
-        Serial.println("\n*** WATCHDOG TIMEOUT: PWM set to 0% (no input for 20s) ***\n");
+        Serial.println("\n*** WATCHDOG TIMEOUT: Ramping to 0% (no input for 20s) ***\n");
       } else {
         xSemaphoreGive(dutyCycleMutex);
       }
@@ -175,11 +196,14 @@ void sensorTask(void *parameter) {
     // Get current duty cycle
     xSemaphoreTake(dutyCycleMutex, portMAX_DELAY);
     float localDutyCycle = currentDutyCycle;
+    float localTargetDutyCycle = targetDutyCycle;
     xSemaphoreGive(dutyCycleMutex);
     
     Serial.print("Duty Cycle: ");
     Serial.print(localDutyCycle, 2);
-    Serial.println("%");
+    Serial.print("% (Target: ");
+    Serial.print(localTargetDutyCycle, 2);
+    Serial.println("%)");
     Serial.println("===========================\n");
     
     vTaskDelay(pdMS_TO_TICKS(1000));  // Read sensors every 1 second
