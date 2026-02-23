@@ -1,0 +1,1168 @@
+UNITS=MM
+#
+#Component attribute names
+#
+@0 .comp_mount_type
+@1 .comp_height
+@2 .no_pop
+@3 .comp_ignore
+@4 .comp_variant_list
+@5 .placement_layer
+
+#
+#Component attribute text strings
+#
+&0 top_layer
+
+# CMP 0
+CMP 3 17.018 67.4116 0 N C14 330nF-THT-Film ;0=2,1=0.0000,5=0
+PRP Capacitor_Type 'THT'
+PRP Case/Package ''
+PRP Max_Operating_Temperature ''
+PRP Min_Operating_Temperature ''
+PRP Mounting_Technology ''
+PRP Pins ''
+PRP Ripple_Current ''
+PRP Ripple_Current_(AC) ''
+PRP RoHS_Compliant ''
+PRP Tolerance '10%'
+PRP Value '330nF'
+PRP Voltage_Rating ''
+TOP 0 14.51799992 67.4116 0 N 50 33 1
+TOP 1 19.51800008 67.4116 0 N 1 1 2
+#
+# CMP 1
+CMP 2 27.813 22.3012 180 N C5 ECA1HM100 ;0=2,1=12.0000,5=0
+PRP Capacitor_Type 'Electrolytic'
+PRP Case/Package 'Radial'
+PRP Datasheet_URL 'https://industrial.panasonic.com/cdbs/www-data/pdf/RDF0000/ABA0000C1218.pdf'
+PRP Datasheet_Version 'Rev. 05, 10/2016'
+PRP Diameter '5mm'
+PRP Lead_Pitch '2mm'
+PRP Manufacturer 'Panasonic'
+PRP Manufacturer_URL 'http://www.panasonic.com/'
+PRP Max_Operating_Temperature '85°C'
+PRP Min_Operating_Temperature '-40°C'
+PRP Mounting_Technology 'TH'
+PRP Package_Description '2-Pin Radial Lead, Dia 5 mm, Height 12 mm'
+PRP Package_Quantity '200'
+PRP Package_Reference 'CAPPR55-200-1100X500X1200'
+PRP Packaging 'Bulk'
+PRP Pins '2'
+PRP Ripple_Current '65mA'
+PRP Ripple_Current_(AC) '65mA'
+PRP RoHS_Compliant 'True'
+PRP Tolerance '20%'
+PRP Value '10µF'
+PRP Voltage_Rating '50V'
+TOP 0 28.812998 22.3012 180 N 46 15 1
+TOP 1 26.813002 22.3012 0 N 50 35 2
+#
+# CMP 2
+CMP 3 48.26 56.0324 90 N C10 100n-THT ;0=2,1=0.0000,5=0
+PRP Capacitor_Type 'Film'
+PRP Case/Package 'THT'
+PRP Max_Operating_Temperature ''
+PRP Min_Operating_Temperature ''
+PRP Mounting_Technology ''
+PRP Pins '2'
+PRP Ripple_Current ''
+PRP Ripple_Current_(AC) ''
+PRP RoHS_Compliant ''
+PRP Tolerance '10%'
+PRP Value '100nF'
+PRP Voltage_Rating ''
+TOP 0 48.26 58.53240008 90 N 50 27 1
+TOP 1 48.26 53.53239992 90 N 46 14 2
+#
+# CMP 3
+CMP 3 25.1206 45.1612 180 N C11 100n-THT ;0=2,1=0.0000,5=0
+PRP Capacitor_Type 'Film'
+PRP Case/Package 'THT'
+PRP Max_Operating_Temperature ''
+PRP Min_Operating_Temperature ''
+PRP Mounting_Technology ''
+PRP Pins '2'
+PRP Ripple_Current ''
+PRP Ripple_Current_(AC) ''
+PRP RoHS_Compliant ''
+PRP Tolerance '10%'
+PRP Value '100nF'
+PRP Voltage_Rating ''
+TOP 0 27.62060008 45.1612 180 N 46 19 1
+TOP 1 22.62059992 45.1612 180 N 50 16 2
+#
+# CMP 4
+CMP 3 59.70080008 73.91962102 180 N C9 100n-THT ;0=2,1=0.0000,5=0
+PRP Capacitor_Type 'Film'
+PRP Case/Package 'THT'
+PRP Max_Operating_Temperature ''
+PRP Min_Operating_Temperature ''
+PRP Mounting_Technology ''
+PRP Pins '2'
+PRP Ripple_Current ''
+PRP Ripple_Current_(AC) ''
+PRP RoHS_Compliant ''
+PRP Tolerance '10%'
+PRP Value '100nF'
+PRP Voltage_Rating ''
+TOP 0 62.20080016 73.91962102 180 N 50 41 1
+TOP 1 57.2008 73.91962102 180 N 46 18 2
+#
+# CMP 5
+CMP 3 18.923 78.8924 180 N C13 100n-THT ;0=2,1=0.0000,5=0
+PRP Capacitor_Type 'Film'
+PRP Case/Package 'THT'
+PRP Max_Operating_Temperature ''
+PRP Min_Operating_Temperature ''
+PRP Mounting_Technology ''
+PRP Pins '2'
+PRP Ripple_Current ''
+PRP Ripple_Current_(AC) ''
+PRP RoHS_Compliant ''
+PRP Tolerance '10%'
+PRP Value '100nF'
+PRP Voltage_Rating ''
+TOP 0 21.42300008 78.8924 180 N 50 25 1
+TOP 1 16.42299992 78.8924 180 N 46 16 2
+#
+# CMP 6
+CMP 3 10.3124 24.8412 270 N C6 100n-THT ;0=2,1=0.0000,5=0
+PRP Capacitor_Type 'Film'
+PRP Case/Package 'THT'
+PRP Max_Operating_Temperature ''
+PRP Min_Operating_Temperature ''
+PRP Mounting_Technology ''
+PRP Pins '2'
+PRP Ripple_Current ''
+PRP Ripple_Current_(AC) ''
+PRP RoHS_Compliant ''
+PRP Tolerance '10%'
+PRP Value '100nF'
+PRP Voltage_Rating ''
+TOP 0 10.3124 22.34119992 270 N 43 2 1
+TOP 1 10.3124 27.34120008 270 N 10 2 2
+#
+# CMP 7
+CMP 3 49.3522 36.1188 180 N C8 100n-THT ;0=2,1=0.0000,5=0
+PRP Capacitor_Type 'Film'
+PRP Case/Package 'THT'
+PRP Max_Operating_Temperature ''
+PRP Min_Operating_Temperature ''
+PRP Mounting_Technology ''
+PRP Pins '2'
+PRP Ripple_Current ''
+PRP Ripple_Current_(AC) ''
+PRP RoHS_Compliant ''
+PRP Tolerance '10%'
+PRP Value '100nF'
+PRP Voltage_Rating ''
+TOP 0 51.85220008 36.1188 180 N 51 2 1
+TOP 1 46.85219992 36.1188 180 N 50 26 2
+#
+# CMP 8
+CMP 3 21.717 20.1422 180 N C7 100n-THT ;0=2,1=0.0000,5=0
+PRP Capacitor_Type 'Film'
+PRP Case/Package 'THT'
+PRP Max_Operating_Temperature ''
+PRP Min_Operating_Temperature ''
+PRP Mounting_Technology ''
+PRP Pins '2'
+PRP Ripple_Current ''
+PRP Ripple_Current_(AC) ''
+PRP RoHS_Compliant ''
+PRP Tolerance '10%'
+PRP Value '100nF'
+PRP Voltage_Rating ''
+TOP 0 24.21700008 20.1422 180 N 50 32 1
+TOP 1 19.21699992 20.1422 180 N 46 13 2
+#
+# CMP 9
+CMP 3 40.4582884 19.8640827 0 N C12 100n-THT ;0=2,1=0.0000,5=0
+PRP Capacitor_Type 'Film'
+PRP Case/Package 'THT'
+PRP Max_Operating_Temperature ''
+PRP Min_Operating_Temperature ''
+PRP Mounting_Technology ''
+PRP Pins '2'
+PRP Ripple_Current ''
+PRP Ripple_Current_(AC) ''
+PRP RoHS_Compliant ''
+PRP Tolerance '10%'
+PRP Value '100nF'
+PRP Voltage_Rating ''
+TOP 0 37.95828832 19.8640827 0 N 50 31 1
+TOP 1 42.95828848 19.8640827 0 N 46 17 2
+#
+# CMP 10
+CMP 8 67.00000062 96.00000104 0 N MH1 M3_Hole ;0=2,1=0.0000,5=0
+PRP Case/Package ''
+PRP Max_Operating_Temperature ''
+PRP Min_Operating_Temperature ''
+PRP Mounting_Technology ''
+PRP Pins ''
+PRP RoHS_Compliant ''
+TOP 0 67.00000062 96.00000104 0 N 0 16 1
+#
+# CMP 11
+CMP 8 3.99999962 96.00000104 0 N MH2 M3_Hole ;0=2,1=0.0000,5=0
+PRP Case/Package ''
+PRP Max_Operating_Temperature ''
+PRP Min_Operating_Temperature ''
+PRP Mounting_Technology ''
+PRP Pins ''
+PRP RoHS_Compliant ''
+TOP 0 3.99999962 96.00000104 0 N 0 15 1
+#
+# CMP 12
+CMP 8 67.00000062 3.99999962 0 N MH3 M3_Hole ;0=2,1=0.0000,5=0
+PRP Case/Package ''
+PRP Max_Operating_Temperature ''
+PRP Min_Operating_Temperature ''
+PRP Mounting_Technology ''
+PRP Pins ''
+PRP RoHS_Compliant ''
+TOP 0 67.00000062 3.99999962 0 N 0 12 1
+#
+# CMP 13
+CMP 8 3.99999962 3.99999962 0 N MH4 M3_Hole ;0=2,1=0.0000,5=0
+PRP Case/Package ''
+PRP Max_Operating_Temperature ''
+PRP Min_Operating_Temperature ''
+PRP Mounting_Technology ''
+PRP Pins ''
+PRP RoHS_Compliant ''
+TOP 0 3.99999962 3.99999962 0 N 0 14 1
+#
+# CMP 14
+CMP 10 29.10000022 52.42075114 0 N R28 10k-ThroughHole-250mW ;0=2,1=2.6000,5=0
+PRP Case/Package 'THT'
+PRP Max_Operating_Temperature ''
+PRP Min_Operating_Temperature ''
+PRP Mounting_Technology ''
+PRP Pins '2'
+PRP Power '250mW'
+PRP RoHS_Compliant ''
+PRP Tolerance '5%'
+PRP Value '10k'
+PRP Voltage_Rating '50V'
+TOP 0 24.59999906 52.42075114 0 N 50 7 1
+TOP 1 33.60000138 52.42075114 0 N 5 2 2
+#
+# CMP 15
+CMP 10 29.20000002 55.27500502 0 N R27 10k-ThroughHole-250mW ;0=2,1=2.6000,5=0
+PRP Case/Package 'THT'
+PRP Max_Operating_Temperature ''
+PRP Min_Operating_Temperature ''
+PRP Mounting_Technology ''
+PRP Pins '2'
+PRP Power '250mW'
+PRP RoHS_Compliant ''
+PRP Tolerance '5%'
+PRP Value '10k'
+PRP Voltage_Rating '50V'
+TOP 0 24.69999886 55.27500502 0 N 50 6 1
+TOP 1 33.70000118 55.27500502 0 N 32 2 2
+#
+# CMP 16
+CMP 10 50.6000004 73.86762214 180 N R26 10k-ThroughHole-250mW ;0=2,1=2.6000,5=0
+PRP Case/Package 'THT'
+PRP Max_Operating_Temperature ''
+PRP Min_Operating_Temperature ''
+PRP Mounting_Technology ''
+PRP Pins '2'
+PRP Power '250mW'
+PRP RoHS_Compliant ''
+PRP Tolerance '5%'
+PRP Value '10k'
+PRP Voltage_Rating '50V'
+TOP 0 55.10000156 73.86762214 180 N 50 52 1
+TOP 1 46.09999924 73.86762214 180 N 6 2 2
+#
+# CMP 17
+CMP 14 18.6000009 73.69999992 180 N U9 LTC2631CTS8-HZ12#TRMPBF ;0=1,1=1.0000,5=0
+PRP Case/Package 'TSOT'
+PRP Interface '2-Wire, I2C'
+PRP Max_Operating_Temperature '70°C'
+PRP Max_Supply_Voltage '5.5V'
+PRP Min_Operating_Temperature '0°C'
+PRP Min_Supply_Voltage '4.5V'
+PRP Mounting_Technology 'Surface Mount'
+PRP Nominal_Supply_Current ''
+PRP Nominal_Supply_Voltage ''
+PRP Number_of_Bits '12'
+PRP Number_of_Channels '1'
+PRP Pins '8'
+PRP RoHS_Compliant ''
+PRP Voltage_Rating ''
+TOP 0 19.90999066 72.72499552 90 N 42 0 1
+TOP 1 19.90999066 73.37498152 90 N 49 1 2
+TOP 2 19.90999066 74.02501832 90 N 48 1 3
+TOP 3 19.90999066 74.67500432 90 N 50 5 4
+TOP 4 17.28998066 74.67500432 90 N 46 8 5
+TOP 5 17.28998066 74.02501832 90 N 1 0 6
+TOP 6 17.28998066 73.37498152 90 N 18 0 7
+TOP 7 17.28998066 72.72499552 90 N 41 0 8
+#
+# CMP 18
+CMP 6 54.50000022 59.50000292 90 N U8 SN74AC74DR ;0=1,1=0.0000,5=0
+PRP Case/Package 'SOIC'
+PRP Frequency '160MHz'
+PRP Logic_Type ''
+PRP Max_Operating_Temperature '85°C'
+PRP Max_Power_Dissipation ''
+PRP Max_Supply_Voltage '6V'
+PRP Min_Operating_Temperature '-40°C'
+PRP Min_Supply_Voltage '2V'
+PRP Mounting_Technology 'Surface Mount'
+PRP Nominal_Supply_Current '2µA'
+PRP Nominal_Supply_Voltage ''
+PRP Output_Function ''
+PRP Pins '14'
+PRP RoHS_Compliant ''
+TOP 0 58.31001546 62.20002546 90 N 35 1 1
+TOP 1 57.04001546 62.20002546 90 N 46 7 2
+TOP 2 55.77001546 62.20002546 90 N 8 0 3
+TOP 3 54.50001546 62.20002546 90 N 46 11 4
+TOP 4 53.23001546 62.20002546 90 N 11 1 5
+TOP 5 51.96001546 62.20002546 90 N 0 10 6
+TOP 6 50.69001546 62.20002546 90 N 50 28 7
+TOP 7 50.69001546 56.79998546 90 N 0 9 8
+TOP 8 51.96001546 56.79998546 90 N 0 5 9
+TOP 9 53.23001546 56.79998546 90 N 15 0 10
+TOP 10 54.50001546 56.79998546 90 N 14 0 11
+TOP 11 55.77001546 56.79998546 90 N 13 0 12
+TOP 12 57.04001546 56.79998546 90 N 12 0 13
+TOP 13 58.31001546 56.79998546 90 N 46 12 14
+#
+# CMP 19
+CMP 13 54.50000022 68.58838962 270 N U6 74LVC08AS14-13 ;0=1,1=1.7300,5=0
+PRP Case/Package 'SO'
+PRP Frequency ''
+PRP Logic_Type ''
+PRP Max_Operating_Temperature '125°C'
+PRP Max_Power_Dissipation ''
+PRP Max_Supply_Voltage '5.5V'
+PRP Min_Operating_Temperature '-40°C'
+PRP Min_Supply_Voltage '1.65V'
+PRP Mounting_Technology 'Surface Mount'
+PRP Nominal_Supply_Current ''
+PRP Nominal_Supply_Voltage ''
+PRP Output_Function ''
+PRP Pins '14'
+PRP RoHS_Compliant ''
+TOP 0 50.69001546 65.86338618 180 N 6 1 1
+TOP 1 51.96001546 65.86338618 180 N 11 0 2
+TOP 2 53.23001546 65.86338618 180 N 26 0 3
+TOP 3 54.50001546 65.86338618 180 N 50 42 4
+TOP 4 55.77001546 65.86338618 180 N 50 12 5
+TOP 5 57.04001546 65.86338618 180 N 0 7 6
+TOP 6 58.31001546 65.86338618 180 N 50 47 7
+TOP 7 58.31001546 71.31341338 180 N 0 8 8
+TOP 8 57.04001546 71.31341338 180 N 50 48 9
+TOP 9 55.77001546 71.31341338 180 N 50 50 10
+TOP 10 54.50001546 71.31341338 180 N 0 6 11
+TOP 11 53.23001546 71.31341338 180 N 50 43 12
+TOP 12 51.96001546 71.31341338 180 N 50 23 13
+TOP 13 50.69001546 71.31341338 180 N 46 3 14
+#
+# CMP 20
+CMP 9 23.62075794 41.2000192 0 N U5 LM393ADT ;0=1,1=1.7500,5=0
+PRP Case/Package 'SO'
+PRP Channels ''
+PRP Frequency ''
+PRP Max_Operating_Temperature '70°C'
+PRP Max_Supply_Current '2.5mA'
+PRP Max_Supply_Voltage '36V'
+PRP Min_Operating_Temperature '0°C'
+PRP Min_Supply_Voltage '2V'
+PRP Mounting_Technology 'Surface Mount'
+PRP Nominal_Dual_Supply ''
+PRP Nominal_Gain_Bandwidth_Product ''
+PRP Nominal_Supply_Voltage ''
+PRP Number_of_Channels '2'
+PRP Output_Type 'TTL'
+PRP Pins '8'
+PRP Power ''
+PRP RoHS_Compliant ''
+TOP 0 20.88074056 43.10504206 270 N 35 0 1
+TOP 1 20.88074056 41.83504206 270 N 16 1 2
+TOP 2 20.88074056 40.56504206 270 N 19 1 3
+TOP 3 20.88074056 39.29504206 270 N 50 38 4
+TOP 4 26.36073976 39.29504206 270 N 50 36 5
+TOP 5 26.36073976 40.56504206 270 N 50 37 6
+TOP 6 26.36073976 41.83504206 270 N 0 1 7
+TOP 7 26.36073976 43.10504206 270 N 46 9 8
+#
+# CMP 21
+CMP 4 54.14575404 28.3907357 0 N U4 SN65HVD233DR ;0=1,1=1.7500,5=0
+PRP Case/Package 'SOIC'
+PRP Max_Operating_Temperature '125°C'
+PRP Max_Supply_Voltage '3.6V'
+PRP Min_Operating_Temperature '-40°C'
+PRP Min_Supply_Voltage '3V'
+PRP Mounting_Technology ''
+PRP Nominal_Supply_Voltage ''
+PRP Pins '8'
+PRP Power ''
+PRP RoHS_Compliant ''
+TOP 0 51.52076056 30.29572046 270 N 36 0 1
+TOP 1 51.52076056 29.02572046 270 N 50 18 2
+TOP 2 51.52076056 27.75572046 270 N 51 0 3
+TOP 3 51.52076056 26.48572046 270 N 37 0 4
+TOP 4 56.77073736 26.48572046 270 N 50 22 5
+TOP 5 56.77073736 27.75572046 270 N 40 1 6
+TOP 6 56.77073736 29.02572046 270 N 39 1 7
+TOP 7 56.77073736 30.29572046 270 N 38 0 8
+#
+# CMP 22
+CMP 7 39.80000168 25.60000214 180 N U3 ADA4522-2ARZ ;0=1,1=0.0000,5=0
+PRP Case/Package 'SOIC'
+PRP Channels ''
+PRP Frequency ''
+PRP Max_Operating_Temperature '125°C'
+PRP Max_Supply_Voltage '55V'
+PRP Min_Operating_Temperature '-40°C'
+PRP Min_Supply_Voltage '4.5V'
+PRP Mounting_Technology 'Surface Mount'
+PRP Nominal_Dual_Supply ''
+PRP Nominal_Gain_Bandwidth_Product ''
+PRP Nominal_Supply_Voltage ''
+PRP Output_Type ''
+PRP Pins '8'
+PRP Power ''
+PRP RoHS_Compliant ''
+TOP 0 42.11604734 23.69500468 180 N 16 0 1
+TOP 1 42.11604734 24.96500468 180 N 17 0 2
+TOP 2 42.11604734 26.23500468 180 N 20 0 3
+TOP 3 42.11604734 27.50500468 180 N 46 2 4
+TOP 4 37.48395094 27.50500468 180 N 24 0 5
+TOP 5 37.48395094 26.23500468 180 N 21 0 6
+TOP 6 37.48395094 24.96500468 180 N 2 0 7
+TOP 7 37.48395094 23.69500468 180 N 50 30 8
+#
+# CMP 23
+CMP 12 18.4404 25.0952 0 N U2 ACPL-C870-000E ;0=1,1=1.7300,5=0
+PRP -3db_Bandwidth '100kHz'
+PRP Bandwidth '100kHz'
+PRP Case/Package 'SO'
+PRP China_RoHS 'Compliant'
+PRP Contact_Plating 'Tin'
+PRP Forward_Current '230mA'
+PRP Height '3.18mm'
+PRP Height_-_Seated_(Max) '3.607mm'
+PRP Input_Bias_Current '1.5nA'
+PRP Input_Current '10.5mA'
+PRP Input_Offset_Voltage_(Vos) '300µV'
+PRP Isolation_Voltage '5kV'
+PRP Length '6.807mm'
+PRP Lifecycle_Status 'Production'
+PRP Max_Operating_Temperature '105°C'
+PRP Max_Supply_Voltage '5.5V'
+PRP Min_Operating_Temperature '-40°C'
+PRP Min_Supply_Voltage '3V'
+PRP Mounting_Technology 'Surface Mount'
+PRP Number_of_Amplifiers '1'
+PRP Number_of_Channels '1'
+PRP Number_of_Circuits '1'
+PRP Number_of_Terminals '8'
+PRP Operating_Supply_Current '10.5mA'
+PRP Operating_Supply_Voltage '5V'
+PRP Output_Current_per_Channel '30mA'
+PRP Output_Type 'ANALOG, Digital'
+PRP Pins '8'
+PRP Propagation_Delay '6.5µs'
+PRP Radiation_Hardening 'No'
+PRP REACH_SVHC 'Yes'
+PRP RoHS 'Compliant'
+PRP RoHS_Compliant ''
+PRP Terminal_Pitch '1.27mm'
+PRP Turn-On_Delay_Time '6.5µs'
+PRP Width '5.85mm'
+TOP 0 13.14037758 27.00020762 270 N 10 0 1
+TOP 1 13.14037758 25.73020762 270 N 23 0 2
+TOP 2 13.14037758 24.46020762 270 N 43 0 3
+TOP 3 13.14037758 23.19020762 270 N 43 4 4
+TOP 4 23.74040718 23.19020762 270 N 50 40 5
+TOP 5 23.74040718 24.46020762 270 N 22 0 6
+TOP 6 23.74040718 25.73020762 270 N 25 0 7
+TOP 7 23.74040718 27.00020762 270 N 46 10 8
+#
+# CMP 24
+CMP 11 27.99999988 13.72932738 0 N U1 1779405241 ;0=2,1=10.1600,5=0
+PRP Case/Size_Code 'SIP-7'
+PRP Category 'Isolated Converter'
+PRP Component_Type 'Standard'
+PRP ComponentLink1Description 'Website Link'
+PRP ComponentLink1URL 'https://www.we-online.com/redexpert/article/1779405241?ad'
+PRP ComponentLink2Description 'Datasheet Link'
+PRP ComponentLink2URL 'https://www.we-online.com/redexpert/spec/1779405241?ad'
+PRP Design_Item_ID '1779405241'
+PRP Height '10.16 mm'
+PRP Input_Voltage '10.8 - 13.2 V'
+PRP Isolation_Voltage '3000 V'
+PRP Length '19.65 mm'
+PRP Manufacturer 'Wurth Elektronik'
+PRP Manufacturer_Part_Number '1779405241'
+PRP Match_Code 'WPME-FISM'
+PRP Max_Operating_Temperature '105 °C'
+PRP Min_Operating_Temperature '-40 °C'
+PRP Mount 'Through Hole'
+PRP Output_Power '2 W'
+PRP Output_Voltage '5 V'
+PRP Packaging 'Tube'
+PRP Pin_Count '4'
+PRP Short_Circuit_Protection 'continuous'
+PRP Source 'WPME-FISM.SchLib'
+PRP Type_of_Insulation 'Functional'
+PRP Width '7.05 mm'
+TOP 0 20.3798932 16.35430562 0 N 9 2 1
+TOP 1 22.9198932 16.35430562 0 N 43 3 2
+TOP 2 30.5398932 16.35430562 0 N 50 39 5
+TOP 3 35.6198932 16.35430562 0 N 46 22 7
+#
+# CMP 25
+CMP 10 59.35425264 49.50000006 270 N R25 10k-ThroughHole-250mW ;0=2,1=2.6000,5=0
+PRP Case/Package 'THT'
+PRP Max_Operating_Temperature ''
+PRP Min_Operating_Temperature ''
+PRP Mounting_Technology ''
+PRP Pins '2'
+PRP Power '250mW'
+PRP RoHS_Compliant ''
+PRP Tolerance '5%'
+PRP Value '10k'
+PRP Voltage_Rating '50V'
+TOP 0 59.35426026 45.00000906 270 N 50 13 1
+TOP 1 59.35426026 53.99999106 270 N 12 1 2
+#
+# CMP 26
+CMP 10 56.49999876 49.50000006 270 N R24 10k-ThroughHole-250mW ;0=2,1=2.6000,5=0
+PRP Case/Package 'THT'
+PRP Max_Operating_Temperature ''
+PRP Min_Operating_Temperature ''
+PRP Mounting_Technology ''
+PRP Pins '2'
+PRP Power '250mW'
+PRP RoHS_Compliant ''
+PRP Tolerance '5%'
+PRP Value '10k'
+PRP Voltage_Rating '50V'
+TOP 0 56.50001146 45.00000906 270 N 50 46 1
+TOP 1 56.50001146 53.99999106 270 N 13 1 2
+#
+# CMP 27
+CMP 10 53.49999968 49.50000006 270 N R23 10k-ThroughHole-250mW ;0=2,1=2.6000,5=0
+PRP Case/Package 'THT'
+PRP Max_Operating_Temperature ''
+PRP Min_Operating_Temperature ''
+PRP Mounting_Technology ''
+PRP Pins '2'
+PRP Power '250mW'
+PRP RoHS_Compliant ''
+PRP Tolerance '5%'
+PRP Value '10k'
+PRP Voltage_Rating '50V'
+TOP 0 53.50001746 45.00000906 270 N 50 14 1
+TOP 1 53.50001746 53.99999106 270 N 14 1 2
+#
+# CMP 28
+CMP 10 50.49999806 49.50000006 270 N R22 10k-ThroughHole-250mW ;0=2,1=2.6000,5=0
+PRP Case/Package 'THT'
+PRP Max_Operating_Temperature ''
+PRP Min_Operating_Temperature ''
+PRP Mounting_Technology ''
+PRP Pins '2'
+PRP Power '250mW'
+PRP RoHS_Compliant ''
+PRP Tolerance '5%'
+PRP Value '10k'
+PRP Voltage_Rating '50V'
+TOP 0 50.50002346 45.00000906 270 N 50 19 1
+TOP 1 50.50002346 53.99999106 270 N 15 1 2
+#
+# CMP 29
+CMP 10 15.58723578 41.1999938 90 N R21 18kOhm-ThroughHole-250mW ;0=2,1=2.6000,5=0
+PRP Case/Package 'THT'
+PRP Max_Operating_Temperature ''
+PRP Min_Operating_Temperature ''
+PRP Mounting_Technology 'THT'
+PRP Pins '2'
+PRP Power '250mW'
+PRP RoHS_Compliant ''
+PRP Tolerance '5%'
+PRP Value '18k'
+PRP Voltage_Rating '67V'
+TOP 0 15.58721292 45.69998226 90 N 50 15 1
+TOP 1 15.58721292 36.70000026 90 N 19 2 2
+#
+# CMP 30
+CMP 10 18.44149474 41.19999888 270 N R20 270k-ThroughHole-250mW ;0=2,1=2.6000,5=0
+PRP Case/Package 'THT'
+PRP Max_Operating_Temperature ''
+PRP Min_Operating_Temperature ''
+PRP Mounting_Technology 'THT'
+PRP Pins '2'
+PRP Power '250mW'
+PRP RoHS_Compliant ''
+PRP Tolerance '5%'
+PRP Value '270k'
+PRP Voltage_Rating '244V'
+TOP 0 18.4415176 36.7000028 270 N 19 0 1
+TOP 1 18.4415176 45.6999848 270 N 35 4 2
+#
+# CMP 31
+CMP 10 48.59999932 25.899999 90 N R19 100k-ThroughHole-250mW ;0=2,1=2.6000,5=0
+PRP Case/Package 'ThroughHole'
+PRP Max_Operating_Temperature ''
+PRP Min_Operating_Temperature ''
+PRP Mounting_Technology ''
+PRP Pins ''
+PRP Power '250mW'
+PRP RoHS_Compliant ''
+PRP Tolerance '5%'
+PRP Value '100k'
+PRP Voltage_Rating '158V'
+TOP 0 48.60000694 30.39999508 90 N 17 1 1
+TOP 1 48.60000694 21.40001308 90 N 16 2 2
+#
+# CMP 32
+CMP 10 44.19999796 37.19999672 90 N R18 10k-ThroughHole-250mW ;0=2,1=2.6000,5=0
+PRP Case/Package 'THT'
+PRP Max_Operating_Temperature ''
+PRP Min_Operating_Temperature ''
+PRP Mounting_Technology ''
+PRP Pins '2'
+PRP Power '250mW'
+PRP RoHS_Compliant ''
+PRP Tolerance '5%'
+PRP Value '10k'
+PRP Voltage_Rating '50V'
+TOP 0 44.20001574 41.69999788 90 N 18 1 1
+TOP 1 44.20001574 32.70001588 90 N 17 2 2
+#
+# CMP 33
+CMP 10 24.69999124 33.2292325 180 N R17 100k-ThroughHole-250mW ;0=2,1=2.6000,5=0
+PRP Case/Package 'ThroughHole'
+PRP Max_Operating_Temperature ''
+PRP Min_Operating_Temperature ''
+PRP Mounting_Technology ''
+PRP Pins ''
+PRP Power '250mW'
+PRP RoHS_Compliant ''
+PRP Tolerance '5%'
+PRP Value '100k'
+PRP Voltage_Rating '158V'
+TOP 0 29.19998478 33.22922488 180 N 46 5 1
+TOP 1 20.20000278 33.22922488 180 N 19 3 2
+#
+# CMP 34
+CMP 10 29.70000918 40.0584924 90 N R16 10k-ThroughHole-250mW ;0=2,1=2.6000,5=0
+PRP Case/Package 'THT'
+PRP Max_Operating_Temperature ''
+PRP Min_Operating_Temperature ''
+PRP Mounting_Technology ''
+PRP Pins '2'
+PRP Power '250mW'
+PRP RoHS_Compliant ''
+PRP Tolerance '5%'
+PRP Value '10k'
+PRP Voltage_Rating '50V'
+TOP 0 29.70002442 44.55849356 90 N 35 3 1
+TOP 1 29.70002442 35.55851156 90 N 46 6 2
+#
+# CMP 35
+CMP 10 45.60000024 25.899999 90 N R15 100k-ThroughHole-250mW ;0=2,1=2.6000,5=0
+PRP Case/Package 'ThroughHole'
+PRP Max_Operating_Temperature ''
+PRP Min_Operating_Temperature ''
+PRP Mounting_Technology ''
+PRP Pins ''
+PRP Power '250mW'
+PRP RoHS_Compliant ''
+PRP Tolerance '5%'
+PRP Value '100k'
+PRP Voltage_Rating '158V'
+TOP 0 45.60001294 30.39999508 90 N 20 2 1
+TOP 1 45.60001294 21.40001308 90 N 50 34 2
+#
+# CMP 36
+CMP 10 41.19990236 37.19999418 90 N R14 10k-ThroughHole-250mW ;0=2,1=2.6000,5=0
+PRP Case/Package 'THT'
+PRP Max_Operating_Temperature ''
+PRP Min_Operating_Temperature ''
+PRP Mounting_Technology ''
+PRP Pins '2'
+PRP Power '250mW'
+PRP RoHS_Compliant ''
+PRP Tolerance '5%'
+PRP Value '10k'
+PRP Voltage_Rating '50V'
+TOP 0 41.19992014 41.69999788 90 N 30 1 1
+TOP 1 41.19992014 32.70001588 90 N 20 1 2
+#
+# CMP 37
+CMP 10 11.54852656 65.40000128 270 N R13 100Ohm-ThroughHole-250mW ;0=2,1=2.6000,5=0
+PRP Case/Package 'THT'
+PRP Max_Operating_Temperature ''
+PRP Min_Operating_Temperature ''
+PRP Mounting_Technology ''
+PRP Pins ''
+PRP Power '250mW'
+PRP RoHS_Compliant ''
+PRP Tolerance '5%'
+PRP Value '100'
+PRP Voltage_Rating '5V'
+TOP 0 11.54851132 60.8999798 270 N 27 0 1
+TOP 1 11.54851132 69.9000126 270 N 42 1 2
+#
+# CMP 38
+CMP 10 5.3000021 65.20000168 270 N R12 100Ohm-ThroughHole-250mW ;0=2,1=2.6000,5=0
+PRP Case/Package 'THT'
+PRP Max_Operating_Temperature ''
+PRP Min_Operating_Temperature ''
+PRP Mounting_Technology ''
+PRP Pins ''
+PRP Power '250mW'
+PRP RoHS_Compliant ''
+PRP Tolerance '5%'
+PRP Value '100'
+PRP Voltage_Rating '5V'
+TOP 0 5.29999702 60.7000056 270 N 28 0 1
+TOP 1 5.29999702 69.6999876 270 N 41 1 2
+#
+# CMP 39
+CMP 10 10.80000126 78.00000148 270 N R11 10k-ThroughHole-250mW ;0=2,1=2.6000,5=0
+PRP Case/Package 'THT'
+PRP Max_Operating_Temperature ''
+PRP Min_Operating_Temperature ''
+PRP Mounting_Technology ''
+PRP Pins '2'
+PRP Power '250mW'
+PRP RoHS_Compliant ''
+PRP Tolerance '5%'
+PRP Value '10k'
+PRP Voltage_Rating '50V'
+TOP 0 10.7999784 73.49998 270 N 30 2 1
+TOP 1 10.7999784 82.5000128 270 N 31 3 2
+#
+# CMP 40
+CMP 10 13.65425514 78.20000108 270 N R10 10k-ThroughHole-250mW ;0=2,1=2.6000,5=0
+PRP Case/Package 'THT'
+PRP Max_Operating_Temperature ''
+PRP Min_Operating_Temperature ''
+PRP Mounting_Technology ''
+PRP Pins '2'
+PRP Power '250mW'
+PRP RoHS_Compliant ''
+PRP Tolerance '5%'
+PRP Value '10k'
+PRP Voltage_Rating '50V'
+TOP 0 13.654278 73.6999796 270 N 4 0 1
+TOP 1 13.654278 82.7000124 270 N 29 1 2
+#
+# CMP 41
+CMP 10 54.99999922 37.29999906 90 N R9 10k-ThroughHole-250mW ;0=2,1=2.6000,5=0
+PRP Case/Package 'THT'
+PRP Max_Operating_Temperature ''
+PRP Min_Operating_Temperature ''
+PRP Mounting_Technology ''
+PRP Pins '2'
+PRP Power '250mW'
+PRP RoHS_Compliant ''
+PRP Tolerance '5%'
+PRP Value '10k'
+PRP Voltage_Rating '50V'
+TOP 0 54.9999789 41.79997736 90 N 50 20 1
+TOP 1 54.9999789 32.79999536 90 N 38 2 2
+#
+# CMP 42
+CMP 10 7.94574738 78.00000148 270 N R8 10k-ThroughHole-250mW ;0=2,1=2.6000,5=0
+PRP Case/Package 'THT'
+PRP Max_Operating_Temperature ''
+PRP Min_Operating_Temperature ''
+PRP Mounting_Technology ''
+PRP Pins '2'
+PRP Power '250mW'
+PRP RoHS_Compliant ''
+PRP Tolerance '5%'
+PRP Value '10k'
+PRP Voltage_Rating '50V'
+TOP 0 7.9457296 73.49998 270 N 2 1 1
+TOP 1 7.9457296 82.5000128 270 N 3 3 2
+#
+# CMP 43
+CMP 10 59.10001642 29.07075466 270 N R7 120Ohm-Throughhole-250mW ;0=2,1=2.6000,5=0
+PRP Case/Package 'Throughole'
+PRP Max_Operating_Temperature ''
+PRP Min_Operating_Temperature ''
+PRP Mounting_Technology 'Throughhole'
+PRP Pins ''
+PRP Power '250mW'
+PRP RoHS_Compliant ''
+PRP Tolerance '5%'
+PRP Value '120'
+PRP Voltage_Rating '5.5V'
+TOP 0 59.10002404 24.57075604 270 N 40 0 1
+TOP 1 59.10002404 33.57073804 270 N 39 0 2
+#
+# CMP 44
+CMP 10 31.70000518 25.80000174 90 N R6 10k-ThroughHole-250mW ;0=2,1=2.6000,5=0
+PRP Case/Package 'THT'
+PRP Max_Operating_Temperature ''
+PRP Min_Operating_Temperature ''
+PRP Mounting_Technology ''
+PRP Pins '2'
+PRP Power '250mW'
+PRP RoHS_Compliant ''
+PRP Tolerance '5%'
+PRP Value '10k'
+PRP Voltage_Rating '50V'
+TOP 0 31.70001534 30.30002068 90 N 21 2 1
+TOP 1 31.70001534 21.29998788 90 N 2 2 2
+#
+# CMP 45
+CMP 10 35.4000054 37.29999906 90 N R5 10k-ThroughHole-250mW ;0=2,1=2.6000,5=0
+PRP Case/Package 'THT'
+PRP Max_Operating_Temperature ''
+PRP Min_Operating_Temperature ''
+PRP Mounting_Technology ''
+PRP Pins '2'
+PRP Power '250mW'
+PRP RoHS_Compliant ''
+PRP Tolerance '5%'
+PRP Value '10k'
+PRP Voltage_Rating '50V'
+TOP 0 35.39998254 41.80002308 90 N 22 1 1
+TOP 1 35.39998254 32.79999028 90 N 21 1 2
+#
+# CMP 46
+CMP 10 10.3542719 9.50000894 270 N R4 21k-Throughhole-250mW ;0=2,1=2.6000,5=0
+PRP Case/Package 'Throughhole'
+PRP Max_Operating_Temperature ''
+PRP Min_Operating_Temperature ''
+PRP Mounting_Technology 'Throughhole'
+PRP Pins ''
+PRP Power '250mW'
+PRP RoHS_Compliant ''
+PRP Tolerance '5%'
+PRP Value '21k'
+PRP Voltage_Rating '72V'
+TOP 0 10.35427698 5.00000016 270 N 43 1 1
+TOP 1 10.35427698 14.00003296 270 N 23 2 2
+#
+# CMP 47
+CMP 10 12.9794 15.9004 270 N R3 210k-Throughhole-250mW ;0=2,1=2.6000,5=0
+PRP Case/Package 'Throughhole'
+PRP Max_Operating_Temperature ''
+PRP Min_Operating_Temperature ''
+PRP Mounting_Technology ''
+PRP Pins ''
+PRP Power '250mW'
+PRP RoHS_Compliant ''
+PRP Tolerance '5%'
+PRP Value '210k'
+PRP Voltage_Rating '229V'
+TOP 0 12.97937968 11.40037852 270 N 23 1 1
+TOP 1 12.97937968 20.40041132 270 N 47 0 2
+#
+# CMP 48
+CMP 10 38.34564848 37.29999652 270 N R2 10k-ThroughHole-250mW ;0=2,1=2.6000,5=0
+PRP Case/Package 'THT'
+PRP Max_Operating_Temperature ''
+PRP Min_Operating_Temperature ''
+PRP Mounting_Technology ''
+PRP Pins '2'
+PRP Power '250mW'
+PRP RoHS_Compliant ''
+PRP Tolerance '5%'
+PRP Value '10k'
+PRP Voltage_Rating '50V'
+TOP 0 38.34567134 32.79999028 270 N 24 2 1
+TOP 1 38.34567134 41.79997228 270 N 50 49 2
+#
+# CMP 49
+CMP 10 34.70000172 25.7999992 270 N R1 10k-ThroughHole-250mW ;0=2,1=2.6000,5=0
+PRP Case/Package 'THT'
+PRP Max_Operating_Temperature ''
+PRP Min_Operating_Temperature ''
+PRP Mounting_Technology ''
+PRP Pins '2'
+PRP Power '250mW'
+PRP RoHS_Compliant ''
+PRP Tolerance '5%'
+PRP Value '10k'
+PRP Voltage_Rating '50V'
+TOP 0 34.70000934 21.29998788 270 N 25 1 1
+TOP 1 34.70000934 30.30002068 270 N 24 1 2
+#
+# CMP 50
+CMP 0 45.99999944 64.10000134 270 N P3 61300311121 ;0=2,1=8.5400,5=0
+PRP Category 'Board-to-Board Connectors'
+PRP Component_Type 'Standard'
+PRP ComponentLink1Description 'Website Link'
+PRP ComponentLink1URL 'https://www.we-online.com/redexpert/article/61300311121?ad'
+PRP ComponentLink2Description 'Datasheet Link'
+PRP ComponentLink2URL 'https://www.we-online.com/redexpert/spec/61300311121?ad'
+PRP Contact_Resistance '20mOhm'
+PRP Design_Item_ID '61300311121'
+PRP Gender 'Pin Header'
+PRP Manufacturer 'Wurth Elektronik'
+PRP Manufacturer_Part_Number '61300311121'
+PRP Match_Code 'WR-PHD'
+PRP Mount 'Through Hole'
+PRP Number_of_Rows '1'
+PRP Operating_Temperature_Max '105°C'
+PRP Operating_Temperature_Min '-40°C'
+PRP Orientation 'Vertical'
+PRP Packaging 'Bag'
+PRP Pin_Count '3'
+PRP Pins '3'
+PRP Pitch '2.54mm'
+PRP Rated_Current '3A'
+PRP Source 'WR-PHD.SchLib'
+PRP Withstanding_Voltage '500V'
+PRP Working_Voltage '250V'
+TOP 0 46.00000706 61.55999626 270 N 6 0 1
+TOP 1 46.00000706 64.09999626 270 N 7 1 2
+TOP 2 46.00000706 66.63999626 270 N 26 1 3
+#
+# CMP 51
+CMP 0 8.42426306 64.59997748 270 N P2 61300311121 ;0=2,1=8.5400,5=0
+PRP Category 'Board-to-Board Connectors'
+PRP Component_Type 'Standard'
+PRP ComponentLink1Description 'Website Link'
+PRP ComponentLink1URL 'https://www.we-online.com/redexpert/article/61300311121?ad'
+PRP ComponentLink2Description 'Datasheet Link'
+PRP ComponentLink2URL 'https://www.we-online.com/redexpert/spec/61300311121?ad'
+PRP Contact_Resistance '20mOhm'
+PRP Design_Item_ID '61300311121'
+PRP Gender 'Pin Header'
+PRP Manufacturer 'Wurth Elektronik'
+PRP Manufacturer_Part_Number '61300311121'
+PRP Match_Code 'WR-PHD'
+PRP Mount 'Through Hole'
+PRP Number_of_Rows '1'
+PRP Operating_Temperature_Max '105°C'
+PRP Operating_Temperature_Min '-40°C'
+PRP Orientation 'Vertical'
+PRP Packaging 'Bag'
+PRP Pin_Count '3'
+PRP Pins '3'
+PRP Pitch '2.54mm'
+PRP Rated_Current '3A'
+PRP Source 'WR-PHD.SchLib'
+PRP Withstanding_Voltage '500V'
+PRP Working_Voltage '250V'
+TOP 0 8.42425544 62.06000034 270 N 50 29 1
+TOP 1 8.42425544 64.60000034 270 N 27 1 2
+TOP 2 8.42425544 67.14000034 270 N 46 21 3
+#
+# CMP 52
+CMP 0 1.90000128 64.70000014 270 N P1 61300311121 ;0=2,1=8.5400,5=0
+PRP Category 'Board-to-Board Connectors'
+PRP Component_Type 'Standard'
+PRP ComponentLink1Description 'Website Link'
+PRP ComponentLink1URL 'https://www.we-online.com/redexpert/article/61300311121?ad'
+PRP ComponentLink2Description 'Datasheet Link'
+PRP ComponentLink2URL 'https://www.we-online.com/redexpert/spec/61300311121?ad'
+PRP Contact_Resistance '20mOhm'
+PRP Design_Item_ID '61300311121'
+PRP Gender 'Pin Header'
+PRP Manufacturer 'Wurth Elektronik'
+PRP Manufacturer_Part_Number '61300311121'
+PRP Match_Code 'WR-PHD'
+PRP Mount 'Through Hole'
+PRP Number_of_Rows '1'
+PRP Operating_Temperature_Max '105°C'
+PRP Operating_Temperature_Min '-40°C'
+PRP Orientation 'Vertical'
+PRP Packaging 'Bag'
+PRP Pin_Count '3'
+PRP Pins '3'
+PRP Pitch '2.54mm'
+PRP Rated_Current '3A'
+PRP Source 'WR-PHD.SchLib'
+PRP Withstanding_Voltage '500V'
+PRP Working_Voltage '250V'
+TOP 0 1.89997842 62.160023 270 N 50 45 1
+TOP 1 1.89997842 64.700023 270 N 28 1 2
+TOP 2 1.89997842 67.240023 270 N 46 20 3
+#
+# CMP 53
+CMP 1 67.00000062 35.00000112 270 N J2 691322310012 ;0=2,1=7.0000,5=0
+PRP Case/Package ''
+PRP Connector_Type ''
+PRP Gender 'Male'
+PRP Max_Current_Rating ''
+PRP Max_Operating_Temperature ''
+PRP Min_Operating_Temperature ''
+PRP Mounting_Technology ''
+PRP Pins ''
+PRP RoHS_Compliant ''
+PRP System 'Connector'
+PRP Voltage_Rating ''
+TOP 0 63.6000252 14.0450824 270 N 9 1 1
+TOP 1 63.6000252 17.8550824 270 N 43 6 2
+TOP 2 63.6000252 21.6650824 270 N 0 21 3
+TOP 3 63.6000252 25.4750824 270 N 50 21 4
+TOP 4 63.6000252 29.2850824 270 N 40 2 5
+TOP 5 63.6000252 33.0950824 270 N 39 2 6
+TOP 6 63.6000252 36.9050824 270 N 49 2 7
+TOP 7 63.6000252 40.7150824 270 N 48 2 8
+TOP 8 63.6000252 44.5250824 270 N 0 17 9
+TOP 9 63.6000252 48.3350824 270 N 0 22 10
+TOP 10 63.6000252 52.1450824 270 N 31 2 11
+TOP 11 63.6000252 55.9550824 270 N 3 2 12
+#
+# CMP 54
+CMP 1 3.99999962 35.00000112 90 N J1 691322310012 ;0=2,1=7.0000,5=0
+PRP Case/Package ''
+PRP Connector_Type ''
+PRP Gender 'Male'
+PRP Max_Current_Rating ''
+PRP Max_Operating_Temperature ''
+PRP Min_Operating_Temperature ''
+PRP Mounting_Technology ''
+PRP Pins ''
+PRP RoHS_Compliant ''
+PRP System 'Connector'
+PRP Voltage_Rating ''
+TOP 0 7.3999852 55.95493 90 N 46 4 1
+TOP 1 7.3999852 52.14493 90 N 4 1 2
+TOP 2 7.3999852 48.33493 90 N 50 44 3
+TOP 3 7.3999852 44.52493 90 N 50 51 4
+TOP 4 7.3999852 40.71493 90 N 34 1 5
+TOP 5 7.3999852 36.90493 90 N 33 1 6
+TOP 6 7.3999852 33.09493 90 N 39 3 7
+TOP 7 7.3999852 29.28493 90 N 40 3 8
+TOP 8 7.3999852 25.47493 90 N 44 1 9
+TOP 9 7.3999852 21.66493 90 N 0 13 10
+TOP 10 7.3999852 17.85493 90 N 47 1 11
+TOP 11 7.3999852 14.04493 90 N 43 7 12
+#
+# CMP 55
+CMP 3 9.872853 92.99999942 90 N C3 100n-THT ;0=2,1=0.0000,5=0
+PRP Capacitor_Type 'Film'
+PRP Case/Package 'THT'
+PRP Max_Operating_Temperature ''
+PRP Min_Operating_Temperature ''
+PRP Mounting_Technology ''
+PRP Pins '2'
+PRP Ripple_Current ''
+PRP Ripple_Current_(AC) ''
+PRP RoHS_Compliant ''
+PRP Tolerance '10%'
+PRP Value '100nF'
+PRP Voltage_Rating ''
+TOP 0 9.8728403 95.4999868 90 N 50 11 1
+TOP 1 9.8728403 90.4999968 90 N 3 0 2
+#
+# CMP 56
+CMP 3 13.27112916 92.99999942 90 N C2 100n-THT ;0=2,1=0.0000,5=0
+PRP Capacitor_Type 'Film'
+PRP Case/Package 'THT'
+PRP Max_Operating_Temperature ''
+PRP Min_Operating_Temperature ''
+PRP Mounting_Technology ''
+PRP Pins '2'
+PRP Ripple_Current ''
+PRP Ripple_Current_(AC) ''
+PRP RoHS_Compliant ''
+PRP Tolerance '10%'
+PRP Value '100nF'
+PRP Voltage_Rating ''
+TOP 0 13.27112916 95.4999868 90 N 50 10 1
+TOP 1 13.27112916 90.4999968 90 N 31 0 2
+#
+# CMP 57
+CMP 3 16.66936722 92.99999942 90 N C1 100n-THT ;0=2,1=0.0000,5=0
+PRP Capacitor_Type 'Film'
+PRP Case/Package 'THT'
+PRP Max_Operating_Temperature ''
+PRP Min_Operating_Temperature ''
+PRP Mounting_Technology ''
+PRP Pins '2'
+PRP Ripple_Current ''
+PRP Ripple_Current_(AC) ''
+PRP RoHS_Compliant ''
+PRP Tolerance '10%'
+PRP Value '100nF'
+PRP Voltage_Rating ''
+TOP 0 16.66937992 95.4999868 90 N 50 8 1
+TOP 1 16.66937992 90.4999968 90 N 29 2 2
+#
+# CMP 58
+CMP 5 32.6199754 79.57174332 180 N MD1 A000005 ;0=2,1=0.0000,5=0
+PRP Case/Package ''
+PRP Clock_Frequency ''
+PRP Frequency '16MHz'
+PRP I/Os ''
+PRP Interface 'I2C, SPI, USB'
+PRP Max_Operating_Temperature ''
+PRP Max_Supply_Voltage '12V'
+PRP Min_Operating_Temperature ''
+PRP Min_Supply_Voltage '7V'
+PRP Mounting_Technology ''
+PRP Nominal_Supply_Voltage ''
+PRP Pins ''
+PRP Power ''
+PRP RAM_Size ''
+PRP RoHS_Compliant ''
+TOP 0 40.2399754 60.83923316 180 N 0 0 1
+TOP 1 40.2399754 63.37923316 180 N 0 2 2
+TOP 2 40.2399754 65.91923316 180 N 0 4 3
+TOP 3 40.2399754 68.45923316 180 N 50 24 4
+TOP 4 40.2399754 70.99923316 180 N 8 1 5
+TOP 5 40.2399754 73.53923316 180 N 6 3 6
+TOP 6 40.2399754 76.07923316 180 N 32 0 7
+TOP 7 40.2399754 78.61923316 180 N 5 1 8
+TOP 8 40.2399754 81.15923316 180 N 45 0 9
+TOP 9 40.2399754 83.69923316 180 N 35 2 10
+TOP 10 40.2399754 86.23923316 180 N 37 1 11
+TOP 11 40.2399754 88.77923316 180 N 36 1 12
+TOP 12 40.2399754 91.31923316 180 N 38 1 13
+TOP 13 40.2399754 93.85923316 180 N 34 0 14
+TOP 14 40.2399754 96.39923316 180 N 33 0 15
+TOP 15 24.9999754 96.39923316 180 N 0 3 16
+TOP 16 24.9999754 93.85923316 180 N 51 1 17
+TOP 17 24.9999754 91.31923316 180 N 0 11 18
+TOP 18 24.9999754 88.77923316 180 N 3 1 19
+TOP 19 24.9999754 86.23923316 180 N 29 0 20
+TOP 20 24.9999754 83.69923316 180 N 31 1 21
+TOP 21 24.9999754 81.15923316 180 N 44 0 22
+TOP 22 24.9999754 78.61923316 180 N 48 0 23
+TOP 23 24.9999754 76.07923316 180 N 49 0 24
+TOP 24 24.9999754 73.53923316 180 N 0 19 25
+TOP 25 24.9999754 70.99923316 180 N 0 18 26
+TOP 26 24.9999754 68.45923316 180 N 46 24 27
+TOP 27 24.9999754 65.91923316 180 N 0 20 28
+TOP 28 24.9999754 63.37923316 180 N 50 9 29
+TOP 29 24.9999754 60.83923316 180 N 46 25 30
+#
+# CMP 59
+CMP 1 35.56350012 4.82499924 0 N J3 691322310012 ;0=2,1=7.0000,5=0
+PRP Case/Package ''
+PRP Connector_Type ''
+PRP Gender 'Male'
+PRP Max_Current_Rating ''
+PRP Max_Operating_Temperature ''
+PRP Min_Operating_Temperature ''
+PRP Mounting_Technology ''
+PRP Pins ''
+PRP RoHS_Compliant ''
+PRP System 'Connector'
+PRP Voltage_Rating ''
+TOP 0 14.60857378 8.22498482 0 N 9 0 1
+TOP 1 18.41857378 8.22498482 0 N 43 5 2
+TOP 2 22.22857378 8.22498482 0 N 10 1 3
+TOP 3 26.03857378 8.22498482 0 N 49 3 4
+TOP 4 29.84857378 8.22498482 0 N 48 3 5
+TOP 5 33.65857378 8.22498482 0 N 45 1 6
+TOP 6 37.46857378 8.22498482 0 N 5 0 7
+TOP 7 41.27857378 8.22498482 0 N 32 1 8
+TOP 8 45.08857378 8.22498482 0 N 7 0 9
+TOP 9 48.89857378 8.22498482 0 N 30 0 10
+TOP 10 52.70857378 8.22498482 0 N 46 23 11
+TOP 11 56.51857378 8.22498482 0 N 50 17 12
+#
