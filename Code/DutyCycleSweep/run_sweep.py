@@ -105,10 +105,11 @@ def run_sweep(port, baudrate=115200, output_file="duty_sweep_results.csv", dyno_
 
     try:
         for target_dc in duty_cycles:
-            # Send duty cycle command
-            command = f"{target_dc}\n"
-            ser.write(command.encode())
-            
+            # Send duty cycle command then reset energy register
+            ser.write(f"{target_dc}\n".encode())
+            time.sleep(0.05)   # brief pause so Arduino processes the DC command first
+            ser.write(b"R")    # reset INA780 energy register
+
             # Wait for 5 seconds total
             # We'll collect data continuously, but only use the data from the last 2 seconds for averaging
             start_time = time.time()
@@ -117,7 +118,7 @@ def run_sweep(port, baudrate=115200, output_file="duty_sweep_results.csv", dyno_
             
             while (time.time() - start_time) < 5.0:
                 elapsed = time.time() - start_time
-                in_averaging_window = elapsed > 3.0
+                in_averaging_window = elapsed > 2.0
 
                 if ser.in_waiting:
                     line = ser.readline().decode('utf-8', errors='ignore').strip()
