@@ -7,6 +7,7 @@
 // Define GPIO pins
 #define PWM_PIN_A 7  // MCPWM0A output pin
 #define PWM_PIN_B 17  // MCPWM0B output pin
+#define SOFT_START_PIN 8 // Soft start pin and Enable pin
 #define INA780_ADDRESS 0x40  // Default I2C address for INA780
 
 // Global variables
@@ -170,6 +171,7 @@ void sensorTask(void *parameter) {
     double power = powerMeter.getPower();
     double energy = powerMeter.getEnergy();
     float temperature = powerMeter.getTemperature();
+    float motCurrent =  analogRead(A1) * (3.3 / 4095.0);
     
     // Get current duty cycle
     xSemaphoreTake(dutyCycleMutex, portMAX_DELAY);
@@ -188,6 +190,8 @@ void sensorTask(void *parameter) {
     Serial.print(energy, 4);
     Serial.print(",");
     Serial.print(temperature, 2);
+    Serial.print(",");
+    Serial.print(motCurrent, 4);
     Serial.print(",");
     Serial.print(localDutyCycle, 2);
     Serial.print(",");
@@ -221,7 +225,17 @@ void setup() {
   } else {
     Serial.println("Warning: INA780 Power Meter Not Found!");
   }
+
+  // Configure A1 as analog input for motor current sensor
+  pinMode(A1, INPUT);
+  pinMode(SOFT_START_PIN, OUTPUT);
+  digitalWrite(SOFT_START_PIN, LOW); // Ensure soft start is low at startup
   
+  delay(500); // 200ms delay is required but a longer wait is better for capacitor charging
+  digitalWrite(SOFT_START_PIN, HIGH); // Enable motor driver after soft start delay
+
+  Serial.println("Soft Start Enabled, Motor Driver Activated");
+
   // Initialize MCPWM GPIO pins
   mcpwm_gpio_init(MCPWM_UNIT_0, MCPWM0A, PWM_PIN_A);
   mcpwm_gpio_init(MCPWM_UNIT_0, MCPWM0B, PWM_PIN_B);

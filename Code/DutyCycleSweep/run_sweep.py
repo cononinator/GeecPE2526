@@ -27,18 +27,19 @@ def generate_duty_cycles():
     return duty_cycles
 
 def parse_sensor_line(line):
-    # Expected format: DATA,Voltage,Current,Power,Energy,Temperature,DutyCycle,TargetDutyCycle
+    # Expected format: DATA,Voltage,Current,Power,Energy,Temperature,MotorCurrent,DutyCycle,TargetDutyCycle
     try:
         parts = line.strip().split(',')
-        if len(parts) >= 8 and parts[0] == "DATA":
+        if len(parts) >= 9 and parts[0] == "DATA":
             return {
                 "Voltage": float(parts[1]),
                 "Current": float(parts[2]),
                 "Power": float(parts[3]),
                 "Energy": float(parts[4]),
                 "Temperature": float(parts[5]),
-                "MeasuredDutyCycle": float(parts[6]),
-                "TargetDutyCycle": float(parts[7])
+                "MotorCurrent": float(parts[6]),
+                "MeasuredDutyCycle": float(parts[7]),
+                "TargetDutyCycle": float(parts[8])
             }
     except ValueError:
         pass
@@ -141,6 +142,7 @@ def run_sweep(port, baudrate=115200, output_file="duty_sweep_results.csv", dyno_
                 avg_energy = samples[-1]['Energy'] # Energy is cumulative, take the last one
                 avg_temp = sum(d['Temperature'] for d in samples) / len(samples)
                 avg_measured_dc = sum(d['MeasuredDutyCycle'] for d in samples) / len(samples)
+                avg_motor_current = sum(d['MotorCurrent'] for d in samples) / len(samples)
                 
                 print(f"{target_dc:<15.1f} | {avg_voltage:<12.4f} | {avg_current:<12.4f} | {avg_power:<12.4f}")
                 
@@ -152,6 +154,7 @@ def run_sweep(port, baudrate=115200, output_file="duty_sweep_results.csv", dyno_
                     "Power_W": avg_power,
                     "Energy_J": avg_energy,
                     "Temperature_C": avg_temp,
+                    "MotorCurrent_A": avg_motor_current,
                     "SamplesCount": len(samples),
                 }
 
