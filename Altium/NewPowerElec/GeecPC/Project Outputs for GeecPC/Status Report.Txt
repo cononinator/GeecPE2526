@@ -1,0 +1,20 @@
+Output: Gerber Files
+Type  : Gerber
+From  : Variant [[No Variations]] of PCB Document [PowerController.PcbDoc]
+   Generated File[PowerController.GTO]
+   Generated File[PowerController.GTP]
+   Generated File[PowerController.GTS]
+   Generated File[PowerController.GTL]
+   Generated File[PowerController.GBL]
+   Generated File[PowerController.GBS]
+   Generated File[PowerController.GBP]
+   Generated File[PowerController.GBO]
+   Generated File[PowerController.GM]
+   Generated File[PowerController.EXTREP]
+   Generated File[PowerController.REP]
+
+
+Files Generated   : 11
+Documents Printed : 0
+
+Finished Output Generation At 12:37:15 On 23/02/2026
