@@ -21,7 +21,7 @@ def generate_duty_cycles():
         duty_cycles.append(float(i))
     for i in range(20, 90, 5):      # 15–85 % at 5 % steps
         duty_cycles.append(float(i))
-    for i in range(86, 100):        # 85–99 % at 1 % steps
+    for i in range(86, 100, 3):        # 85–99 % at 1 % steps
         duty_cycles.append(float(i))
     duty_cycles.append(99.8)        # ~100 %
     return duty_cycles
@@ -80,8 +80,8 @@ class SweepWorker(QThread):
 
     # Emitted after each step with the averaged result dict
     step_complete = pyqtSignal(dict)
-    # Emitted when the sweep finishes (passes full results list)
-    sweep_done = pyqtSignal(list)
+    # Emitted when the sweep finishes (passes full results list and timestamp string)
+    sweep_done = pyqtSignal(list, str)
     # Emitted for status messages
     status = pyqtSignal(str)
 
@@ -123,6 +123,7 @@ class SweepWorker(QThread):
         self.status.emit(f"Starting sweep with {len(duty_cycles)} points.")
 
         all_raw_samples = []
+        dyno_buf = ""  # accumulation buffer for partial dyno lines
 
         try:
             for target_dc in duty_cycles:
@@ -152,10 +153,15 @@ class SweepWorker(QThread):
                                 samples.append(data)
 
                     if dyno_ser and dyno_ser.in_waiting:
-                        line = dyno_ser.readline().decode('utf-8', errors='ignore').strip()
-                        data = parse_dyno_line(line)
-                        if data and in_averaging_window:
-                            dyno_samples.append(data)
+                        # Read all available bytes and append to buffer; only
+                        # process complete newline-terminated lines to avoid
+                        # dropping partial frames when timeout=0.
+                        dyno_buf += dyno_ser.read(dyno_ser.in_waiting).decode('utf-8', errors='ignore')
+                        while '\n' in dyno_buf:
+                            line, dyno_buf = dyno_buf.split('\n', 1)
+                            data = parse_dyno_line(line.strip())
+                            if data and in_averaging_window:
+                                dyno_samples.append(data)
 
                     time.sleep(0.01)
 
@@ -214,7 +220,7 @@ class SweepWorker(QThread):
             base = self.output_file.split('.')[0]
             if results:
                 df = pd.DataFrame(results)
-                filename = f"results/{base}_{ts}.csv"
+                filename = f"{base}_{ts}.csv"
                 df.to_csv(filename, index=False)
                 self.status.emit(f"Results saved to {filename}")
             else:
@@ -235,14 +241,14 @@ class SweepWorker(QThread):
             else:
                 self.status.emit("No raw samples collected.")
 
-            self.sweep_done.emit(results)
+            self.sweep_done.emit(results, ts)
 
 # ─────────────────────────────────────────────
 # Main window
 # ─────────────────────────────────────────────
 
 class SweepWindow(QMainWindow):
-    def __init__(self, worker: SweepWorker, dyno: bool):
+    def __init__(self, worker: SweepWorker, dyno: bool, args_base: str = "duty_sweep_results"):
         super().__init__()
         self.setWindowTitle("Duty Cycle Sweep")
         self.resize(1200, 800 if not dyno else 1100)
@@ -261,7 +267,10 @@ class SweepWindow(QMainWindow):
         grid = QGridLayout()
         layout.addLayout(grid)
 
-        def make_plot(title, ylabel, row, col, color):
+        # {slug: (PlotWidget, curve)}
+        self._plots: dict = {}
+
+        def make_plot(slug, title, ylabel, row, col, color):
             pw = pg.PlotWidget(title=title)
             pw.setLabel("bottom", "Duty Cycle", units="%")
             pw.setLabel("left", ylabel)
@@ -270,19 +279,22 @@ class SweepWindow(QMainWindow):
             curve = pw.plot([], [], pen=pen, symbol="o", symbolSize=5,
                             symbolBrush=color)
             grid.addWidget(pw, row, col)
+            self._plots[slug] = pw
             return curve
 
-        self.c_voltage  = make_plot("Bus Voltage",      "V (V)",  0, 0, "#1f77b4")
-        self.c_current  = make_plot("INA Current",      "A",      0, 1, "#ff7f0e")
-        self.c_power    = make_plot("Electrical Power", "W",      1, 0, "#2ca02c")
-        self.c_motorcur = make_plot("Motor Current",    "A",      1, 1, "#d62728")
+        self.c_voltage  = make_plot("bus_voltage",      "Bus Voltage",      "V (V)",  0, 0, "#1f77b4")
+        self.c_current  = make_plot("ina_current",      "INA Current",      "A",      0, 1, "#ff7f0e")
+        self.c_power    = make_plot("elec_power",       "Electrical Power", "W",      1, 0, "#2ca02c")
+        self.c_motorcur = make_plot("motor_current",    "Motor Current",    "A",      1, 1, "#d62728")
 
         if dyno:
-            self.c_rpm    = make_plot("Car RPM",  "RPM",  2, 0, "#9467bd")
-            self.c_torque = make_plot("Torque",   "N·m",  2, 1, "#8c564b")
+            self.c_rpm    = make_plot("car_rpm",   "Car RPM",  "RPM",  2, 0, "#9467bd")
+            self.c_torque = make_plot("torque",    "Torque",   "N·m",  2, 1, "#8c564b")
         else:
             self.c_rpm    = None
             self.c_torque = None
+
+        self._base = args_base
 
         # Data buffers
         self._dc       = []
@@ -320,10 +332,24 @@ class SweepWindow(QMainWindow):
         self.status_label.setText(msg)
         print(msg)
 
-    def _on_done(self, results: list):
+    def _on_done(self, results: list, ts: str):
+        self.status_label.setText(
+            f"Sweep complete — {len(results)} points. Saving figures…"
+        )
+        QApplication.processEvents()  # repaint before grabbing screenshots
+        self._save_figures(ts)
         self.status_label.setText(
             f"Sweep complete — {len(results)} points. Close window to exit."
         )
+
+    def _save_figures(self, ts: str):
+        import os
+        for slug, pw in self._plots.items():
+            filename = f"{self._base}_{ts}_{slug}.png"
+            exporter = pg.exporters.ImageExporter(pw.plotItem)
+            exporter.parameters()["width"] = 1200
+            exporter.export(filename)
+            print(f"Figure saved: {filename}")
 
 # ─────────────────────────────────────────────
 # Entry point
@@ -345,7 +371,8 @@ if __name__ == "__main__":
         args.dyno_port, args.dyno_baud,
     )
 
-    window = SweepWindow(worker, dyno=args.dyno_port is not None)
+    base = args.output.split('.')[0]
+    window = SweepWindow(worker, dyno=args.dyno_port is not None, args_base=base)
     window.show()
 
     worker.start()
