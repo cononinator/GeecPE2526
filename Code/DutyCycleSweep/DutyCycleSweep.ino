@@ -179,8 +179,10 @@ void sensorTask(void *parameter) {
     float localTargetDutyCycle = targetDutyCycle;
     xSemaphoreGive(dutyCycleMutex);
     
-    // Print in CSV format: DATA,Voltage,Current,Power,Energy,Temperature,DutyCycle,TargetDutyCycle
+    // Print in CSV format: DATA,Timestamp_ms,Voltage,Current,Power,Energy,Temperature,MotorCurrent,DutyCycle,TargetDutyCycle
     Serial.print("DATA,");
+    Serial.print(millis());
+    Serial.print(",");
     Serial.print(voltage, 4);
     Serial.print(",");
     Serial.print(current, 4);
