@@ -9,6 +9,7 @@ from PyQt5.QtWidgets import (
 )
 from PyQt5.QtCore import QThread, pyqtSignal, Qt
 import pyqtgraph as pg
+import pyqtgraph.exporters
 
 # ─────────────────────────────────────────────
 # Duty cycle sequence
@@ -30,19 +31,20 @@ def generate_duty_cycles():
 # ─────────────────────────────────────────────
 
 def parse_sensor_line(line):
-    # DATA,Voltage,Current,Power,Energy,Temperature,MotorCurrent,DutyCycle,TargetDutyCycle
+    # DATA,Timestamp_ms,Voltage,Current,Power,Energy,Temperature,MotorCurrent,DutyCycle,TargetDutyCycle
     try:
         parts = line.strip().split(',')
-        if len(parts) >= 9 and parts[0] == "DATA":
+        if len(parts) >= 10 and parts[0] == "DATA":
             return {
-                "Voltage":           float(parts[1]),
-                "Current":           float(parts[2]),
-                "Power":             float(parts[3]),
-                "Energy":            float(parts[4]),
-                "Temperature":       float(parts[5]),
-                "MotorCurrent":      float(parts[6]),
-                "MeasuredDutyCycle": float(parts[7]),
-                "TargetDutyCycle":   float(parts[8]),
+                "Timestamp_ms":      float(parts[1]),
+                "Voltage":           float(parts[2]),
+                "Current":           float(parts[3]),
+                "Power":             float(parts[4]),
+                "Energy":            float(parts[5]),
+                "Temperature":       float(parts[6]),
+                "MotorCurrent":      float(parts[7]),
+                "MeasuredDutyCycle": float(parts[8]),
+                "TargetDutyCycle":   float(parts[9]),
             }
     except ValueError:
         pass
@@ -120,6 +122,8 @@ class SweepWorker(QThread):
 
         self.status.emit(f"Starting sweep with {len(duty_cycles)} points.")
 
+        all_raw_samples = []
+
         try:
             for target_dc in duty_cycles:
                 # Send duty cycle then immediately reset energy register
@@ -138,8 +142,14 @@ class SweepWorker(QThread):
                     if ser.in_waiting:
                         line = ser.readline().decode('utf-8', errors='ignore').strip()
                         data = parse_sensor_line(line)
-                        if data and in_averaging_window:
-                            samples.append(data)
+                        if data:
+                            host_ts = time.time()
+                            data["Host_Timestamp"] = host_ts
+                            data["SetDutyCycle"] = target_dc
+                            data["InAveragingWindow"] = in_averaging_window
+                            all_raw_samples.append(data)
+                            if in_averaging_window:
+                                samples.append(data)
 
                     if dyno_ser and dyno_ser.in_waiting:
                         line = dyno_ser.readline().decode('utf-8', errors='ignore').strip()
@@ -200,13 +210,30 @@ class SweepWorker(QThread):
             if dyno_ser and dyno_ser.is_open:
                 dyno_ser.close()
 
+            ts = mktimestamp()
+            base = self.output_file.split('.')[0]
             if results:
                 df = pd.DataFrame(results)
-                filename = f"{self.output_file.split('.')[0]}_{mktimestamp()}.csv"
+                filename = f"results/{base}_{ts}.csv"
                 df.to_csv(filename, index=False)
                 self.status.emit(f"Results saved to {filename}")
             else:
                 self.status.emit("No results collected.")
+
+            if all_raw_samples:
+                raw_filename = f"{base}_{ts}_raw.csv"
+                df_raw = pd.DataFrame(all_raw_samples)
+                # Reorder columns for readability
+                col_order = ["Host_Timestamp", "Timestamp_ms", "SetDutyCycle",
+                             "InAveragingWindow", "MeasuredDutyCycle", "TargetDutyCycle",
+                             "Voltage", "Current", "Power", "Energy",
+                             "Temperature", "MotorCurrent"]
+                col_order = [c for c in col_order if c in df_raw.columns]
+                df_raw = df_raw[col_order]
+                df_raw.to_csv(raw_filename, index=False)
+                self.status.emit(f"Raw samples saved to {raw_filename} ({len(all_raw_samples)} rows)")
+            else:
+                self.status.emit("No raw samples collected.")
 
             self.sweep_done.emit(results)
 
