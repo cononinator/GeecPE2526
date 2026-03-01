@@ -7,6 +7,7 @@
 // Define GPIO pins
 #define PWM_PIN_A 7  // MCPWM0A output pin
 #define PWM_PIN_B 17  // MCPWM0B output pin
+#define SOFT_START_PIN 8 // Soft start pin and Enable pin
 #define INA780_ADDRESS 0x40  // Default I2C address for INA780
 
 // Global variables
@@ -20,195 +21,11 @@ SemaphoreHandle_t dutyCycleMutex;
 const float RAMP_UP_STEP = 0.5;   // 0.5% change per 10ms (100% in 2s)
 const float RAMP_DOWN_STEP = 2.0; // 2.0% change per 10ms (100% in 0.5s)
 
-
 // Task handles
-TaskHandle_t commandTaskHandle = NULL;\
+TaskHandle_t commandTaskHandle = NULL;
 TaskHandle_t pwmTaskHandle = NULL;
 TaskHandle_t sensorTaskHandle = NULL;
 TaskHandle_t watchdogTaskHandle = NULL;
-
-// Command handling task
-void commandTask(void *parameter) {
-  char command;
-  float dutyCycle;
-  
-  while (1) {
-    if (Serial.available() > 0) {
-      command = Serial.read();
-      
-      switch (command) {
-        case 'S':  // Stop - Set duty cycle to 0%
-          xSemaphoreTake(dutyCycleMutex, portMAX_DELAY);
-          targetDutyCycle = 0.0;
-          xSemaphoreGive(dutyCycleMutex);
-          lastCommandTime = millis();
-          Serial.println("Stopping (Ramping to 0%)");
-          break;
-          
-        case 'R':  // Reset power meter
-          powerMeter.reset();
-          lastCommandTime = millis();
-          Serial.println("Power Meter Reset");
-          break;
-
-        case 'H': // Help commands
-          Serial.println("\nCommands:");
-          Serial.println("  0-100: Set duty cycle (%)");
-          Serial.println("  S: Stop (set duty cycle to 0%)");
-          Serial.println("  R: Reset power meter");
-          
-        default:
-          // Check if it's a numeric value for duty cycle
-          if (command >= '0' && command <= '9') {
-            // Put the character back and read the full number
-            Serial.println((String)"Received: " + command);
-            String dutyCycleStr = String(command);
-            
-            // Read remaining digits
-            delay(10);  // Small delay to allow full number to arrive
-            while (Serial.available() > 0) {
-              char nextChar = Serial.read();
-              if (nextChar >= '0' && nextChar <= '9' || nextChar == '.') {
-                dutyCycleStr += nextChar;
-              } else {
-                break;
-              }
-            }
-            
-            dutyCycle = dutyCycleStr.toFloat();
-            
-            // Validate duty cycle range (0-100)
-            if (dutyCycle >= 0.0 && dutyCycle <= 100.0) {
-              xSemaphoreTake(dutyCycleMutex, portMAX_DELAY);
-              targetDutyCycle = dutyCycle;
-              xSemaphoreGive(dutyCycleMutex);
-              lastCommandTime = millis();
-              Serial.print("Target Duty Cycle Set to: ");
-              Serial.print(targetDutyCycle, 2);
-              Serial.println("%");
-            } else {
-              Serial.println("Error: Duty cycle must be between 0 and 100");
-            }
-          } else {
-            Serial.println("Unknown Command");
-            Serial.println("\nCommands:");
-            Serial.println("  0-100: Set duty cycle (%)");
-            Serial.println("  S: Stop (set duty cycle to 0%)");
-            Serial.println("  R: Reset power meter");
-          
-          }
-          break;
-      }
-    }
-    
-    vTaskDelay(pdMS_TO_TICKS(10));  // Small delay to prevent task hogging CPU
-  }
-}
-
-// PWM control task
-void pwmTask(void *parameter) {
-  
-  while (1) {
-    // Get the current duty cycle value safely
-    xSemaphoreTake(dutyCycleMutex, portMAX_DELAY);
-    
-    // Ramp logic
-    if (currentDutyCycle < targetDutyCycle) {
-      if (fabs(targetDutyCycle - currentDutyCycle) < RAMP_UP_STEP) {
-        currentDutyCycle = targetDutyCycle;
-      } else {
-        currentDutyCycle += RAMP_UP_STEP;
-      }
-    } else if (currentDutyCycle > targetDutyCycle) {
-      if (fabs(currentDutyCycle - targetDutyCycle) < RAMP_DOWN_STEP) {
-        currentDutyCycle = targetDutyCycle;
-      } else {
-        currentDutyCycle -= RAMP_DOWN_STEP;
-      }
-    }
-    
-    float localDutyCycle = currentDutyCycle;
-    xSemaphoreGive(dutyCycleMutex);
-    
-    // Update PWM duty cycle
-    mcpwm_set_duty(MCPWM_UNIT_0, MCPWM_TIMER_0, MCPWM_OPR_A, localDutyCycle);
-    mcpwm_set_duty(MCPWM_UNIT_0, MCPWM_TIMER_0, MCPWM_OPR_B, localDutyCycle);
-    
-    vTaskDelay(pdMS_TO_TICKS(10));  // Update PWM every 10ms
-  }
-}
-
-// Watchdog task - sets PWM to 0 if no command received for 20 seconds
-void watchdogTask(void *parameter) {
-  const unsigned long timeoutMs = 20000;  // 20 seconds
-  
-  while (1) {
-    unsigned long timeSinceLastCommand = millis() - lastCommandTime;
-    
-    if (timeSinceLastCommand > timeoutMs) {
-      xSemaphoreTake(dutyCycleMutex, portMAX_DELAY);
-      if (targetDutyCycle != 0.0) {
-        targetDutyCycle = 0.0; // Ramp down on timeout
-        xSemaphoreGive(dutyCycleMutex);
-        Serial.println("\n*** WATCHDOG TIMEOUT: Ramping to 0% (no input for 20s) ***\n");
-      } else {
-        xSemaphoreGive(dutyCycleMutex);
-      }
-      lastCommandTime = millis();  // Reset to prevent repeated messages
-    }
-    
-    vTaskDelay(pdMS_TO_TICKS(1000));  // Check every second
-  }
-}
-
-// Sensor reading task
-void sensorTask(void *parameter) {
-  while (1) {
-    // Read all sensor values
-    float voltage = powerMeter.getBusVoltage();
-    float current = powerMeter.getCurrent();
-    double power = powerMeter.getPower();
-    double energy = powerMeter.getEnergy();
-    float temperature = powerMeter.getTemperature();
-    
-    // Print sensor readings
-    Serial.println("===== Sensor Readings =====");
-    Serial.print("Voltage: ");
-    Serial.print(voltage, 3);
-    Serial.println(" V");
-    
-    Serial.print("Current: ");
-    Serial.print(current, 3);
-    Serial.println(" A");
-    
-    Serial.print("Power: ");
-    Serial.print(power, 3);
-    Serial.println(" W");
-    
-    Serial.print("Energy: ");
-    Serial.print(energy, 3);
-    Serial.println(" J");
-    
-    Serial.print("Temperature: ");
-    Serial.print(temperature, 2);
-    Serial.println(" °C");
-    
-    // Get current duty cycle
-    xSemaphoreTake(dutyCycleMutex, portMAX_DELAY);
-    float localDutyCycle = currentDutyCycle;
-    float localTargetDutyCycle = targetDutyCycle;
-    xSemaphoreGive(dutyCycleMutex);
-    
-    Serial.print("Duty Cycle: ");
-    Serial.print(localDutyCycle, 2);
-    Serial.print("% (Target: ");
-    Serial.print(localTargetDutyCycle, 2);
-    Serial.println("%)");
-    Serial.println("===========================\n");
-    
-    vTaskDelay(pdMS_TO_TICKS(1000));  // Read sensors every 1 second
-  }
-}
 
 void setup() {
   Serial.begin(115200);
@@ -234,7 +51,17 @@ void setup() {
   } else {
     Serial.println("Warning: INA780 Power Meter Not Found!");
   }
-  
+
+  // Configure A1 as analog input for motor current sensor
+  pinMode(A1, INPUT);
+  pinMode(SOFT_START_PIN, OUTPUT);
+  digitalWrite(SOFT_START_PIN, LOW); // Ensure soft start is low at startup
+
+  delay(500); // 200ms delay is required but a longer wait is better for capacitor charging
+  digitalWrite(SOFT_START_PIN, HIGH); // Enable motor driver after soft start delay
+
+  Serial.println("Soft Start Enabled, Motor Driver Activated");
+
   // Initialize MCPWM GPIO pins
   mcpwm_gpio_init(MCPWM_UNIT_0, MCPWM0A, PWM_PIN_A);
   mcpwm_gpio_init(MCPWM_UNIT_0, MCPWM0B, PWM_PIN_B);
