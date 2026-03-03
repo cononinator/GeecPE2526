@@ -1,10 +1,14 @@
-Output: Bill of Materials
-Type  : BOM
-From  : Variant [Assembly Variant] of Project [GeecPE.PrjPcb]
-   Generated File[Bill of Materials-GeecPE(Assembly Variant).xlsx]
+Project Outputs Generation Report
+---------------------------------
+Start Output Generation At 14:42:28 On 03/03/2026
+
+Output: Export STEP
+Type  : ExportSTEP
+From  : Variant [[No Variations]] of PCB Document [PowerElec.PcbDoc]
+   Generated File[PowerElec.step]
 
 
 Files Generated   : 1
 Documents Printed : 0
 
-Finished Output Generation At 15:47:57 On 16/01/2026
+Finished Output Generation At 14:42:42 On 03/03/2026
