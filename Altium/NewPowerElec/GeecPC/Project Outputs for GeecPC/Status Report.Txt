@@ -1,20 +1,14 @@
-Output: Gerber Files
-Type  : Gerber
+Project Outputs Generation Report
+---------------------------------
+Start Output Generation At 14:43:07 On 03/03/2026
+
+Output: Export STEP
+Type  : ExportSTEP
 From  : Variant [[No Variations]] of PCB Document [PowerController.PcbDoc]
-   Generated File[PowerController.GTO]
-   Generated File[PowerController.GTP]
-   Generated File[PowerController.GTS]
-   Generated File[PowerController.GTL]
-   Generated File[PowerController.GBL]
-   Generated File[PowerController.GBS]
-   Generated File[PowerController.GBP]
-   Generated File[PowerController.GBO]
-   Generated File[PowerController.GM]
-   Generated File[PowerController.EXTREP]
-   Generated File[PowerController.REP]
+   Generated File[PowerController.step]
 
 
-Files Generated   : 11
+Files Generated   : 1
 Documents Printed : 0
 
-Finished Output Generation At 12:37:15 On 23/02/2026
+Finished Output Generation At 14:43:40 On 03/03/2026
