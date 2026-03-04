@@ -6,7 +6,7 @@
  * Resolution: 12-bit (0 - 4095)
  */
 
-const byte DAC_ADDR = 0x10; 
+const byte DAC_ADDR = 0x73; 
 
 // Commands from Table 3 of the Datasheet [cite: 327]
 const byte CMD_WRITE_UPDATE = 0x30; // Write to and Update DAC Register
@@ -18,6 +18,8 @@ int currentVoltageStep = 0; // 0 = 0V, 1 = 1V, 2 = 2V, etc.
 void setup() {
   Serial.begin(115200);
   Wire.begin(); // Initialize I2C (SDA = A4, SCL = A5 on Nano ESP32 by default)
+  // pinMode(A5, INPUT);  // Remove OUTPUT drive, leaves pin floating
+  // pinMode(A4, INPUT);
 
   // Wait a moment for power to stabilize
   delay(100);
@@ -28,6 +30,15 @@ void setup() {
   // The HZ model defaults to Internal Ref on power reset[cite: 331], 
   // but we send the command explicitly to be sure.
   sendI2CCommand(CMD_INTERNAL_REF, 0); 
+  Serial.println("Running I2C Scan");
+  for (byte addr = 1; addr < 127; addr++) {
+    Wire.beginTransmission(addr);
+    byte error = Wire.endTransmission();
+    if (error == 0) {
+        Serial.print("Found: 0x");
+        Serial.println(addr, HEX);
+    }
+}
 }
 
 void loop() {
@@ -72,5 +83,6 @@ void sendI2CCommand(byte command, uint16_t data) {
   Wire.write(command);              // Byte 1: Command
   Wire.write(highByte(dataToSend)); // Byte 2: Upper 8 bits
   Wire.write(lowByte(dataToSend));  // Byte 3: Lower 8 bits
-  Wire.endTransmission();
+  byte error = Wire.endTransmission();
+  Serial.print("I2C Status: "); Serial.println(error);
 }
