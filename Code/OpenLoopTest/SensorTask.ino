@@ -8,7 +8,7 @@ void sensorTask(void *parameter) {
     double power      = powerMeter.getPower();
     double energy     = powerMeter.getEnergy();
     float temperature = powerMeter.getTemperature();
-    float motCurrent  = analogRead(A1) * (3.3 / 4095.0);
+    float motCurrent  = analogRead(A2) * (3.3 / 4095.0);
 
     // Print sensor readings
     Serial.println("===== Sensor Readings =====");
