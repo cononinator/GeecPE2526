@@ -5,9 +5,10 @@
 #include <freertos/semphr.h>
 
 // Define GPIO pins
-#define PWM_PIN_A 7  // MCPWM0A output pin
-#define PWM_PIN_B 17  // MCPWM0B output pin
-#define SOFT_START_PIN 8 // Soft start pin and Enable pin
+#define PWM_PIN_A 6  // MCPWM0A output pin
+#define PWM_PIN_B D2  // MCPWM0B output pin
+#define SOFT_START_PIN D5 // Soft start pin
+#define ENABLE_PIN D4 // Enable pin
 #define INA780_ADDRESS 0x40  // Default I2C address for INA780
 
 // Global variables
@@ -38,7 +39,7 @@ void setup() {
   
   // Initialize I2C for INA780
   // Wire.begin();
-  Wire.begin(A5, A4);
+  Wire.begin();
   // powerMeter.begin();
   
   // Check if INA780 is connected
@@ -52,13 +53,16 @@ void setup() {
     Serial.println("Warning: INA780 Power Meter Not Found!");
   }
 
-  // Configure A1 as analog input for motor current sensor
-  pinMode(A1, INPUT);
+  // Configure A2 as analog input for motor current sensor
+  pinMode(A2, INPUT);
   pinMode(SOFT_START_PIN, OUTPUT);
+  pinMode(ENABLE_PIN, OUTPUT);
   digitalWrite(SOFT_START_PIN, LOW); // Ensure soft start is low at startup
+  digitalWrite(ENABLE_PIN, LOW); // Ensure soft start is low at startup
 
   delay(500); // 200ms delay is required but a longer wait is better for capacitor charging
   digitalWrite(SOFT_START_PIN, HIGH); // Enable motor driver after soft start delay
+  digitalWrite(ENABLE_PIN, HIGH);
 
   Serial.println("Soft Start Enabled, Motor Driver Activated");
 
@@ -80,7 +84,7 @@ void setup() {
   mcpwm_config_t pwm_config;
   pwm_config.frequency = 30000;      // Frequency in Hz (30 kHz)
   pwm_config.cmpr_a = 0;            // Initial duty cycle of PWM0A = 0%
-  pwm_config.cmpr_b = 0;            // Initial duty cycle of PWM0B = 0%
+  pwm_config.cmpr_b = 10;            // Initial duty cycle of PWM0B = 0%
   pwm_config.counter_mode = MCPWM_UP_COUNTER;
   pwm_config.duty_mode = MCPWM_DUTY_MODE_0;
   
