@@ -215,70 +215,86 @@ DocumentPath=Project Outputs for Free Documents\ODB\odb\steps\pcb\netlists\cadne
 DItemRevisionGUID=
 
 [GeneratedDocument19]
-DocumentPath=Project Outputs for GeecPC\Gerber\PowerController.EXTREP
+DocumentPath=PowerController 12-03-2026 18-40-24.WAS
 DItemRevisionGUID=
 
 [GeneratedDocument20]
-DocumentPath=Project Outputs for GeecPC\GerberX2\PowerController.EXTREP
+DocumentPath=Project Outputs for GeecPC\NC Drill\PowerController-Plated.TXT
 DItemRevisionGUID=
 
 [GeneratedDocument21]
-DocumentPath=Project Outputs for GeecPC\Gerber\PowerController.GBL
+DocumentPath=Project Outputs for GeecPC\NC Drill\PowerController.DRR
 DItemRevisionGUID=
 
 [GeneratedDocument22]
-DocumentPath=Project Outputs for GeecPC\Gerber\PowerController.GBO
+DocumentPath=Project Outputs for GeecPC\Gerber\PowerController.EXTREP
 DItemRevisionGUID=
 
 [GeneratedDocument23]
-DocumentPath=Project Outputs for GeecPC\Gerber\PowerController.GBP
+DocumentPath=Project Outputs for GeecPC\GerberX2\PowerController.EXTREP
 DItemRevisionGUID=
 
 [GeneratedDocument24]
-DocumentPath=Project Outputs for GeecPC\Gerber\PowerController.GBS
+DocumentPath=Project Outputs for GeecPC\Gerber\PowerController.GBL
 DItemRevisionGUID=
 
 [GeneratedDocument25]
-DocumentPath=Project Outputs for GeecPC\Gerber\PowerController.GM
+DocumentPath=Project Outputs for GeecPC\Gerber\PowerController.GBO
 DItemRevisionGUID=
 
 [GeneratedDocument26]
-DocumentPath=Project Outputs for GeecPC\Gerber\PowerController.GTL
+DocumentPath=Project Outputs for GeecPC\Gerber\PowerController.GBP
 DItemRevisionGUID=
 
 [GeneratedDocument27]
-DocumentPath=Project Outputs for GeecPC\Gerber\PowerController.GTO
+DocumentPath=Project Outputs for GeecPC\Gerber\PowerController.GBS
 DItemRevisionGUID=
 
 [GeneratedDocument28]
-DocumentPath=Project Outputs for GeecPC\Gerber\PowerController.GTP
+DocumentPath=Project Outputs for GeecPC\Gerber\PowerController.GM
 DItemRevisionGUID=
 
 [GeneratedDocument29]
-DocumentPath=Project Outputs for GeecPC\Gerber\PowerController.GTS
+DocumentPath=Project Outputs for GeecPC\Gerber\PowerController.GTL
 DItemRevisionGUID=
 
 [GeneratedDocument30]
-DocumentPath=Project Outputs for Free Documents\ODB\PowerController.REP
+DocumentPath=Project Outputs for GeecPC\Gerber\PowerController.GTO
 DItemRevisionGUID=
 
 [GeneratedDocument31]
-DocumentPath=Project Outputs for GeecPC\Gerber\PowerController.REP
+DocumentPath=Project Outputs for GeecPC\Gerber\PowerController.GTP
 DItemRevisionGUID=
 
 [GeneratedDocument32]
-DocumentPath=Project Outputs for GeecPC\GerberX2\PowerController.REP
+DocumentPath=Project Outputs for GeecPC\Gerber\PowerController.GTS
 DItemRevisionGUID=
 
 [GeneratedDocument33]
-DocumentPath=Project Outputs for Free Documents\ODB\odb\steps\pcb\profile
+DocumentPath=Project Outputs for GeecPC\NC Drill\PowerController.LDP
 DItemRevisionGUID=
 
 [GeneratedDocument34]
-DocumentPath=Project Outputs for Free Documents\ODB\odb\steps\pcb\stephdr
+DocumentPath=Project Outputs for Free Documents\ODB\PowerController.REP
 DItemRevisionGUID=
 
 [GeneratedDocument35]
+DocumentPath=Project Outputs for GeecPC\Gerber\PowerController.REP
+DItemRevisionGUID=
+
+[GeneratedDocument36]
+DocumentPath=Project Outputs for GeecPC\GerberX2\PowerController.REP
+DItemRevisionGUID=
+
+[GeneratedDocument37]
+DocumentPath=Project Outputs for Free Documents\ODB\odb\steps\pcb\profile
+DItemRevisionGUID=
+
+[GeneratedDocument38]
+DocumentPath=Project Outputs for Free Documents\ODB\odb\steps\pcb\stephdr
+DItemRevisionGUID=
+
+[GeneratedDocument39]
 DocumentPath=Project Outputs for Free Documents\ODB\odb\steps\pcb\layers\drill_plated_bottom_layer-top_layer\tools
 DItemRevisionGUID=
 
@@ -1277,8 +1293,8 @@ UpdateToLatestRevision=1
 PartTypes=0
 ComponentLibIdentifierKind0=Vault Name
 ComponentLibraryIdentifier0=University of Galway
-ComponentDesignItemID0=CMP-00004-2
-ComponentSymbolReference0=ACPL-C870-000E-Symbol-1
+ComponentDesignItemID0=CMP-013-000028-1
+ComponentSymbolReference0=1779405341
 ComponentUpdate0=1
 ComponentIsDeviceSheet0=0
 FullReplace=1
@@ -1294,90 +1310,70 @@ RemoveParameters=0
 AddModels=1
 RemoveModels=1
 UpdateCurrentModels=1
-ParameterName0=-3db Bandwidth
+ParameterName0=Case/Size Code
 ParameterUpdate0=1
-ParameterName1=Bandwidth
+ParameterName1=Category
 ParameterUpdate1=1
-ParameterName2=Case/Package
+ParameterName2=Comment
 ParameterUpdate2=1
-ParameterName3=China RoHS
+ParameterName3=Component Kind
 ParameterUpdate3=1
-ParameterName4=Comment
+ParameterName4=Component Type
 ParameterUpdate4=1
-ParameterName5=Component Kind
+ParameterName5=ComponentLink1Description
 ParameterUpdate5=1
-ParameterName6=Contact Plating
+ParameterName6=ComponentLink1URL
 ParameterUpdate6=1
-ParameterName7=Description
+ParameterName7=ComponentLink2Description
 ParameterUpdate7=1
-ParameterName8=Forward Current
+ParameterName8=ComponentLink2URL
 ParameterUpdate8=1
-ParameterName9=Height
+ParameterName9=Description
 ParameterUpdate9=1
-ParameterName10=Height - Seated (Max)
+ParameterName10=Design Item ID
 ParameterUpdate10=1
-ParameterName11=Input Bias Current
+ParameterName11=Height
 ParameterUpdate11=1
-ParameterName12=Input Current
+ParameterName12=Input Voltage
 ParameterUpdate12=1
-ParameterName13=Input Offset Voltage (Vos)
+ParameterName13=Isolation Voltage
 ParameterUpdate13=1
-ParameterName14=Isolation Voltage
+ParameterName14=Length
 ParameterUpdate14=1
-ParameterName15=Length
+ParameterName15=Library Reference
 ParameterUpdate15=1
-ParameterName16=Library Reference
+ParameterName16=Manufacturer
 ParameterUpdate16=1
-ParameterName17=Lifecycle Status
+ParameterName17=Manufacturer Part Number
 ParameterUpdate17=1
-ParameterName18=Max Operating Temperature
+ParameterName18=Match Code
 ParameterUpdate18=1
-ParameterName19=Max Supply Voltage
+ParameterName19=Max Operating Temperature
 ParameterUpdate19=1
 ParameterName20=Min Operating Temperature
 ParameterUpdate20=1
-ParameterName21=Min Supply Voltage
+ParameterName21=Mount
 ParameterUpdate21=1
-ParameterName22=Mounting Technology
+ParameterName22=Output Power
 ParameterUpdate22=1
-ParameterName23=Number of Amplifiers
+ParameterName23=Output Voltage
 ParameterUpdate23=1
-ParameterName24=Number of Channels
+ParameterName24=Packaging
 ParameterUpdate24=1
-ParameterName25=Number of Circuits
+ParameterName25=Pin Count
 ParameterUpdate25=1
-ParameterName26=Number of Terminals
+ParameterName26=Short Circuit Protection
 ParameterUpdate26=1
-ParameterName27=Operating Supply Current
+ParameterName27=Source
 ParameterUpdate27=1
-ParameterName28=Operating Supply Voltage
+ParameterName28=Type of Insulation
 ParameterUpdate28=1
-ParameterName29=Output Current per Channel
+ParameterName29=Width
 ParameterUpdate29=1
-ParameterName30=Output Type
-ParameterUpdate30=1
-ParameterName31=Pins
-ParameterUpdate31=1
-ParameterName32=Propagation Delay
-ParameterUpdate32=1
-ParameterName33=Radiation Hardening
-ParameterUpdate33=1
-ParameterName34=REACH SVHC
-ParameterUpdate34=1
-ParameterName35=RoHS
-ParameterUpdate35=1
-ParameterName36=RoHS Compliant
-ParameterUpdate36=1
-ParameterName37=Terminal Pitch
-ParameterUpdate37=1
-ParameterName38=Turn-On Delay Time
-ParameterUpdate38=1
-ParameterName39=Width
-ParameterUpdate39=1
 ModelTypeGroup0=PCBLIB
 ModelTypeUpdate0=1
 ModelType0=PCBLIB
-ModelName0=SOIC127P1150X173-8M
+ModelName0=SIP-7_1779405241
 ModelUpdate0=1
 
 [DatabaseUpdateOptions]
