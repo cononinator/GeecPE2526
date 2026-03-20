@@ -1,0 +1,7 @@
+Voltage,Current,Power,Energy,Temperature,MotorCurrent,MeasuredDutyCycle,TargetDutyCycle,Phase,Repeat,CurrentLimit_A,Dyno_Timestamp_ms,Dyno_Speed_kmh,Car_Speed_kmh,Dyno_Torque_Nm,Dyno_Power_W
+26.434,0.137,3.622,21045.873,19.62,1.0565,8.5,100.0,Accelerating,1.0,20.0,,,,,
+26.097,8.808,229.856,21209.004,20.12,3.3,58.5,100.0,Accelerating,1.0,20.0,,,,,
+,,,,,,,,,,,1783.0,38.52,40.98,4.534,18.29
+25.766,16.409,422.802,21582.344,21.12,3.3,100.0,100.0,Accelerating,1.0,20.0,,,,,
+,,,,,,,,,,,2721.0,137.65,146.43,4.649,67.01
+25.991,9.571,248.71,21927.836,21.12,1.9075,100.0,100.0,Accelerating,1.0,20.0,,,,,
