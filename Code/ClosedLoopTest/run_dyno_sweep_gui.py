@@ -212,6 +212,12 @@ class DynoSweepWorker(QThread):
         results = []
         test_start_time = time.time()  # Track test start time for entire cycle
 
+        last_speed_kmh = 0.0
+        last_voltage = 0.0
+        last_motor_current = 0.0
+        last_power = 0.0
+        last_temperature = 0.0
+
         try:
             for repeat in range(self.num_repeats):
                 if self._stop_flag:
@@ -243,6 +249,20 @@ class DynoSweepWorker(QThread):
                             accel_samples.append(data)
                             all_samples.append(data)
 
+                            last_voltage = data["Voltage"]
+                            last_motor_current = data["MotorCurrent"]
+                            last_power = data["Power"]
+                            last_temperature = data["Temperature"]
+
+                            self.data_updated.emit({
+                                "time": data["Timestamp_s"],
+                                "speed": last_speed_kmh,
+                                "voltage": last_voltage,
+                                "current": last_motor_current,
+                                "power": last_power,
+                                "temp": last_temperature,
+                            })
+
                     if dyno_ser and dyno_ser.in_waiting:
                         dyno_buf += dyno_ser.read(dyno_ser.in_waiting).decode('utf-8', errors='ignore')
                         while '\n' in dyno_buf:
@@ -252,13 +272,16 @@ class DynoSweepWorker(QThread):
                                 data["Timestamp_s"] = time.time() - test_start_time
                                 accel_dyno.append(data)
                                 all_samples.append(data)
+
+                                last_speed_kmh = data["Car_Speed_kmh"]
+
                                 self.data_updated.emit({
-                                    "time": time.time() - accel_start,
-                                    "speed": data["Car_Speed_kmh"],
-                                    "voltage": accel_samples[-1]["Voltage"] if accel_samples else 0,
-                                    "current": accel_samples[-1]["MotorCurrent"] if accel_samples else 0,
-                                    "power": accel_samples[-1]["Power"] if accel_samples else 0,
-                                    "temp": accel_samples[-1]["Temperature"] if accel_samples else 0,
+                                    "time": data["Timestamp_s"],
+                                    "speed": last_speed_kmh,
+                                    "voltage": last_voltage,
+                                    "current": last_motor_current,
+                                    "power": last_power,
+                                    "temp": last_temperature,
                                 })
 
                                 if data["Car_Speed_kmh"] >= self.max_speed and not max_speed_reached:
@@ -290,6 +313,20 @@ class DynoSweepWorker(QThread):
                             coast_samples.append(data)
                             all_samples.append(data)
 
+                            last_voltage = data["Voltage"]
+                            last_motor_current = data["MotorCurrent"]
+                            last_power = data["Power"]
+                            last_temperature = data["Temperature"]
+
+                            self.data_updated.emit({
+                                "time": data["Timestamp_s"],
+                                "speed": last_speed_kmh,
+                                "voltage": last_voltage,
+                                "current": last_motor_current,
+                                "power": last_power,
+                                "temp": last_temperature,
+                            })
+
                     if dyno_ser and dyno_ser.in_waiting:
                         dyno_buf += dyno_ser.read(dyno_ser.in_waiting).decode('utf-8', errors='ignore')
                         while '\n' in dyno_buf:
@@ -300,13 +337,16 @@ class DynoSweepWorker(QThread):
                                 data["Timestamp_s"] = time.time() - test_start_time
                                 coast_dyno.append(data)
                                 all_samples.append(data)
+
+                                last_speed_kmh = current_speed
+
                                 self.data_updated.emit({
-                                    "time": (time.time() - accel_start) + 60.0,  # Offset from accel phase
-                                    "speed": current_speed,
-                                    "voltage": coast_samples[-1]["Voltage"] if coast_samples else 0,
-                                    "current": coast_samples[-1]["MotorCurrent"] if coast_samples else 0,
-                                    "power": coast_samples[-1]["Power"] if coast_samples else 0,
-                                    "temp": coast_samples[-1]["Temperature"] if coast_samples else 0,
+                                    "time": data["Timestamp_s"],
+                                    "speed": last_speed_kmh,
+                                    "voltage": last_voltage,
+                                    "current": last_motor_current,
+                                    "power": last_power,
+                                    "temp": last_temperature,
                                 })
 
                             if current_speed < self.min_speed:
