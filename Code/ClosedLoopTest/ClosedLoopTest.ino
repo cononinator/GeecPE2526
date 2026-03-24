@@ -37,7 +37,7 @@
 // No software fault handling needed.
 
 // ─── Ramp Constants ───────────────────────────────────────────────────────────
-const float RAMP_UP_STEP   = 0.5f;  // %/10 ms  →  0→100% in 2 s
+const float RAMP_UP_STEP   = 1.0f;  // %/10 ms  →  0→100% in 2 s
 const float RAMP_DOWN_STEP = 2.0f;  // %/10 ms  →  100→0% in 0.5 s
 
 // ─── Shared State ─────────────────────────────────────────────────────────────

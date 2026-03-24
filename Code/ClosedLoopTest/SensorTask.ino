@@ -1,5 +1,5 @@
 // ─── Sensor Reading Task ──────────────────────────────────────────────────────
-// Runs every 1 s on Core 0.
+// Runs every 100 ms on Core 0.
 // Reads the INA780 power meter and the A2 motor current sensor.
 // The INA780 current reading is written to the shared measuredCurrent variable
 // so that PWMTask can use it for current-aware ramp limiting.
@@ -45,6 +45,6 @@ void sensorTask(void *parameter) {
     Serial.print(",");
     Serial.println(localTargetDutyCycle, 2);
 
-    vTaskDelay(pdMS_TO_TICKS(1000));
+    vTaskDelay(pdMS_TO_TICKS(100));
   }
 }
