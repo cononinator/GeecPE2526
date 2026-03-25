@@ -191,7 +191,7 @@ ax7a.legend(handles=legend_freq + legend_style, title="Freq / Quantity", fontsiz
 
 ax7a.set_xlabel("Set Duty Cycle (%)", fontsize=12)
 ax7a.set_ylabel("Motor Phase Current (A)", fontsize=12, color="black")
-ax7b.set_ylabel("Shaft Torque (Nm)", fontsize=12, color="black")m 
+ax7b.set_ylabel("Shaft Torque (Nm)", fontsize=12, color="black")
 ax7a.set_title("Motor Current & Torque vs Duty Cycle — Switching Frequency Comparison", fontsize=13)
 ax7a.grid(True, alpha=0.35)
 plt.tight_layout()
