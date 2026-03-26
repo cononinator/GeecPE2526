@@ -3,6 +3,11 @@
 run_dyno_sweep_gui.py — GUI for closed-loop dyno sweep test with live plotting
 
 Provides real-time data visualization and parameter input.
+Port configuration is done via the GUI; CLI args are optional pre-fills.
+
+Usage:
+    python run_dyno_sweep_gui.py
+    python run_dyno_sweep_gui.py --port COM3 --dyno-port COM4
 """
 
 import serial
@@ -14,7 +19,7 @@ import sys
 try:
     from PyQt5.QtWidgets import (
         QApplication, QMainWindow, QWidget, QGridLayout, QLabel, QVBoxLayout,
-        QHBoxLayout, QPushButton, QSpinBox, QDoubleSpinBox
+        QHBoxLayout, QPushButton, QSpinBox, QDoubleSpinBox, QLineEdit
     )
     from PyQt5.QtCore import QThread, pyqtSignal, Qt
     import pyqtgraph as pg
@@ -164,7 +169,7 @@ class DynoSweepWorker(QThread):
     """Runs the dyno sweep in a separate thread."""
 
     status = pyqtSignal(str)
-    data_updated = pyqtSignal(dict)  # (time, speed, voltage, current, power, temp)
+    data_updated = pyqtSignal(dict)
     sweep_done = pyqtSignal(list, str)  # (results, timestamp)
 
     def __init__(self, port, baudrate, dyno_port, dyno_baudrate,
@@ -217,13 +222,27 @@ class DynoSweepWorker(QThread):
 
         all_samples = []
         results = []
-        test_start_time = time.time()  # Track test start time for entire cycle
+        test_start_time = time.time()
 
-        last_speed_kmh = 0.0
-        last_voltage = 0.0
+        last_speed_kmh    = 0.0
+        last_voltage      = 0.0
         last_motor_current = 0.0
-        last_power = 0.0
-        last_temperature = 0.0
+        last_power        = 0.0
+        last_motor_voltage = 0.0
+        last_dyno_torque  = 0.0
+        last_dyno_power   = 0.0
+
+        def emit_update(ts):
+            self.data_updated.emit({
+                "time":          ts,
+                "speed":         last_speed_kmh,
+                "voltage":       last_voltage,
+                "current":       last_motor_current,
+                "power":         last_power,
+                "motor_voltage": last_motor_voltage,
+                "dyno_torque":   last_dyno_torque,
+                "dyno_power":    last_dyno_power,
+            })
 
         try:
             for repeat in range(self.num_repeats):
@@ -256,19 +275,11 @@ class DynoSweepWorker(QThread):
                             accel_samples.append(data)
                             all_samples.append(data)
 
-                            last_voltage = data["Voltage"]
+                            last_voltage       = data["Voltage"]
                             last_motor_current = data["MotorCurrent"]
-                            last_power = data["Power"]
-                            last_temperature = data["Temperature"]
-
-                            self.data_updated.emit({
-                                "time": data["Timestamp_s"],
-                                "speed": last_speed_kmh,
-                                "voltage": last_voltage,
-                                "current": last_motor_current,
-                                "power": last_power,
-                                "temp": last_temperature,
-                            })
+                            last_power         = data["Power"]
+                            last_motor_voltage = data["MotorVoltage"]
+                            emit_update(data["Timestamp_s"])
 
                     if dyno_ser and dyno_ser.in_waiting:
                         dyno_buf += dyno_ser.read(dyno_ser.in_waiting).decode('utf-8', errors='ignore')
@@ -280,16 +291,10 @@ class DynoSweepWorker(QThread):
                                 accel_dyno.append(data)
                                 all_samples.append(data)
 
-                                last_speed_kmh = data["Car_Speed_kmh"]
-
-                                self.data_updated.emit({
-                                    "time": data["Timestamp_s"],
-                                    "speed": last_speed_kmh,
-                                    "voltage": last_voltage,
-                                    "current": last_motor_current,
-                                    "power": last_power,
-                                    "temp": last_temperature,
-                                })
+                                last_speed_kmh   = data["Car_Speed_kmh"]
+                                last_dyno_torque = data["Dyno_Torque_Nm"]
+                                last_dyno_power  = data["Dyno_Power_W"]
+                                emit_update(data["Timestamp_s"])
 
                                 if data["Car_Speed_kmh"] >= self.max_speed and not max_speed_reached:
                                     max_speed_reached = True
@@ -320,19 +325,11 @@ class DynoSweepWorker(QThread):
                             coast_samples.append(data)
                             all_samples.append(data)
 
-                            last_voltage = data["Voltage"]
+                            last_voltage       = data["Voltage"]
                             last_motor_current = data["MotorCurrent"]
-                            last_power = data["Power"]
-                            last_temperature = data["Temperature"]
-
-                            self.data_updated.emit({
-                                "time": data["Timestamp_s"],
-                                "speed": last_speed_kmh,
-                                "voltage": last_voltage,
-                                "current": last_motor_current,
-                                "power": last_power,
-                                "temp": last_temperature,
-                            })
+                            last_power         = data["Power"]
+                            last_motor_voltage = data["MotorVoltage"]
+                            emit_update(data["Timestamp_s"])
 
                     if dyno_ser and dyno_ser.in_waiting:
                         dyno_buf += dyno_ser.read(dyno_ser.in_waiting).decode('utf-8', errors='ignore')
@@ -340,23 +337,16 @@ class DynoSweepWorker(QThread):
                             line, dyno_buf = dyno_buf.split('\n', 1)
                             data = parse_dyno_line(line.strip())
                             if data:
-                                current_speed = data["Car_Speed_kmh"]
+                                current_speed    = data["Car_Speed_kmh"]
+                                last_speed_kmh   = current_speed
+                                last_dyno_torque = data["Dyno_Torque_Nm"]
+                                last_dyno_power  = data["Dyno_Power_W"]
                                 data["Timestamp_s"] = time.time() - test_start_time
                                 coast_dyno.append(data)
                                 all_samples.append(data)
+                                emit_update(data["Timestamp_s"])
 
-                                last_speed_kmh = current_speed
-
-                                self.data_updated.emit({
-                                    "time": data["Timestamp_s"],
-                                    "speed": last_speed_kmh,
-                                    "voltage": last_voltage,
-                                    "current": last_motor_current,
-                                    "power": last_power,
-                                    "temp": last_temperature,
-                                })
-
-                            if current_speed < self.min_speed:
+                            if current_speed is not None and current_speed < self.min_speed:
                                 break
 
                     if current_speed is not None and current_speed < self.min_speed:
@@ -402,10 +392,10 @@ class DynoSweepWorker(QThread):
 # ─────────────────────────────────────────────
 
 class DynoSweepWindow(QMainWindow):
-    def __init__(self, port, baudrate, dyno_port, dyno_baudrate):
+    def __init__(self, port="", baudrate=115200, dyno_port="", dyno_baudrate=9600):
         super().__init__()
         self.setWindowTitle("DynoSweep Closed-Loop Test")
-        self.resize(1200, 800)
+        self.resize(1400, 900)
 
         pg.setConfigOption("background", "w")
         pg.setConfigOption("foreground", "k")
@@ -414,11 +404,49 @@ class DynoSweepWindow(QMainWindow):
         self.setCentralWidget(central)
         layout = QVBoxLayout(central)
 
-        # Status label
-        self.status_label = QLabel("Ready. Click 'Start Test' to begin.")
+        # ── Connection panel ──────────────────────────────────────────────────
+        conn_row = QHBoxLayout()
+
+        conn_row.addWidget(QLabel("Firmware Port:"))
+        self.edit_port = QLineEdit()
+        self.edit_port.setPlaceholderText("e.g. COM3")
+        self.edit_port.setMaximumWidth(120)
+        if port:
+            self.edit_port.setText(port)
+        conn_row.addWidget(self.edit_port)
+
+        conn_row.addWidget(QLabel("Baud:"))
+        self.spin_baud = QSpinBox()
+        self.spin_baud.setRange(1200, 2000000)
+        self.spin_baud.setValue(baudrate)
+        self.spin_baud.setMaximumWidth(90)
+        conn_row.addWidget(self.spin_baud)
+
+        conn_row.addSpacing(20)
+
+        conn_row.addWidget(QLabel("Dyno Port:"))
+        self.edit_dyno_port = QLineEdit()
+        self.edit_dyno_port.setPlaceholderText("e.g. COM4 (optional)")
+        self.edit_dyno_port.setMaximumWidth(150)
+        if dyno_port:
+            self.edit_dyno_port.setText(dyno_port)
+        conn_row.addWidget(self.edit_dyno_port)
+
+        conn_row.addWidget(QLabel("Dyno Baud:"))
+        self.spin_dyno_baud = QSpinBox()
+        self.spin_dyno_baud.setRange(1200, 2000000)
+        self.spin_dyno_baud.setValue(dyno_baudrate)
+        self.spin_dyno_baud.setMaximumWidth(90)
+        conn_row.addWidget(self.spin_dyno_baud)
+
+        conn_row.addStretch()
+        layout.addLayout(conn_row)
+
+        # ── Status label ──────────────────────────────────────────────────────
+        self.status_label = QLabel("Ready. Fill in ports above, then click 'Start Test'.")
         layout.addWidget(self.status_label)
 
-        # Buttons
+        # ── Buttons ───────────────────────────────────────────────────────────
         hbox_buttons = QHBoxLayout()
         self.btn_start = QPushButton("Start Test")
         self.btn_stop = QPushButton("Stop")
@@ -430,52 +458,48 @@ class DynoSweepWindow(QMainWindow):
         hbox_buttons.addStretch()
         layout.addLayout(hbox_buttons)
 
-        # Plots grid
+        # ── Plots — 3×2 grid ─────────────────────────────────────────────────
         grid = QGridLayout()
 
-        # Create plots
-        self.plot_speed = pg.PlotWidget(title="Dyno Speed")
-        self.plot_speed.setLabel("bottom", "Time", units="s")
-        self.plot_speed.setLabel("left", "Speed", units="km/h")
-        self.plot_speed.showGrid(x=True, y=True, alpha=0.3)
-        self.curve_speed = self.plot_speed.plot([], [], pen=pg.mkPen("#1f77b4", width=2), symbol="o", symbolSize=3)
+        def make_plot(title, x_label, y_label, y_units, color):
+            p = pg.PlotWidget(title=title)
+            p.setLabel("bottom", x_label, units="s")
+            p.setLabel("left", y_label, units=y_units)
+            p.showGrid(x=True, y=True, alpha=0.3)
+            c = p.plot([], [], pen=pg.mkPen(color, width=2), symbol="o", symbolSize=3)
+            return p, c
 
-        self.plot_power = pg.PlotWidget(title="Electrical Power")
-        self.plot_power.setLabel("bottom", "Time", units="s")
-        self.plot_power.setLabel("left", "Power", units="W")
-        self.plot_power.showGrid(x=True, y=True, alpha=0.3)
-        self.curve_power = self.plot_power.plot([], [], pen=pg.mkPen("#ff7f0e", width=2), symbol="o", symbolSize=3)
+        self.plot_speed, self.curve_speed = make_plot(
+            "Dyno Speed", "Time", "Speed", "km/h", "#1f77b4")
+        self.plot_power, self.curve_power = make_plot(
+            "Electrical Power", "Time", "Power", "W", "#ff7f0e")
+        self.plot_current, self.curve_current = make_plot(
+            "Motor Current", "Time", "Current", "A", "#2ca02c")
+        self.plot_motor_voltage, self.curve_motor_voltage = make_plot(
+            "Motor Voltage", "Time", "Voltage", "V", "#9467bd")
+        self.plot_dyno_torque, self.curve_dyno_torque = make_plot(
+            "Dyno Torque", "Time", "Torque", "Nm", "#8c564b")
+        self.plot_dyno_power, self.curve_dyno_power = make_plot(
+            "Dyno Power", "Time", "Power", "W", "#e377c2")
 
-        self.plot_current = pg.PlotWidget(title="Motor Current")
-        self.plot_current.setLabel("bottom", "Time", units="s")
-        self.plot_current.setLabel("left", "Current", units="A")
-        self.plot_current.showGrid(x=True, y=True, alpha=0.3)
-        self.curve_current = self.plot_current.plot([], [], pen=pg.mkPen("#2ca02c", width=2), symbol="o", symbolSize=3)
-
-        self.plot_temp = pg.PlotWidget(title="Temperature")
-        self.plot_temp.setLabel("bottom", "Time", units="s")
-        self.plot_temp.setLabel("left", "Temperature", units="°C")
-        self.plot_temp.showGrid(x=True, y=True, alpha=0.3)
-        self.curve_temp = self.plot_temp.plot([], [], pen=pg.mkPen("#d62728", width=2), symbol="o", symbolSize=3)
-
-        grid.addWidget(self.plot_speed, 0, 0)
-        grid.addWidget(self.plot_power, 0, 1)
-        grid.addWidget(self.plot_current, 1, 0)
-        grid.addWidget(self.plot_temp, 1, 1)
+        grid.addWidget(self.plot_speed,         0, 0)
+        grid.addWidget(self.plot_power,         0, 1)
+        grid.addWidget(self.plot_current,       1, 0)
+        grid.addWidget(self.plot_motor_voltage, 1, 1)
+        grid.addWidget(self.plot_dyno_torque,   2, 0)
+        grid.addWidget(self.plot_dyno_power,    2, 1)
         layout.addLayout(grid)
 
-        self.port = port
-        self.baudrate = baudrate
-        self.dyno_port = dyno_port
-        self.dyno_baudrate = dyno_baudrate
         self.worker = None
 
         # Data buffers
-        self.times = []
-        self.speeds = []
-        self.powers = []
-        self.currents = []
-        self.temps = []
+        self.times          = []
+        self.speeds         = []
+        self.powers         = []
+        self.currents       = []
+        self.motor_voltages = []
+        self.dyno_torques   = []
+        self.dyno_powers    = []
 
     def _on_start_test(self):
         dialog = ParameterDialog(self)
@@ -488,18 +512,29 @@ class DynoSweepWindow(QMainWindow):
             self.btn_stop.setEnabled(False)
 
     def _start_sweep(self, current_limit, min_speed, max_speed):
+        port      = self.edit_port.text().strip()
+        baud      = self.spin_baud.value()
+        dyno_port = self.edit_dyno_port.text().strip() or None
+        dyno_baud = self.spin_dyno_baud.value()
+
+        if not port:
+            self.status_label.setText("Error: Firmware port is required.")
+            return
+
         self.btn_start.setEnabled(False)
         self.btn_stop.setEnabled(True)
 
         # Reset buffers
-        self.times = []
-        self.speeds = []
-        self.powers = []
-        self.currents = []
-        self.temps = []
+        self.times          = []
+        self.speeds         = []
+        self.powers         = []
+        self.currents       = []
+        self.motor_voltages = []
+        self.dyno_torques   = []
+        self.dyno_powers    = []
 
         self.worker = DynoSweepWorker(
-            self.port, self.baudrate, self.dyno_port, self.dyno_baudrate,
+            port, baud, dyno_port, dyno_baud,
             current_limit, min_speed, max_speed, num_repeats=5
         )
         self.worker.status.connect(self._on_status)
@@ -516,18 +551,23 @@ class DynoSweepWindow(QMainWindow):
         self.speeds.append(data["speed"])
         self.powers.append(data["power"])
         self.currents.append(data["current"])
-        self.temps.append(data["temp"])
+        self.motor_voltages.append(data["motor_voltage"])
+        self.dyno_torques.append(data["dyno_torque"])
+        self.dyno_powers.append(data["dyno_power"])
 
         self.curve_speed.setData(self.times, self.speeds)
         self.curve_power.setData(self.times, self.powers)
         self.curve_current.setData(self.times, self.currents)
-        self.curve_temp.setData(self.times, self.temps)
+        self.curve_motor_voltage.setData(self.times, self.motor_voltages)
+        self.curve_dyno_torque.setData(self.times, self.dyno_torques)
+        self.curve_dyno_power.setData(self.times, self.dyno_powers)
 
-        # Auto-scale
         self.plot_speed.enableAutoRange()
         self.plot_power.enableAutoRange()
         self.plot_current.enableAutoRange()
-        self.plot_temp.enableAutoRange()
+        self.plot_motor_voltage.enableAutoRange()
+        self.plot_dyno_torque.enableAutoRange()
+        self.plot_dyno_power.enableAutoRange()
 
     def _on_sweep_done(self, results: list, ts: str):
         self.status_label.setText("Test complete. Click 'Start Test' for another cycle.")
@@ -536,10 +576,12 @@ class DynoSweepWindow(QMainWindow):
 
         # Save plots
         for slug, plot in [
-            ("speed", self.plot_speed),
-            ("power", self.plot_power),
-            ("current", self.plot_current),
-            ("temp", self.plot_temp),
+            ("speed",         self.plot_speed),
+            ("power",         self.plot_power),
+            ("current",       self.plot_current),
+            ("motor_voltage", self.plot_motor_voltage),
+            ("dyno_torque",   self.plot_dyno_torque),
+            ("dyno_power",    self.plot_dyno_power),
         ]:
             filename = f"dyno_sweep_{ts}_{slug}.png"
             exporter = pg.exporters.ImageExporter(plot.plotItem)
@@ -550,10 +592,10 @@ class DynoSweepWindow(QMainWindow):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="DynoSweep Closed-Loop Test (GUI)")
-    parser.add_argument("--port", type=str, required=True, help="COM port for firmware")
-    parser.add_argument("--baud", type=int, default=115200, help="Baud rate for firmware")
-    parser.add_argument("--dyno-port", type=str, default=None, help="COM port for dyno (optional)")
-    parser.add_argument("--dyno-baud", type=int, default=9600, help="Baud rate for dyno")
+    parser.add_argument("--port",      type=str, default="",   help="COM port for firmware (pre-fills GUI)")
+    parser.add_argument("--baud",      type=int, default=115200, help="Baud rate for firmware")
+    parser.add_argument("--dyno-port", type=str, default="",   help="COM port for dyno (pre-fills GUI)")
+    parser.add_argument("--dyno-baud", type=int, default=9600,  help="Baud rate for dyno")
 
     args = parser.parse_args()
 
