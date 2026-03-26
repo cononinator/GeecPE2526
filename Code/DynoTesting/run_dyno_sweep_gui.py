@@ -34,7 +34,8 @@ except ImportError as e:
 
 def parse_sensor_line(line):
     """Parse sensor data line from firmware.
-    Expected format: DATA,Voltage,Current,Power,Energy,Temperature,MotorVoltage,MotorCurrent,MeasuredDutyCycle,TargetDutyCycle
+    Expected format: DATA,Voltage,Current,Power,Energy,Temperature,MotorVoltage,MotorCurrent,MeasuredDutyCycle,TargetDutyCycle[,WheelSpeed]
+    WheelSpeed (km/h via CAN from DAQ) is optional — present in firmware builds with CAN enabled.
     """
     try:
         parts = line.strip().split(',')
@@ -48,7 +49,8 @@ def parse_sensor_line(line):
                 "MotorVoltage": float(parts[6]),
                 "MotorCurrent": float(parts[7]),
                 "MeasuredDutyCycle": float(parts[8]),
-                "TargetDutyCycle": float(parts[9])
+                "TargetDutyCycle": float(parts[9]),
+                "WheelSpeed": float(parts[10]) if len(parts) >= 11 else None,
             }
     except ValueError:
         pass
@@ -176,7 +178,8 @@ class DynoSweepWorker(QThread):
     sweep_done = pyqtSignal(list, str)  # (results, timestamp)
 
     def __init__(self, port, baudrate, dyno_port, dyno_baudrate,
-                 current_limit, min_speed, max_speed, num_repeats=5):
+                 current_limit, min_speed, max_speed, num_repeats=5,
+                 use_wheel_speed=False):
         super().__init__()
         self.port = port
         self.baudrate = baudrate
@@ -186,6 +189,7 @@ class DynoSweepWorker(QThread):
         self.min_speed = min_speed
         self.max_speed = max_speed
         self.num_repeats = num_repeats
+        self.use_wheel_speed = use_wheel_speed
         self._stop_flag = False
 
     def stop(self):
@@ -234,11 +238,12 @@ class DynoSweepWorker(QThread):
         last_motor_voltage = 0.0
         last_dyno_torque  = 0.0
         last_dyno_power   = 0.0
+        last_wheel_speed  = 0.0
 
         def emit_update(ts):
             self.data_updated.emit({
                 "time":          ts,
-                "speed":         last_speed_kmh,
+                "speed":         last_wheel_speed if self.use_wheel_speed else last_speed_kmh,
                 "voltage":       last_voltage,
                 "current":       last_motor_current,
                 "power":         last_power,
@@ -284,7 +289,14 @@ class DynoSweepWorker(QThread):
                             last_motor_current = data["MotorCurrent"]
                             last_power         = data["Power"]
                             last_motor_voltage = data["MotorVoltage"]
+                            if data["WheelSpeed"] is not None:
+                                last_wheel_speed = data["WheelSpeed"]
                             emit_update(data["Timestamp_s"])
+
+                            # Use wheel speed for max speed detection when toggled
+                            if self.use_wheel_speed and last_wheel_speed >= self.max_speed and not max_speed_reached:
+                                max_speed_reached = True
+                                ser.write(b"0\n")  # Stop motor immediately
 
                     if dyno_ser and dyno_ser.in_waiting:
                         dyno_buf += dyno_ser.read(dyno_ser.in_waiting).decode('utf-8', errors='ignore')
@@ -301,7 +313,8 @@ class DynoSweepWorker(QThread):
                                 last_dyno_power  = data["Dyno_Power_W"]
                                 emit_update(data["Timestamp_s"])
 
-                                if data["Car_Speed_kmh"] >= self.max_speed and not max_speed_reached:
+                                # Use dyno speed for max speed detection when not using wheel speed
+                                if not self.use_wheel_speed and data["Car_Speed_kmh"] >= self.max_speed and not max_speed_reached:
                                     max_speed_reached = True
                                     ser.write(b"0\n")  # Stop motor immediately
 
@@ -336,6 +349,10 @@ class DynoSweepWorker(QThread):
                             last_motor_current = data["MotorCurrent"]
                             last_power         = data["Power"]
                             last_motor_voltage = data["MotorVoltage"]
+                            if data["WheelSpeed"] is not None:
+                                last_wheel_speed = data["WheelSpeed"]
+                                if self.use_wheel_speed:
+                                    current_speed = last_wheel_speed
                             emit_update(data["Timestamp_s"])
 
                     if dyno_ser and dyno_ser.in_waiting:
@@ -344,13 +361,14 @@ class DynoSweepWorker(QThread):
                             line, dyno_buf = dyno_buf.split('\n', 1)
                             data = parse_dyno_line(line.strip())
                             if data:
-                                current_speed    = data["Car_Speed_kmh"]
-                                last_speed_kmh   = current_speed
+                                last_speed_kmh   = data["Car_Speed_kmh"]
                                 last_dyno_torque = data["Dyno_Torque_Nm"]
                                 last_dyno_power  = data["Dyno_Power_W"]
                                 data["Timestamp_s"] = time.time() - test_start_time
                                 coast_dyno.append(data)
                                 all_samples.append(data)
+                                if not self.use_wheel_speed:
+                                    current_speed = last_speed_kmh
                                 emit_update(data["Timestamp_s"])
 
                             if current_speed is not None and current_speed < self.min_speed:
@@ -463,6 +481,11 @@ class DynoSweepWindow(QMainWindow):
         hbox_buttons.addWidget(self.btn_start)
         hbox_buttons.addWidget(self.btn_stop)
         hbox_buttons.addStretch()
+        self.chk_wheel_speed = QCheckBox("Use Wheel Speed (CAN)")
+        self.chk_wheel_speed.setChecked(False)
+        self.chk_wheel_speed.toggled.connect(self._on_wheel_speed_toggled)
+        hbox_buttons.addWidget(self.chk_wheel_speed)
+        hbox_buttons.addSpacing(20)
         self.chk_log = QCheckBox("Show Serial Log")
         self.chk_log.setChecked(False)
         self.chk_log.toggled.connect(self._on_log_toggled)
@@ -484,7 +507,7 @@ class DynoSweepWindow(QMainWindow):
             return p, c
 
         self.plot_speed, self.curve_speed = make_plot(
-            "Dyno Speed", "Time", "Speed", "km/h", "#1f77b4")
+            "Speed (Dyno)", "Time", "Speed", "km/h", "#1f77b4")
         self.plot_power, self.curve_power = make_plot(
             "Electrical Power", "Time", "Power", "W", "#ff7f0e")
         self.plot_current, self.curve_current = make_plot(
@@ -563,13 +586,18 @@ class DynoSweepWindow(QMainWindow):
 
         self.worker = DynoSweepWorker(
             port, baud, dyno_port, dyno_baud,
-            current_limit, min_speed, max_speed, num_repeats=5
+            current_limit, min_speed, max_speed, num_repeats=5,
+            use_wheel_speed=self.chk_wheel_speed.isChecked()
         )
         self.worker.status.connect(self._on_status)
         self.worker.raw_line.connect(self._on_raw_line)
         self.worker.data_updated.connect(self._on_data_update)
         self.worker.sweep_done.connect(self._on_sweep_done)
         self.worker.start()
+
+    def _on_wheel_speed_toggled(self, checked: bool):
+        title = "Speed (Wheel — CAN)" if checked else "Speed (Dyno)"
+        self.plot_speed.setTitle(title)
 
     def _on_log_toggled(self, checked: bool):
         self.log_widget.setVisible(checked)

@@ -1,13 +1,18 @@
 // ─── MCPWM API: requires ESP32 Arduino Core 3.x (ESP-IDF 5.x) ────────────────
 // Install via Boards Manager: "esp32 by Espressif Systems" version 3.0.0 or later.
 #include "driver/mcpwm_prelude.h"
+#include "driver/twai.h"
 #include "INA780.h"
+#include "CANid.h"
 #include <Wire.h>
 #include <freertos/FreeRTOS.h>
 #include <freertos/task.h>
 #include <freertos/semphr.h>
 
 // ─── Pin Definitions ──────────────────────────────────────────────────────────
+#define CAN_TX_PIN      D9   // TWAI TX → CAN transceiver
+#define CAN_RX_PIN      D8   // TWAI RX ← CAN transceiver
+
 #define PWM_PIN_A       6    // MCPWM0A output (controlled by duty cycle)
 #define PWM_PIN_B       D2   // MCPWM0B output (fixed 1 µs pulse, bootstrap/sync)
 #define SOFT_START_PIN  D5   // Soft-start enable
@@ -60,14 +65,32 @@ volatile float measuredCurrent   = 0.0f;    // Written by SensorTask, read by PW
 volatile bool serialControlEnabled = false;   // false = throttle mode (default), true = serial mode
 volatile unsigned long lastCommandTime = 0;
 
+// ─── Shared Sensor Readings (written by SensorTask, read by CANTask) ──────────
+volatile float sensBusVoltage   = 0.0f;
+volatile float sensPower        = 0.0f;
+volatile float sensEnergy       = 0.0f;
+volatile float sensTemperature  = 0.0f;
+volatile float sensMotorVoltage = 0.0f;
+volatile float sensMotorCurrent = 0.0f;
+
+// ─── CAN-Received State (written by CANTask, available for other tasks) ────────
+volatile bool  canDaqStatus      = false;
+volatile float canSpeed          = 0.0f;
+volatile bool  canScreenStatus   = false;
+volatile float canScreenLimit    = 0.0f;
+volatile int   canScreenLapNumber = 0;
+
 // ─── FreeRTOS Handles ─────────────────────────────────────────────────────────
 SemaphoreHandle_t dutyCycleMutex;       // Protects currentDutyCycle / targetDutyCycle
 SemaphoreHandle_t currentLimitMutex;   // Protects measuredCurrent / currentLimit
+SemaphoreHandle_t sensorDataMutex;     // Protects sens* variables
+SemaphoreHandle_t canRxMutex;          // Protects canDaqStatus, canSpeed, etc.
 
 TaskHandle_t commandTaskHandle   = NULL;
 TaskHandle_t pwmTaskHandle       = NULL;
 TaskHandle_t sensorTaskHandle    = NULL;
 TaskHandle_t watchdogTaskHandle  = NULL;
+TaskHandle_t canTaskHandle       = NULL;
 
 // ─── MCPWM Object Handles ─────────────────────────────────────────────────────
 // One timer, one operator, two comparators (A = variable duty, B = fixed 1 µs),
@@ -197,14 +220,30 @@ void setup() {
   Serial.println("  genA: variable duty (PWM_PIN_A)");
   Serial.println("  genB: 1 µs fixed pulse (D2)");
 
+  // ── TWAI (CAN) ──
+  twai_general_config_t g_config = TWAI_GENERAL_CONFIG_DEFAULT((gpio_num_t)CAN_TX_PIN, (gpio_num_t)CAN_RX_PIN, TWAI_MODE_NORMAL);
+  twai_timing_config_t  t_config = TWAI_TIMING_CONFIG_500KBITS();
+  twai_filter_config_t  f_config = TWAI_FILTER_CONFIG_ACCEPT_ALL();
+
+  if (twai_driver_install(&g_config, &t_config, &f_config) != ESP_OK) {
+    Serial.println("ERROR: TWAI driver install failed");
+  } else if (twai_start() != ESP_OK) {
+    Serial.println("ERROR: TWAI start failed");
+  } else {
+    Serial.println("CAN (TWAI) started — 500 kbit/s");
+  }
+
   // ── FreeRTOS ──
   dutyCycleMutex    = xSemaphoreCreateMutex();
   currentLimitMutex = xSemaphoreCreateMutex();
+  sensorDataMutex   = xSemaphoreCreateMutex();
+  canRxMutex        = xSemaphoreCreateMutex();
 
   xTaskCreatePinnedToCore(commandTask,  "CommandTask",  4096, NULL, 2, &commandTaskHandle,  1);
   xTaskCreatePinnedToCore(pwmTask,      "PWMTask",      2048, NULL, 1, &pwmTaskHandle,      1);
   xTaskCreatePinnedToCore(sensorTask,   "SensorTask",   4096, NULL, 1, &sensorTaskHandle,   0);
   xTaskCreatePinnedToCore(watchdogTask, "WatchdogTask", 2048, NULL, 2, &watchdogTaskHandle, 0);
+  xTaskCreatePinnedToCore(canTask,      "CANTask",      4096, NULL, 1, &canTaskHandle,      0);
 
   Serial.println("FreeRTOS tasks created");
   printHelp();
