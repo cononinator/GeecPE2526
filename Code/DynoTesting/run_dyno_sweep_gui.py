@@ -19,9 +19,11 @@ import sys
 try:
     from PyQt5.QtWidgets import (
         QApplication, QMainWindow, QWidget, QGridLayout, QLabel, QVBoxLayout,
-        QHBoxLayout, QPushButton, QSpinBox, QDoubleSpinBox, QLineEdit
+        QHBoxLayout, QPushButton, QSpinBox, QDoubleSpinBox, QLineEdit,
+        QPlainTextEdit, QCheckBox, QSizePolicy
     )
     from PyQt5.QtCore import QThread, pyqtSignal, Qt
+    from PyQt5.QtGui import QFont
     import pyqtgraph as pg
     import pyqtgraph.exporters
 except ImportError as e:
@@ -169,6 +171,7 @@ class DynoSweepWorker(QThread):
     """Runs the dyno sweep in a separate thread."""
 
     status = pyqtSignal(str)
+    raw_line = pyqtSignal(str)           # every raw line from firmware serial port
     data_updated = pyqtSignal(dict)
     sweep_done = pyqtSignal(list, str)  # (results, timestamp)
 
@@ -266,6 +269,8 @@ class DynoSweepWorker(QThread):
                 while (time.time() - accel_start) < 60.0 and not self._stop_flag:
                     if ser.in_waiting:
                         line = ser.readline().decode('utf-8', errors='ignore').strip()
+                        if line:
+                            self.raw_line.emit(line)
                         data = parse_sensor_line(line)
                         if data:
                             data["Phase"] = "Accelerating"
@@ -316,6 +321,8 @@ class DynoSweepWorker(QThread):
                 while (time.time() - coast_start) < 120.0 and not self._stop_flag:
                     if ser.in_waiting:
                         line = ser.readline().decode('utf-8', errors='ignore').strip()
+                        if line:
+                            self.raw_line.emit(line)
                         data = parse_sensor_line(line)
                         if data:
                             data["Phase"] = "Coasting"
@@ -456,9 +463,16 @@ class DynoSweepWindow(QMainWindow):
         hbox_buttons.addWidget(self.btn_start)
         hbox_buttons.addWidget(self.btn_stop)
         hbox_buttons.addStretch()
+        self.chk_log = QCheckBox("Show Serial Log")
+        self.chk_log.setChecked(False)
+        self.chk_log.toggled.connect(self._on_log_toggled)
+        hbox_buttons.addWidget(self.chk_log)
         layout.addLayout(hbox_buttons)
 
-        # ── Plots — 3×2 grid ─────────────────────────────────────────────────
+        # ── Plots + log side-by-side ──────────────────────────────────────────
+        content_row = QHBoxLayout()
+
+        # Plots — 3×2 grid
         grid = QGridLayout()
 
         def make_plot(title, x_label, y_label, y_units, color):
@@ -483,12 +497,26 @@ class DynoSweepWindow(QMainWindow):
             "Dyno Power", "Time", "Power", "W", "#e377c2")
 
         grid.addWidget(self.plot_speed,         0, 0)
-        grid.addWidget(self.plot_power,         0, 1)
+        grid.addWidget(self.plot_dyno_torque,   0, 1)
         grid.addWidget(self.plot_current,       1, 0)
         grid.addWidget(self.plot_motor_voltage, 1, 1)
-        grid.addWidget(self.plot_dyno_torque,   2, 0)
+        grid.addWidget(self.plot_power,         2, 0)
         grid.addWidget(self.plot_dyno_power,    2, 1)
-        layout.addLayout(grid)
+        content_row.addLayout(grid, stretch=1)
+
+        # Serial log panel (hidden by default, sits to the right of the plots)
+        self.log_widget = QPlainTextEdit()
+        self.log_widget.setReadOnly(True)
+        self.log_widget.setMaximumBlockCount(2000)  # cap at 2000 lines
+        font = QFont("Courier New", 9)
+        font.setStyleHint(QFont.Monospace)
+        self.log_widget.setFont(font)
+        self.log_widget.setMinimumWidth(280)
+        self.log_widget.setMaximumWidth(400)
+        self.log_widget.setVisible(False)
+        content_row.addWidget(self.log_widget)
+
+        layout.addLayout(content_row)
 
         self.worker = None
 
@@ -538,12 +566,20 @@ class DynoSweepWindow(QMainWindow):
             current_limit, min_speed, max_speed, num_repeats=5
         )
         self.worker.status.connect(self._on_status)
+        self.worker.raw_line.connect(self._on_raw_line)
         self.worker.data_updated.connect(self._on_data_update)
         self.worker.sweep_done.connect(self._on_sweep_done)
         self.worker.start()
 
+    def _on_log_toggled(self, checked: bool):
+        self.log_widget.setVisible(checked)
+
+    def _on_raw_line(self, line: str):
+        self.log_widget.appendPlainText(line)
+
     def _on_status(self, msg: str):
         self.status_label.setText(msg)
+        self.log_widget.appendPlainText(f"[STATUS] {msg}")
         print(msg)
 
     def _on_data_update(self, data: dict):
