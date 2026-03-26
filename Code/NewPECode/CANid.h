@@ -13,6 +13,8 @@
 // DAQ CAN IDs
 #define DAQ_STATUS 0x100
 #define DAQ_SPEED 0x101
+#define DAQ_RPM 0x102
+#define DAQ_GPS_FIX 0x103
 
 // Sensor CAN IDs
 #define SCREEN_STATUS 0x200
