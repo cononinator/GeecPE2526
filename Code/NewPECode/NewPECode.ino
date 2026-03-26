@@ -32,6 +32,15 @@
 // Fixed 1 µs on-time for generator B:  1 µs × 80 MHz = 80 ticks
 #define PWM_B_TICKS          80UL
 
+// ─── Throttle ─────────────────────────────────────────────────────────────────
+#define THROTTLE_PIN              A1
+#define THROTTLE_OFF_V            0.8f    // Below this voltage → output off (safety)
+#define THROTTLE_MAX_V            3.3f    // Full throttle voltage = 100%
+
+// Set to true to have throttle control the current limit (via DAC) instead of duty cycle.
+// When true: throttle scales 0–100% of the value set by the 'C' command; duty holds at 100%.
+#define THROTTLE_CONTROLS_CURRENT false
+
 // ─── Current Limiting ─────────────────────────────────────────────────────
 // Hardware peak current limiting via LTC2631 DAC (sets comparator reference).
 // No software fault handling needed.
@@ -48,6 +57,7 @@ volatile float targetDutyCycle   = 0.0f;
 volatile float currentLimit      = 10.0f;   // Amperes — set via 'C' command
 volatile float measuredCurrent   = 0.0f;    // Written by SensorTask, read by PWMTask
 
+volatile bool serialControlEnabled = false;   // false = throttle mode (default), true = serial mode
 volatile unsigned long lastCommandTime = 0;
 
 // ─── FreeRTOS Handles ─────────────────────────────────────────────────────────
@@ -96,6 +106,8 @@ void setup() {
   Serial.println(" A");
 
   // ── GPIO ──
+  pinMode(A0, INPUT);
+  pinMode(A1, INPUT);
   pinMode(A2, INPUT);
   pinMode(SOFT_START_PIN, OUTPUT);
   pinMode(ENABLE_PIN, OUTPUT);
@@ -206,7 +218,9 @@ void loop() {
 // ─── Help text (also called from CommandTask) ─────────────────────────────────
 void printHelp() {
   Serial.println("\n===== Commands =====");
-  Serial.println("  0-100      : Set target duty cycle (%)");
+  Serial.println("  M          : Enable serial control (overrides throttle)");
+  Serial.println("  T          : Return to throttle control (default)");
+  Serial.println("  0-100      : Set target duty cycle (%) [serial mode only]");
   Serial.println("  S          : Stop (ramp to 0%)");
   Serial.println("  R          : Reset power meter energy/charge");
   Serial.println("  C <amps>   : Set current limit (e.g. 'C 15.5')");

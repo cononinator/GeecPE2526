@@ -12,6 +12,10 @@ void sensorTask(void *parameter) {
     double energy     = powerMeter.getEnergy();
     float temperature = powerMeter.getTemperature();
 
+    // A0: motor voltage sensor  Vadc = 0.0554*Vmot + 0.09  →  Vmot = (Vadc - 0.09) / 0.0554
+    float motorVoltageADC = analogRead(A0) * (3.3f / 4095.0f);
+    float motorVoltage    = (motorVoltageADC - 0.09f) / 0.0554f;
+
     // A2: motor current sensor output voltage (0–3.3 V raw)
     float motCurrent = analogRead(A2) * (3.3f / 4095.0f);
 
@@ -38,6 +42,8 @@ void sensorTask(void *parameter) {
     Serial.print(energy, 3);
     Serial.print(",");
     Serial.print(temperature, 2);
+    Serial.print(",");
+    Serial.print(motorVoltage, 3);
     Serial.print(",");
     Serial.print(motCurrent, 4);
     Serial.print(",");
