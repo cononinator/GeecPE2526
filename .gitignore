@@ -10,3 +10,5 @@
 *.TMP
 *.SchDocPreview
 *_Previews*
+**/build/*
+**/_internal/*
