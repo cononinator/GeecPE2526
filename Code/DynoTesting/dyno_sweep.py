@@ -20,12 +20,13 @@ import sys
 
 def parse_sensor_line(line):
     """Parse sensor data line from firmware.
-    Expected format: DATA,Voltage,Current,Power,Energy,Temperature,MotorVoltage,MotorCurrent,MeasuredDutyCycle,TargetDutyCycle
+    Expected format: DATA,Voltage,Current,Power,Energy,Temperature,MotorVoltage,MotorCurrent,MeasuredDutyCycle,TargetDutyCycle[,WheelSpeed]
+    WheelSpeed (km/h via CAN from DAQ) is optional — present in firmware builds with CAN enabled.
     """
     try:
         parts = line.strip().split(',')
         if len(parts) >= 10 and parts[0] == "DATA":
-            return {
+            result = {
                 "Voltage": float(parts[1]),
                 "Current": float(parts[2]),
                 "Power": float(parts[3]),
@@ -34,8 +35,10 @@ def parse_sensor_line(line):
                 "MotorVoltage": float(parts[6]),
                 "MotorCurrent": float(parts[7]),
                 "MeasuredDutyCycle": float(parts[8]),
-                "TargetDutyCycle": float(parts[9])
+                "TargetDutyCycle": float(parts[9]),
+                "WheelSpeed": float(parts[10]) if len(parts) >= 11 else None,
             }
+            return result
     except ValueError:
         pass
     return None

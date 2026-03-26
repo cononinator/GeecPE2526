@@ -3,6 +3,7 @@
 // Reads the INA780 power meter and the A2 motor current sensor.
 // The INA780 current reading is written to the shared measuredCurrent variable
 // so that PWMTask can use it for current-aware ramp limiting.
+// All sensor readings are also written to sens* variables for CANTask.
 void sensorTask(void *parameter) {
   while (1) {
     // ── Read sensors ──
@@ -25,11 +26,26 @@ void sensorTask(void *parameter) {
     float localLimit = currentLimit;
     xSemaphoreGive(currentLimitMutex);
 
+    // ── Publish all sensor readings for CANTask ──
+    xSemaphoreTake(sensorDataMutex, portMAX_DELAY);
+    sensBusVoltage   = voltage;
+    sensPower        = (float)power;
+    sensEnergy       = (float)energy;
+    sensTemperature  = temperature;
+    sensMotorVoltage = motorVoltage;
+    sensMotorCurrent = motCurrent;
+    xSemaphoreGive(sensorDataMutex);
+
     // ── Read duty cycle state ──
     xSemaphoreTake(dutyCycleMutex, portMAX_DELAY);
     float localDutyCycle       = currentDutyCycle;
     float localTargetDutyCycle = targetDutyCycle;
     xSemaphoreGive(dutyCycleMutex);
+
+    // ── Read wheel speed from CAN ──
+    xSemaphoreTake(canRxMutex, portMAX_DELAY);
+    float localWheelSpeed = canSpeed;
+    xSemaphoreGive(canRxMutex);
 
     // ── Print CSV format ──
     Serial.print("DATA,");
@@ -49,7 +65,9 @@ void sensorTask(void *parameter) {
     Serial.print(",");
     Serial.print(localDutyCycle, 2);
     Serial.print(",");
-    Serial.println(localTargetDutyCycle, 2);
+    Serial.print(localTargetDutyCycle, 2);
+    Serial.print(",");
+    Serial.println(localWheelSpeed, 3);
 
     vTaskDelay(pdMS_TO_TICKS(100));
   }
