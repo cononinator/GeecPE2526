@@ -39,7 +39,7 @@
 
 // ─── Throttle ─────────────────────────────────────────────────────────────────
 #define THROTTLE_PIN              A1
-#define THROTTLE_OFF_V            0.8f    // Below this voltage → output off (safety)
+#define THROTTLE_OFF_V            1.4f    // Below this voltage → output off (safety)
 #define THROTTLE_MAX_V            3.3f    // Full throttle voltage = 100%
 
 // Set to true to have throttle control the current limit (via DAC) instead of duty cycle.
