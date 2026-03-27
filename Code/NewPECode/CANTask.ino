@@ -5,8 +5,8 @@
 //   and control state read from shared variables.
 //
 // Receive (every loop): processes incoming DAQ_* and SCREEN_* messages.
-//   DAQ_STATUS    (0x100)  1-byte boolean
-//   DAQ_SPEED     (0x101)  4-byte float (m/s or km/h — as sent by DAQ)
+//   DAQ_SPEED     (0x100)  4-byte float (m/s or km/h — as sent by DAQ)
+//   DAQ_STATUS    (0x101)  1-byte boolean
 //   SCREEN_STATUS (0x200)  1-byte boolean
 //   SCREEN_LIMIT  (0x201)  4-byte float
 //   SCREEN_LAP_NUMBER (0x202) 4-byte int32

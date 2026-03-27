@@ -11,8 +11,8 @@
 #define PE_CURRENT_LIMIT 0x029
 
 // DAQ CAN IDs
-#define DAQ_STATUS 0x100
-#define DAQ_SPEED 0x101
+#define DAQ_SPEED 0x100
+#define DAQ_STATUS 0x101
 #define DAQ_RPM 0x102
 #define DAQ_GPS_FIX 0x103
 
