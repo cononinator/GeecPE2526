@@ -74,6 +74,8 @@ void pwmTask(void *parameter) {
     // Convert duty percentage → comparator ticks.
     // Compare value latches at timer zero (update_cmp_on_tez = true) so updates
     // are glitch-free and take effect at the very next period start.
+    // Cap at 99.8% — 100% duty must never be sent.
+    if (localDutyCycle > 99.8f) localDutyCycle = 99.8f;
     uint32_t ticks = (uint32_t)(localDutyCycle / 100.0f * (float)PERIOD_TICKS);
     mcpwm_comparator_set_compare_value(cmpA, ticks);
 
