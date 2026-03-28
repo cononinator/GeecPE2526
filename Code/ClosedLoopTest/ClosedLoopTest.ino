@@ -9,7 +9,7 @@
 
 // ─── Pin Definitions ──────────────────────────────────────────────────────────
 #define PWM_PIN_A       6    // MCPWM0A output (controlled by duty cycle)
-#define PWM_PIN_B       D2   // MCPWM0B output (fixed 1 µs pulse, bootstrap/sync)
+#define PWM_PIN_B       5   // MCPWM0B output (fixed 1 µs pulse, bootstrap/sync)
 #define SOFT_START_PIN  D5   // Soft-start enable
 #define ENABLE_PIN      D4   // Gate driver enable
 #define FAULT_PIN       D7   // Current comparator output: LOW = overcurrent detected
@@ -22,7 +22,7 @@
 // Sensor output voltage vs. current:  V_sensor = 0.1402 * I_amps + 0.0473
 // Used to convert a desired current limit (A) into a DAC voltage setpoint.
 #define SENSOR_SLOPE    0.1402f
-#define SENSOR_OFFSET   0.0473f
+#define SENSOR_OFFSET   0.01f
 
 // ─── MCPWM Constants ──────────────────────────────────────────────────────────
 #define PWM_FREQUENCY    30000       // Hz
@@ -30,7 +30,7 @@
 #define MCPWM_RESOLUTION_HZ  80000000UL
 #define PERIOD_TICKS         (MCPWM_RESOLUTION_HZ / PWM_FREQUENCY)  // 2667
 // Fixed 1 µs on-time for generator B:  1 µs × 80 MHz = 80 ticks
-#define PWM_B_TICKS          80UL
+#define PWM_B_TICKS          800UL
 
 // ─── Current Limiting ─────────────────────────────────────────────────────
 // Hardware peak current limiting via LTC2631 DAC (sets comparator reference).
@@ -171,7 +171,7 @@ void setup() {
 
   // Pull-down on both output pins (ensures defined low state at startup)
   gpio_pulldown_en((gpio_num_t)PWM_PIN_A);
-  gpio_pulldown_en((gpio_num_t)D2);
+  gpio_pulldown_en((gpio_num_t)PWM_PIN_B);
 
   // ── 5. Enable and start timer ──
   ESP_ERROR_CHECK(mcpwm_timer_enable(mcpwmTimer));

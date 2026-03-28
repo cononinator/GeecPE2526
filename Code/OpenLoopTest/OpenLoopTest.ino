@@ -84,7 +84,7 @@ void setup() {
   mcpwm_config_t pwm_config;
   pwm_config.frequency = 30000;      // Frequency in Hz (30 kHz)
   pwm_config.cmpr_a = 0;            // Initial duty cycle of PWM0A = 0%
-  pwm_config.cmpr_b = 10;            // Initial duty cycle of PWM0B = 0%
+  pwm_config.cmpr_b = 10;            // Initial duty cycle of PWM0B = 10%
   pwm_config.counter_mode = MCPWM_UP_COUNTER;
   pwm_config.duty_mode = MCPWM_DUTY_MODE_0;
   
@@ -136,7 +136,7 @@ void setup() {
     &watchdogTaskHandle, // Task handle
     0                  // Core ID (core 0)
   );
-  
+  mcpwm_set_duty(MCPWM_UNIT_0, MCPWM_TIMER_0, MCPWM_OPR_B, 10);
   Serial.println("FreeRTOS Tasks Created");
   Serial.println("\nCommands:");
   Serial.println("  0-100: Set duty cycle (%)");
