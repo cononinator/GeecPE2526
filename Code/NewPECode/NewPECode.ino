@@ -24,10 +24,10 @@
 #define DAC_I2C_ADDRESS 0x73  // LTC2631-HZ12 current-limit DAC (global address)
 
 // ─── Current Sensor Calibration ───────────────────────────────────────────────
-// Sensor output voltage vs. current:  V_sensor = 0.1402 * I_amps + 0.0473
+// Sensor output voltage vs. current:  V_sensor = 0.983 * I_amps + 0.17
 // Used to convert a desired current limit (A) into a DAC voltage setpoint.
-#define SENSOR_SLOPE    0.1402f
-#define SENSOR_OFFSET   0.0473f
+#define SENSOR_SLOPE    0.983f
+#define SENSOR_OFFSET   0.17f
 
 // ─── MCPWM Constants ──────────────────────────────────────────────────────────
 #define PWM_FREQUENCY    30000       // Hz
@@ -106,7 +106,7 @@ mcpwm_gen_handle_t      genB        = NULL;  // PWM_PIN_B output (D2)
 void setup() {
   Serial.begin(115200);
   delay(1000);
-  while (!Serial);
+  // while (!Serial);
   Serial.println("=== ClosedLoopTest Starting ===");
 
   lastCommandTime = millis();

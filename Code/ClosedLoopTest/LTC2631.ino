@@ -42,7 +42,7 @@ void setCurrentLimitDAC(float amps) {
   if (vSetpoint < 0.0f)      vSetpoint = 0.0f;
   if (vSetpoint > 4.095f)    vSetpoint = 4.095f;
 
-  uint16_t code = (uint16_t)(vSetpoint / 4.096f * 4095.0f + 0.5f);
+  uint16_t code = (uint16_t)(vSetpoint / 4.096f * 4095.0f + 0.1f);
   if (code > 4095) code = 4095;
 
   dacSendCommand(LTC2631_CMD_WRITE_UPDATE, code);

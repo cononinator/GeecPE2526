@@ -25,7 +25,7 @@ void pwmTask(void *parameter) {
 
     // Update PWM duty cycle
     mcpwm_set_duty(MCPWM_UNIT_0, MCPWM_TIMER_0, MCPWM_OPR_A, localDutyCycle);
-    mcpwm_set_duty(MCPWM_UNIT_0, MCPWM_TIMER_0, MCPWM_OPR_B, localDutyCycle);
+    // mcpwm_set_duty(MCPWM_UNIT_0, MCPWM_TIMER_0, MCPWM_OPR_B, localDutyCycle);
 
     vTaskDelay(pdMS_TO_TICKS(10));  // Update PWM every 10ms
   }
