@@ -59,7 +59,7 @@ INA780 powerMeter(INA780_ADDRESS);
 
 volatile float currentDutyCycle  = 0.0f;
 volatile float targetDutyCycle   = 0.0f;
-volatile float currentLimit      = 10.0f;   // Amperes — set via 'C' command
+volatile float currentLimit      = 20.0f;   // Amperes — set via 'C' command
 volatile float measuredCurrent   = 0.0f;    // Written by SensorTask, read by PWMTask
 
 volatile bool serialControlEnabled = false;   // false = throttle mode (default), true = serial mode
