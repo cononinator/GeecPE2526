@@ -23,29 +23,11 @@ void pwmTask(void *parameter) {
     float localTarget = targetDutyCycle;
     xSemaphoreGive(dutyCycleMutex);
 
-    xSemaphoreTake(currentLimitMutex, portMAX_DELAY);
-    float localMeasured = measuredCurrent;
-    float localLimit    = currentLimit;
-    xSemaphoreGive(currentLimitMutex);
-
-    // ── Ramp logic ──
-    bool currentThrottled = false;
-
     xSemaphoreTake(dutyCycleMutex, portMAX_DELAY);
 
     if (currentDutyCycle < localTarget) {
-      // Ramp UP — check current before stepping
-      bool overCurrent = (localMeasured >= localLimit * 0.95f);
-
-      if (overCurrent) {
-        currentThrottled = true;
-        // Hold duty flat — do not increment
-      } else {
-        float step = fabs(localTarget - currentDutyCycle);
-        currentDutyCycle += (step < RAMP_UP_STEP) ? step : RAMP_UP_STEP;
-        throttleMessageSent = false;  // Reset message flag when not throttled
-      }
-
+      float step = fabs(localTarget - currentDutyCycle);
+      currentDutyCycle += (step < RAMP_UP_STEP) ? step : RAMP_UP_STEP;   
     } else if (currentDutyCycle > localTarget) {
       // Ramp DOWN — never blocked by current
       float step = fabs(currentDutyCycle - localTarget);
@@ -56,24 +38,9 @@ void pwmTask(void *parameter) {
     float localDutyCycle = currentDutyCycle;
     xSemaphoreGive(dutyCycleMutex);
 
-    // ── Throttle message (rate-limited to 1/s) ──
-    if (currentThrottled && !throttleMessageSent) {
-      unsigned long now = millis();
-      if (now - lastThrottleMessage >= 1000) {
-        Serial.print("[PWM] Ramp paused — current ");
-        Serial.print(localMeasured, 2);
-        Serial.print(" A >= ");
-        Serial.print(localLimit * 0.95f, 2);
-        Serial.println(" A threshold");
-        lastThrottleMessage = now;
-        throttleMessageSent = true;
-      }
-    }
-
     // ── Apply to genA only (cmpB / genB are fixed at 1 µs — never touched) ──
-    // Convert duty percentage → comparator ticks.
-    // Compare value latches at timer zero (update_cmp_on_tez = true) so updates
-    // are glitch-free and take effect at the very next period start.
+    // Convert duty percentage -> comparator ticks.
+    // Compare value latches at timer zero (update_cmp_on_tez = true) or next period start
     // Cap at 99.8% — 100% duty must never be sent.
     if (localDutyCycle > 99.8f) localDutyCycle = 99.8f;
     uint32_t ticks = (uint32_t)(localDutyCycle / 100.0f * (float)PERIOD_TICKS);

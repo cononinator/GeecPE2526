@@ -13,18 +13,13 @@ void sensorTask(void *parameter) {
     double energy     = powerMeter.getEnergy();
     float temperature = powerMeter.getTemperature();
 
-    // A0: motor voltage sensor  Vadc = 0.0554*Vmot + 0.09  →  Vmot = (Vadc - 0.09) / 0.0554
+    // A0: motor voltage  Vadc = 0.053764*Vmot + 0.439522
     float motorVoltageADC = analogRead(A0) * (3.3f / 4095.0f);
-    float motorVoltage    = (motorVoltageADC - 0.09f) / 0.0554f;
+    float motorVoltage    = (motorVoltageADC - 0.439522f) / 0.053764f;
 
-    // A2: motor current sensor output voltage (0–3.3 V raw)
-    float motCurrent = analogRead(A2) * (3.3f / 4095.0f);
-
-    // ── Publish measured current for PWMTask ──
-    xSemaphoreTake(currentLimitMutex, portMAX_DELAY);
-    measuredCurrent = current;
-    float localLimit = currentLimit;
-    xSemaphoreGive(currentLimitMutex);
+    // A2: motor current sensor — calibrated: I(A) = (V_sensor - 0.0473) / 0.1402
+    float motCurrentV = analogRead(A2) * (3.3f / 4095.0f);
+    float motCurrent  = (motCurrentV - 0.0473f) / 0.1402f;
 
     // ── Publish all sensor readings for CANTask ──
     xSemaphoreTake(sensorDataMutex, portMAX_DELAY);

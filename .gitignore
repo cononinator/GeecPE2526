@@ -12,3 +12,5 @@
 *_Previews*
 **/build/*
 **/_internal/*
+**/_internal/*
+.venv/*

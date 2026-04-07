@@ -14,19 +14,19 @@
 #define CAN_RX_PIN      D8   // TWAI RX ← CAN transceiver
 
 #define PWM_PIN_A       6    // MCPWM0A output (controlled by duty cycle)
-#define PWM_PIN_B       D2   // MCPWM0B output (fixed 1 µs pulse, bootstrap/sync)
+#define PWM_PIN_B       D11   // MCPWM0B output (fixed 1 µs pulse, bootstrap/sync)
 #define SOFT_START_PIN  D5   // Soft-start enable
 #define ENABLE_PIN      D4   // Gate driver enable
 #define FAULT_PIN       D7   // Current comparator output: LOW = overcurrent detected
-
+#define LOGIC_TRANS     D12  // Logic Level translator PIN: Constant HIGH
 // ─── I2C Device Addresses ─────────────────────────────────────────────────────
 #define INA780_ADDRESS  0x40  // INA780 power meter
 #define DAC_I2C_ADDRESS 0x73  // LTC2631-HZ12 current-limit DAC (global address)
 
 // ─── Current Sensor Calibration ───────────────────────────────────────────────
-// Sensor output voltage vs. current:  V_sensor = 0.983 * I_amps + 0.17
+// Sensor output voltage vs. current:  V_sensor = 0.0983 * I_amps + 0.17
 // Used to convert a desired current limit (A) into a DAC voltage setpoint.
-#define SENSOR_SLOPE    0.983f
+#define SENSOR_SLOPE    0.0983f
 #define SENSOR_OFFSET   0.17f
 
 // ─── MCPWM Constants ──────────────────────────────────────────────────────────
@@ -59,7 +59,7 @@ INA780 powerMeter(INA780_ADDRESS);
 
 volatile float currentDutyCycle  = 0.0f;
 volatile float targetDutyCycle   = 0.0f;
-volatile float currentLimit      = 10.0f;   // Amperes — set via 'C' command
+volatile float currentLimit      = 20.0f;   // Amperes — set via 'C' command
 volatile float measuredCurrent   = 0.0f;    // Written by SensorTask, read by PWMTask
 
 volatile bool serialControlEnabled = false;   // false = throttle mode (default), true = serial mode
@@ -100,8 +100,7 @@ mcpwm_oper_handle_t     mcpwmOper   = NULL;
 mcpwm_cmpr_handle_t     cmpA        = NULL;  // Controls generator A duty cycle
 mcpwm_cmpr_handle_t     cmpB        = NULL;  // Fixed 1 µs on-time for generator B
 mcpwm_gen_handle_t      genA        = NULL;  // PWM_PIN_A output
-mcpwm_gen_handle_t      genB        = NULL;  // PWM_PIN_B output (D2)
-
+mcpwm_gen_handle_t      genB        = NULL;  // PWM_PIN_B output 
 // ─── Setup ────────────────────────────────────────────────────────────────────
 void setup() {
   Serial.begin(115200);
@@ -134,9 +133,11 @@ void setup() {
   pinMode(A2, INPUT);
   pinMode(SOFT_START_PIN, OUTPUT);
   pinMode(ENABLE_PIN, OUTPUT);
+  pinMode(LOGIC_TRANS, OUTPUT);
 
   digitalWrite(SOFT_START_PIN, LOW);
   digitalWrite(ENABLE_PIN, LOW);
+  digitalWrite(LOGIC_TRANS, HIGH);
   delay(500);
   digitalWrite(SOFT_START_PIN, HIGH);
   digitalWrite(ENABLE_PIN, HIGH);
@@ -147,7 +148,7 @@ void setup() {
   // Topology: one timer → one operator → two comparators → two generators
   //
   //   cmpA / genA (PWM_PIN_A) — variable duty, controlled by PWMTask
-  //   cmpB / genB (D2)        — fixed 1 µs on-time, set once and never changed
+  //   cmpB / genB (PWM_PIN_B)        — fixed 1 µs on-time, set once and never changed
   //
   // Both generators use active-high PWM:
   //   HIGH at timer empty (counter = 0, start of period)
@@ -184,7 +185,7 @@ void setup() {
 
   // ── 4. Generators ──
   mcpwm_generator_config_t genCfgA = { .gen_gpio_num = PWM_PIN_A };
-  mcpwm_generator_config_t genCfgB = { .gen_gpio_num = (int)D2 };
+  mcpwm_generator_config_t genCfgB = { .gen_gpio_num = (int)PWM_PIN_B };
   ESP_ERROR_CHECK(mcpwm_new_generator(mcpwmOper, &genCfgA, &genA));
   ESP_ERROR_CHECK(mcpwm_new_generator(mcpwmOper, &genCfgB, &genB));
 
@@ -206,7 +207,7 @@ void setup() {
 
   // Pull-down on both output pins (ensures defined low state at startup)
   gpio_pulldown_en((gpio_num_t)PWM_PIN_A);
-  gpio_pulldown_en((gpio_num_t)D2);
+  gpio_pulldown_en((gpio_num_t)PWM_PIN_B);
 
   // ── 5. Enable and start timer ──
   ESP_ERROR_CHECK(mcpwm_timer_enable(mcpwmTimer));
@@ -218,7 +219,7 @@ void setup() {
   Serial.print(PERIOD_TICKS);
   Serial.println(" ticks (80 MHz)");
   Serial.println("  genA: variable duty (PWM_PIN_A)");
-  Serial.println("  genB: 1 µs fixed pulse (D2)");
+  Serial.println("  genB: 1 µs fixed pulse (PWM_PIN_B)");
 
   // ── TWAI (CAN) ──
   twai_general_config_t g_config = TWAI_GENERAL_CONFIG_DEFAULT((gpio_num_t)CAN_TX_PIN, (gpio_num_t)CAN_RX_PIN, TWAI_MODE_NORMAL);
