@@ -20,12 +20,6 @@ void sensorTask(void *parameter) {
     // A2: motor current sensor output voltage (0–3.3 V raw)
     float motCurrent = analogRead(A2) * (3.3f / 4095.0f);
 
-    // ── Publish measured current for PWMTask ──
-    xSemaphoreTake(currentLimitMutex, portMAX_DELAY);
-    measuredCurrent = current;
-    float localLimit = currentLimit;
-    xSemaphoreGive(currentLimitMutex);
-
     // ── Publish all sensor readings for CANTask ──
     xSemaphoreTake(sensorDataMutex, portMAX_DELAY);
     sensBusVoltage   = voltage;

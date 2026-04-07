@@ -34,14 +34,14 @@ void commandTask(void *parameter) {
 
 #if THROTTLE_CONTROLS_CURRENT
         // Scale throttle against the current 'C' limit; duty cycle holds at 100%
-        xSemaphoreTake(currentLimitMutex, portMAX_DELAY);
-        float scaledLimit = newTarget / 100.0f * currentLimit;
-        xSemaphoreGive(currentLimitMutex);
-        setCurrentLimitDAC(scaledLimit);
+        // xSemaphoreTake(currentLimitMutex, portMAX_DELAY);
+        // float scaledLimit = newTarget / 100.0f * currentLimit;
+        // xSemaphoreGive(currentLimitMutex);
+        // setCurrentLimitDAC(scaledLimit);
 
-        xSemaphoreTake(dutyCycleMutex, portMAX_DELAY);
-        targetDutyCycle = 100.0f;
-        xSemaphoreGive(dutyCycleMutex);
+        // xSemaphoreTake(dutyCycleMutex, portMAX_DELAY);
+        // targetDutyCycle = 100.0f;
+        // xSemaphoreGive(dutyCycleMutex);
 #else
         xSemaphoreTake(dutyCycleMutex, portMAX_DELAY);
         targetDutyCycle = newTarget;
@@ -162,7 +162,7 @@ void commandTask(void *parameter) {
               Serial.print(dutyCycle, 2);
               Serial.println("%");
             } else {
-              Serial.println("Error: duty cycle must be 0–100");
+              Serial.println("Error: duty cycle must be 0-100");
             }
           } else if (command != '\n' && command != '\r' && command != ' ') {
             Serial.print("Unknown command: '");
