@@ -8,7 +8,7 @@
 //   DAQ_SPEED     (0x100)  4-byte float (m/s or km/h — as sent by DAQ)
 //   DAQ_STATUS    (0x101)  1-byte boolean
 //   SCREEN_STATUS (0x200)  1-byte boolean
-//   SCREEN_LIMIT  (0x201)  4-byte float
+//   SCREEN_LIMIT  (0x201)  4-byte int32 carrying the mode number (1 or 2)
 //   SCREEN_LAP_NUMBER (0x202) 4-byte int32
 
 #define CAN_TX_INTERVAL_MS  100
@@ -68,9 +68,24 @@ void canTask(void *parameter) {
 
         case SCREEN_LIMIT:
           if (rx.data_length_code >= 4) {
-            float f;
-            memcpy(&f, rx.data, 4);
-            canScreenLimit = f;
+            int32_t mode;
+            memcpy(&mode, rx.data, 4);
+            canScreenLimit = (float)mode;
+
+            float newLimit = 0.0f;
+
+            if (mode == SCREEN_MODE_1) {
+              newLimit = SCREEN_MODE_1_CURRENT_LIMIT;
+            } else if (mode == SCREEN_MODE_2) {
+              newLimit = SCREEN_MODE_2_CURRENT_LIMIT;
+            }
+
+            if (newLimit > 0.0f) {
+              xSemaphoreTake(currentLimitMutex, portMAX_DELAY);
+              currentLimit = newLimit;
+              xSemaphoreGive(currentLimitMutex);
+              setCurrentLimitDAC(newLimit);
+            }
           }
           break;
 

@@ -29,6 +29,10 @@
 #define SENSOR_SLOPE    0.0983f
 #define SENSOR_OFFSET   0.17f
 
+// Screen mode current limits
+#define SCREEN_MODE_1_CURRENT_LIMIT 20.0f
+#define SCREEN_MODE_2_CURRENT_LIMIT 30.0f
+
 // ─── MCPWM Constants ──────────────────────────────────────────────────────────
 #define PWM_FREQUENCY    30000       // Hz
 // Timer resolution: 80 MHz.  Period ticks = 80,000,000 / 30,000 = 2667 → 29,996 Hz (≈30 kHz)

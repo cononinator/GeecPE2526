@@ -35,11 +35,20 @@ I2C_CAN CAN(CAN_I2C_ADDRESS);  // Initialize CAN object
 
 // ========== BUTTON CONFIGURATION ==========
 #define LAP_BUTTON_PIN 5  // Button pin for lap timer reset
-#define DEBOUNCE_DELAY 250  // Debounce delay in ms
+#define DEBOUNCE_DELAY 150  // Debounce delay in ms
+#define LONG_PRESS_DELAY 800  // Long press threshold in ms
+
+// ========== MODE CONFIGURATION ==========
+#define MODE_1 1
+#define MODE_2 2
 
 // ========== DATA VARIABLES ==========
 // Speed data
 float wheelSpeedKPH = 0.0;  // Wheel speed in km/h
+
+// Drive mode selection
+int currentMode = MODE_1;
+int lastSentMode = 0;
 
 // PE data received from CANTask
 bool peStatus = false;
@@ -73,8 +82,11 @@ int totalSeconds = 0;
 
 // Lap counter
 int lapCount = 0;
-bool lastButtonState = HIGH;
+bool lastButtonReading = HIGH;
+bool buttonStableState = HIGH;
 unsigned long lastDebounceTime = 0;
+unsigned long buttonPressStartTime = 0;
+bool longPressHandled = false;
 
 // Display update
 unsigned long lastDisplayUpdate = 0;
@@ -85,6 +97,9 @@ void updateTimers();
 void checkLapButton();
 void readCAN();
 void updateDisplay();
+void handleShortPress();
+void handleLongPress();
+void sendModeSelection();
 void setBacklightWhite();
 
 void setup() {
@@ -136,6 +151,9 @@ void setup() {
   lapStartTime = millis();
   totalStartTime = millis();
   lastCanReceiveTime = millis();
+
+  // Publish the initial mode so the PE side starts in a known state
+  sendModeSelection();
   
   Serial.println("\n✅ System ready!");
   Serial.println("Waiting for CAN data...\n");
@@ -184,31 +202,71 @@ void updateTimers() {
 
 void checkLapButton() {
   int reading = digitalRead(LAP_BUTTON_PIN);
-  
-  // Check if button is pressed (LOW with PULLUP) with debounce
-  if (reading == LOW && lastButtonState == HIGH && (millis() - lastDebounceTime) > DEBOUNCE_DELAY) {
-    // Button pressed - reset lap timer and increment lap counter
-    lapStartTime = millis();  // Reset lap timer
-    lapCount++;               // Increment lap counter
-    
-    // Print lap info to serial
-    Serial.print("🏁 Lap ");
-    Serial.print(lapCount);
-    Serial.print(" - Lap time: ");
-    Serial.print(lapMinutes);
-    Serial.print(":");
-    if (lapSeconds < 10) Serial.print("0");
-    Serial.print(lapSeconds);
-    Serial.print(" | Total time: ");
-    Serial.print(totalMinutes);
-    Serial.print(":");
-    if (totalSeconds < 10) Serial.print("0");
-    Serial.println(totalSeconds);
-    
+
+  if (reading != lastButtonReading) {
     lastDebounceTime = millis();
+    lastButtonReading = reading;
+  }
+
+  if ((millis() - lastDebounceTime) > DEBOUNCE_DELAY && reading != buttonStableState) {
+    buttonStableState = reading;
+
+    if (buttonStableState == LOW) {
+      buttonPressStartTime = millis();
+      longPressHandled = false;
+    } else if (!longPressHandled) {
+      handleShortPress();
+    }
   }
   
-  lastButtonState = reading;
+  if (buttonStableState == LOW && !longPressHandled && (millis() - buttonPressStartTime) >= LONG_PRESS_DELAY) {
+    handleLongPress();
+    longPressHandled = true;
+  }
+}
+
+void handleShortPress() {
+  currentMode = (currentMode == MODE_1) ? MODE_2 : MODE_1;
+  sendModeSelection();
+
+  Serial.print("Mode changed to M");
+  Serial.println(currentMode);
+}
+
+void handleLongPress() {
+  lapStartTime = millis();  // Reset lap timer
+  lapCount++;               // Increment lap counter
+
+  Serial.print("🏁 Lap ");
+  Serial.print(lapCount);
+  Serial.print(" - Lap time: ");
+  Serial.print(lapMinutes);
+  Serial.print(":");
+  if (lapSeconds < 10) Serial.print("0");
+  Serial.print(lapSeconds);
+  Serial.print(" | Total time: ");
+  Serial.print(totalMinutes);
+  Serial.print(":");
+  if (totalSeconds < 10) Serial.print("0");
+  Serial.println(totalSeconds);
+}
+
+void sendModeSelection() {
+  if (!canInitialized || currentMode == lastSentMode) {
+    return;
+  }
+
+  int32_t modeValue = (int32_t)currentMode;
+  unsigned char buf[4];
+  memcpy(buf, &modeValue, sizeof(modeValue));
+
+  if (CAN.sendMsgBuf(SCREEN_LIMIT, 0, 4, buf) == CAN_OK) {
+    lastSentMode = currentMode;
+    Serial.print("Sent SCREEN_LIMIT mode value: ");
+    Serial.println(currentMode);
+  } else {
+    Serial.println("Failed to send SCREEN_LIMIT mode value");
+  }
 }
 
 void readCAN() {
@@ -314,6 +372,10 @@ void updateDisplay() {
   char lapStr[5];
   sprintf(lapStr, "L:%02d", lapCount);
 
+  // Format the current mode as M1 or M2
+  char modeStr[3];
+  sprintf(modeStr, "M%d", currentMode);
+
   // Display on LCD - Row 0 (top line): original layout with temperature alternating in the right slot
   lcd.setCursor(0, 0);
   lcd.print(" ");
@@ -327,12 +389,13 @@ void updateDisplay() {
     lcd.print(totalTimeStr);
   }
 
-  // Display on LCD - Row 1 (bottom line): speed + lap counter
+  // Display on LCD - Row 1 (bottom line): speed + mode + lap counter
   lcd.setCursor(0, 1);
   lcd.print(speedStr);
-  lcd.print("     ");
-  lcd.print(lapStr);
   lcd.print(" ");
+  lcd.print(modeStr);
+  lcd.print(" ");
+  lcd.print(lapStr);
 
   // Ensure backlight stays white
  // setBacklightWhite();

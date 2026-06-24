@@ -20,3 +20,8 @@
 #define SCREEN_STATUS 0x200
 #define SCREEN_LIMIT 0x201
 #define SCREEN_LAP_NUMBER 0x202
+
+// Screen mode values
+#define SCREEN_MODE_1 1
+#define SCREEN_MODE_2 2
+
