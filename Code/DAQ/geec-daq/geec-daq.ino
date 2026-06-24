@@ -68,6 +68,9 @@
 #define WHEEL_SENSOR_PIN 5   // GPIO5 - wheel speed sensor input
 #define WHEEL_DIAMETER 0.5    // Wheel diameter in meters
 #define SPOKES_PER_REV 8      // Number of spokes = pulses per revolution
+#define WHEEL_SPEED_BUFFER_SIZE 10
+#define DATA_UPDATE_INTERVAL 50
+#define WHEEL_SPEED_TIMEOUT_US 2000000UL
 // ========================================
 
 // ========== ANALOG SENSORS ==========
@@ -131,6 +134,10 @@ unsigned long lastSpeedCalcTime = 0;
 float wheelSpeedMPS = 0.0;
 float wheelSpeedKPH = 0.0;
 bool wheelSensorDetected = false;
+volatile unsigned long wheelPulseTimestamps[WHEEL_SPEED_BUFFER_SIZE] = {0};
+volatile uint8_t wheelPulseWriteIndex = 0;
+volatile uint8_t wheelPulseSampleCount = 0;
+volatile unsigned long lastWheelPulseMicros = 0;
 
 // Analog sensor variables
 float voltageValue = 0.0;
@@ -141,7 +148,7 @@ float powerValue = 0.0;
 I2C_CAN CAN(CAN_I2C_ADDRESS);  // Initialize CAN object with I2C address
 bool canInitialized = false;
 unsigned long lastCanSendTime = 0;
-const unsigned long CAN_SEND_INTERVAL = 100;  // Send CAN messages every 100ms
+const unsigned long CAN_SEND_INTERVAL = DATA_UPDATE_INTERVAL;  // Send CAN messages every update interval
 
 // PE CAN receive state
 bool peStatus = false;
@@ -171,6 +178,13 @@ uint32_t timer = millis();
 
 // Interrupt service routine for wheel sensor
 void IRAM_ATTR wheelSensorISR() {
+  unsigned long pulseMicros = micros();
+  wheelPulseTimestamps[wheelPulseWriteIndex] = pulseMicros;
+  wheelPulseWriteIndex = (wheelPulseWriteIndex + 1) % WHEEL_SPEED_BUFFER_SIZE;
+  if (wheelPulseSampleCount < WHEEL_SPEED_BUFFER_SIZE) {
+    wheelPulseSampleCount++;
+  }
+  lastWheelPulseMicros = pulseMicros;
   pulseCount++;
 }
 
@@ -266,6 +280,59 @@ float readCurrent(int pin) {
   }
   
   return current;
+}
+
+bool updateWheelSpeed() {
+  unsigned long timestamps[WHEEL_SPEED_BUFFER_SIZE];
+  uint8_t sampleCount;
+  uint8_t writeIndex;
+  unsigned long latestPulseMicros;
+  unsigned long nowMicros;
+
+  noInterrupts();
+  sampleCount = wheelPulseSampleCount;
+  writeIndex = wheelPulseWriteIndex;
+  latestPulseMicros = lastWheelPulseMicros;
+  for (uint8_t i = 0; i < WHEEL_SPEED_BUFFER_SIZE; i++) {
+    timestamps[i] = wheelPulseTimestamps[i];
+  }
+  interrupts();
+
+  if (sampleCount < 2) {
+    wheelSpeedMPS = 0.0;
+    wheelSpeedKPH = 0.0;
+    return false;
+  }
+
+  nowMicros = micros();
+  if (latestPulseMicros != 0 && (nowMicros - latestPulseMicros) > WHEEL_SPEED_TIMEOUT_US) {
+    wheelSpeedMPS = 0.0;
+    wheelSpeedKPH = 0.0;
+    return false;
+  }
+
+  uint8_t oldestIndex = (sampleCount == WHEEL_SPEED_BUFFER_SIZE) ? writeIndex : 0;
+  uint8_t newestIndex = (sampleCount == WHEEL_SPEED_BUFFER_SIZE)
+                            ? ((writeIndex + WHEEL_SPEED_BUFFER_SIZE - 1) % WHEEL_SPEED_BUFFER_SIZE)
+                            : (sampleCount - 1);
+
+  unsigned long startUs = timestamps[oldestIndex];
+  unsigned long endUs = timestamps[newestIndex];
+  if (endUs <= startUs) {
+    return false;
+  }
+
+  unsigned long deltaUs = endUs - startUs;
+  if (deltaUs == 0) {
+    return false;
+  }
+
+  float distancePerPulse = (PI * WHEEL_DIAMETER) / SPOKES_PER_REV;
+  float distance = (sampleCount - 1) * distancePerPulse;
+
+  wheelSpeedMPS = distance / (deltaUs / 1000000.0f);
+  wheelSpeedKPH = wheelSpeedMPS * 3.6f;
+  return true;
 }
 
 // ========== CAN BUS FUNCTIONS (Using Working Library) ==========
@@ -542,37 +609,22 @@ void loop() {
 
   // Read all queued PE CAN data before logging
   readCanData();
-  
-  // Send CAN data at regular intervals
-  if (canInitialized && (millis() - lastCanSendTime > CAN_SEND_INTERVAL)) {
-    sendCanData();
-    lastCanSendTime = millis();
-  }
-  
-  // Log data every 2 seconds
-  if (millis() - timer > 2000) {
+
+  // Update and publish wheel speed at a faster cadence
+  if (millis() - timer > DATA_UPDATE_INTERVAL) {
     timer = millis();
+
+    updateWheelSpeed();
     
-    // Calculate wheel speed
+    // Calculate wheel pulse delta for logging
     unsigned long currentTime = millis();
-    unsigned long timeDelta = currentTime - lastSpeedCalcTime;
     
     noInterrupts();
     unsigned long currentPulseCount = pulseCount;
     interrupts();
     
     unsigned long pulseDelta = currentPulseCount - lastPulseCount;
-    
-    if (timeDelta > 0 && pulseDelta > 0) {
-      float distancePerPulse = (3.14159 * WHEEL_DIAMETER) / SPOKES_PER_REV;
-      float distance = pulseDelta * distancePerPulse;
-      wheelSpeedMPS = (distance * 1000.0) / timeDelta;
-      wheelSpeedKPH = wheelSpeedMPS * 3.6;
-      wheelSensorDetected = true;
-    } else {
-      wheelSpeedMPS = 0;
-      wheelSpeedKPH = 0;
-    }
+    wheelSensorDetected = (currentPulseCount > 0);
     
     // Create log data
     String logData = "";
@@ -636,6 +688,12 @@ void loop() {
       } else {
         setError(ERR_SD_CARD);
       }
+    }
+
+    // Send CAN data at the same cadence as the speed update
+    if (canInitialized && (millis() - lastCanSendTime > CAN_SEND_INTERVAL)) {
+      sendCanData();
+      lastCanSendTime = millis();
     }
     
     // Print to Serial (minimal output to avoid clutter)
