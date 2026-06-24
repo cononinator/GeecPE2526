@@ -67,7 +67,7 @@
 // ========== WHEEL SPEED SENSOR ==========
 #define WHEEL_SENSOR_PIN 5   // GPIO5 - wheel speed sensor input
 #define WHEEL_DIAMETER 0.5    // Wheel diameter in meters
-#define SPOKES_PER_REV 6      // Number of spokes = pulses per revolution
+#define SPOKES_PER_REV 8      // Number of spokes = pulses per revolution
 // ========================================
 
 // ========== ANALOG SENSORS ==========
@@ -82,6 +82,19 @@
 // ========== CAN BUS CONFIGURATION ==========
 #define CAN_I2C_ADDRESS 0x25  // Default I2C address for Seeed CAN module
 // ============================================
+
+// ========== PE CAN IDs ==========
+#define PE_STATUS          0x020
+#define PE_MOTOR_CURRENT   0x021
+#define PE_MOTOR_VOLTAGE   0x022
+#define PE_BATTERY_VOLTAGE 0x023
+#define PE_BATTERY_CURRENT 0x024
+#define PE_TEMPERATURE     0x025
+#define PE_ENERGY          0x026
+#define PE_POWER           0x027
+#define PE_DUTY_CYCLE      0x028
+#define PE_CURRENT_LIMIT   0x029
+// =================================
 
 // ========== ERROR CODES ==========
 #define ERR_NONE        0
@@ -129,6 +142,18 @@ I2C_CAN CAN(CAN_I2C_ADDRESS);  // Initialize CAN object with I2C address
 bool canInitialized = false;
 unsigned long lastCanSendTime = 0;
 const unsigned long CAN_SEND_INTERVAL = 100;  // Send CAN messages every 100ms
+
+// PE CAN receive state
+bool peStatus = false;
+float peMotorCurrent = 0.0;
+float peMotorVoltage = 0.0;
+float peBatteryVoltage = 0.0;
+float peBatteryCurrent = 0.0;
+float peTemperature = 0.0;
+float peEnergy = 0.0;
+float pePower = 0.0;
+float peDutyCycle = 0.0;
+float peCurrentLimit = 0.0;
 
 // GPS tracking
 bool gpsFixStatus = false;
@@ -244,6 +269,42 @@ float readCurrent(int pin) {
 }
 
 // ========== CAN BUS FUNCTIONS (Using Working Library) ==========
+void readCanData() {
+  if (!canInitialized) {
+    return;
+  }
+
+  while (CAN.checkReceive() == CAN_MSGAVAIL) {
+    unsigned char len = 0;
+    unsigned char buf[8];
+
+    CAN.readMsgBuf(&len, buf);
+    unsigned long canId = CAN.getCanId();
+
+    if (canId == PE_STATUS && len >= 1) {
+      peStatus = (buf[0] != 0);
+    } else if (canId == PE_MOTOR_CURRENT && len >= 4) {
+      memcpy(&peMotorCurrent, buf, 4);
+    } else if (canId == PE_MOTOR_VOLTAGE && len >= 4) {
+      memcpy(&peMotorVoltage, buf, 4);
+    } else if (canId == PE_BATTERY_VOLTAGE && len >= 4) {
+      memcpy(&peBatteryVoltage, buf, 4);
+    } else if (canId == PE_BATTERY_CURRENT && len >= 4) {
+      memcpy(&peBatteryCurrent, buf, 4);
+    } else if (canId == PE_TEMPERATURE && len >= 4) {
+      memcpy(&peTemperature, buf, 4);
+    } else if (canId == PE_ENERGY && len >= 4) {
+      memcpy(&peEnergy, buf, 4);
+    } else if (canId == PE_POWER && len >= 4) {
+      memcpy(&pePower, buf, 4);
+    } else if (canId == PE_DUTY_CYCLE && len >= 4) {
+      memcpy(&peDutyCycle, buf, 4);
+    } else if (canId == PE_CURRENT_LIMIT && len >= 4) {
+      memcpy(&peCurrentLimit, buf, 4);
+    }
+  }
+}
+
 void sendCanData() {
   if (!canInitialized) {
     setError(ERR_CAN);
@@ -396,7 +457,7 @@ void setup() {
     // Create file with header
     dataFile = SD.open(filename, FILE_WRITE);
     if (dataFile) {
-      dataFile.println("UTC Time,Date,Latitude,Longitude,Altitude(m),GPS Speed(km/h),Heading(°),Satellites,Fix Quality,Wheel Speed(m/s),Wheel Speed(km/h),Pulses,Voltage(V),Current(A),Power(W)");
+      dataFile.println("UTC Time,Date,Latitude,Longitude,Altitude(m),GPS Speed(km/h),Heading(°),Satellites,Fix Quality,Wheel Speed(m/s),Wheel Speed(km/h),Pulses,Voltage(V),Current(A),Power(W),PE Status,PE Motor Current(A),PE Motor Voltage(V),PE Battery Voltage(V),PE Battery Current(A),PE Temperature(C),PE Energy,PE Power,PE Duty Cycle,PE Current Limit");
       dataFile.flush();
       dataFile.close();
       Serial.println("   File created: " + String(filename));
@@ -478,6 +539,9 @@ void loop() {
   voltageValue = readVoltage(VOLTAGE_PIN);
   currentValue = readCurrent(CURRENT_PIN);
   powerValue = voltageValue * currentValue;
+
+  // Read all queued PE CAN data before logging
+  readCanData();
   
   // Send CAN data at regular intervals
   if (canInitialized && (millis() - lastCanSendTime > CAN_SEND_INTERVAL)) {
@@ -541,6 +605,16 @@ void loop() {
     logData += "," + String(voltageValue, 2);
     logData += "," + String(currentValue, 2);
     logData += "," + String(powerValue, 2);
+    logData += "," + String(peStatus ? 1 : 0);
+    logData += "," + String(peMotorCurrent, 2);
+    logData += "," + String(peMotorVoltage, 2);
+    logData += "," + String(peBatteryVoltage, 2);
+    logData += "," + String(peBatteryCurrent, 2);
+    logData += "," + String(peTemperature, 2);
+    logData += "," + String(peEnergy, 2);
+    logData += "," + String(pePower, 2);
+    logData += "," + String(peDutyCycle, 2);
+    logData += "," + String(peCurrentLimit, 2);
     
     // Write to SD card
     if (sdCardAvailable) {

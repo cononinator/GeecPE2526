@@ -22,6 +22,7 @@
 #include <Wire.h>
 #include "rgb_lcd.h"
 #include "I2C_CAN.h"
+#include "CANid.h"
 
 // ========== RGB LCD CONFIGURATION ==========
 #define TEXT_ADDR 0x3E  // LCD text address
@@ -32,9 +33,6 @@ rgb_lcd lcd;
 #define CAN_I2C_ADDRESS 0x25  // Default I2C address for Seeed CAN module
 I2C_CAN CAN(CAN_I2C_ADDRESS);  // Initialize CAN object
 
-// CAN Message IDs (matching transmitter)
-#define CAN_ID_SPEED   0x100  // Speed data (wheel + GPS)
-
 // ========== BUTTON CONFIGURATION ==========
 #define LAP_BUTTON_PIN 5  // Button pin for lap timer reset
 #define DEBOUNCE_DELAY 250  // Debounce delay in ms
@@ -43,9 +41,23 @@ I2C_CAN CAN(CAN_I2C_ADDRESS);  // Initialize CAN object
 // Speed data
 float wheelSpeedKPH = 0.0;  // Wheel speed in km/h
 
+// PE data received from CANTask
+bool peStatus = false;
+float peMotorCurrent = 0.0;
+float peMotorVoltage = 0.0;
+float peBatteryVoltage = 0.0;
+float peBatteryCurrent = 0.0;
+float peTemperature = 0.0;
+float peEnergy = 0.0;
+float pePower = 0.0;
+float peDutyCycle = 0.0;
+float peCurrentLimit = 0.0;
+
 // CAN status
 bool canInitialized = false;
 unsigned long lastCanReceiveTime = 0;
+unsigned long lastPeReceiveTime = 0;
+static bool timeoutPrinted = false;
 
 // Timer variables (lap timer - resets on lap button)
 unsigned long lapStartTime = 0;
@@ -213,17 +225,43 @@ void readCAN() {
       lastCanReceiveTime = millis();
       
       // Parse based on CAN ID
-      if (canId == CAN_ID_SPEED && len >= 8) {
+      if (canId == DAQ_SPEED && len >= 4) {
         // Speed data packet (ID: 0x100)
-        // Bytes 0-3: Wheel speed (float, km/h)
-        
-        // Extract wheel speed (float)
         memcpy(&wheelSpeedKPH, &buf[0], 4);
-        
-        // Debug output
-        Serial.print("📊 CAN Speed: ");
+
+        Serial.print("CAN Speed: ");
         Serial.print(wheelSpeedKPH, 1);
         Serial.println(" km/h");
+      } else if (canId == PE_STATUS && len >= 1) {
+        peStatus = (buf[0] != 0);
+        lastPeReceiveTime = millis();
+      } else if (canId == PE_MOTOR_CURRENT && len >= 4) {
+        memcpy(&peMotorCurrent, &buf[0], 4);
+        lastPeReceiveTime = millis();
+      } else if (canId == PE_MOTOR_VOLTAGE && len >= 4) {
+        memcpy(&peMotorVoltage, &buf[0], 4);
+        lastPeReceiveTime = millis();
+      } else if (canId == PE_BATTERY_VOLTAGE && len >= 4) {
+        memcpy(&peBatteryVoltage, &buf[0], 4);
+        lastPeReceiveTime = millis();
+      } else if (canId == PE_BATTERY_CURRENT && len >= 4) {
+        memcpy(&peBatteryCurrent, &buf[0], 4);
+        lastPeReceiveTime = millis();
+      } else if (canId == PE_TEMPERATURE && len >= 4) {
+        memcpy(&peTemperature, &buf[0], 4);
+        lastPeReceiveTime = millis();
+      } else if (canId == PE_ENERGY && len >= 4) {
+        memcpy(&peEnergy, &buf[0], 4);
+        lastPeReceiveTime = millis();
+      } else if (canId == PE_POWER && len >= 4) {
+        memcpy(&pePower, &buf[0], 4);
+        lastPeReceiveTime = millis();
+      } else if (canId == PE_DUTY_CYCLE && len >= 4) {
+        memcpy(&peDutyCycle, &buf[0], 4);
+        lastPeReceiveTime = millis();
+      } else if (canId == PE_CURRENT_LIMIT && len >= 4) {
+        memcpy(&peCurrentLimit, &buf[0], 4);
+        lastPeReceiveTime = millis();
       }
     }
   }
@@ -231,16 +269,14 @@ void readCAN() {
   // If no CAN message received for 3 seconds, show timeout indicator
   if (millis() - lastCanReceiveTime > 3000 && lastCanReceiveTime > 0) {
     // Only print timeout message once
-    static bool timeoutPrinted = false;
     if (!timeoutPrinted) {
-      Serial.println("⚠️ CAN timeout - No data received for 3 seconds");
+      Serial.println("CAN timeout - No data received for 3 seconds");
       timeoutPrinted = true;
     }
     // Set speed to -1 to indicate no data
     wheelSpeedKPH = -1;
   } else {
     // Reset timeout flag when data is received
-    static bool timeoutPrinted = false;
     if (timeoutPrinted && (millis() - lastCanReceiveTime) < 3000) {
       timeoutPrinted = false;
     }
@@ -251,53 +287,53 @@ void updateDisplay() {
   // Format lap timer as MM:SS (top left)
   char lapTimeStr[6];
   sprintf(lapTimeStr, "%02d:%02d", lapMinutes, lapSeconds);
-  
-  // Format total time counter as MM:SS (top right)
+
+  // Alternate the top-right field between total time and temperature
+  bool showTemperatureRow = ((millis() / 3000UL) % 2) == 1;
+
+  // Format total time counter as MM:SS
   char totalTimeStr[6];
   sprintf(totalTimeStr, "%02d:%02d", totalMinutes, totalSeconds);
-  
-  // Format speed (bottom left)
+
+  // Format temperature and speed values for display
+  char tempStr[8];
   char speedStr[8];
+  if (millis() - lastPeReceiveTime < 3000) {
+    sprintf(tempStr, "%5.0fC", peTemperature);
+  } else {
+    sprintf(tempStr, " ---C");
+  }
+
   if (wheelSpeedKPH >= 0) {
-    // Show speed with one decimal place
     sprintf(speedStr, "%4.1fkmh", wheelSpeedKPH);  // "xx.xkmh" format
   } else {
     sprintf(speedStr, " --.-kmh");
   }
-  
+
   // Format lap counter as L:xx (bottom right)
   char lapStr[5];
   sprintf(lapStr, "L:%02d", lapCount);
-  
-  // Display on LCD - Row 0 (top line)
+
+  // Display on LCD - Row 0 (top line): original layout with temperature alternating in the right slot
   lcd.setCursor(0, 0);
-  lcd.print(" ");              // 1 space
-  lcd.print(lapTimeStr);      // "00:00" (5 chars)
-  lcd.print("     ");              // 1 space
-  lcd.print(totalTimeStr);    // "00:00" (5 chars)
-  
-  // Fill remaining space with spaces (for clean display)
-  // int remaining = 16 - (5 + 2 + 5);
-  // for (int i = 0; i < remaining; i++) {
-  //   lcd.print("      ");
-  // }
-  
-  // Display on LCD - Row 1 (bottom line)
-  lcd.setCursor(0, 1);
-  
-  // Show speed
-  if (wheelSpeedKPH >= 0) {
-    lcd.print(speedStr);      // "xx.xkmh" (6 chars)
+  lcd.print(" ");
+  lcd.print(lapTimeStr);
+  if (showTemperatureRow) {
+    lcd.print("  T:");
+    lcd.print(tempStr);
+    lcd.print(" ");
   } else {
-    lcd.print("--.-kmh");     // "--.-kmh" (7 chars)
+    lcd.print("     ");
+    lcd.print(totalTimeStr);
   }
-  
-  // Add spacing to center the lap counter on the right side
-  lcd.print("     ");         // 5 spaces
-  
-  // Show lap counter (L:xx)
-  lcd.print(lapStr);          // "L:xx" (4 chars)
-  
+
+  // Display on LCD - Row 1 (bottom line): speed + lap counter
+  lcd.setCursor(0, 1);
+  lcd.print(speedStr);
+  lcd.print("     ");
+  lcd.print(lapStr);
+  lcd.print(" ");
+
   // Ensure backlight stays white
  // setBacklightWhite();
 }
